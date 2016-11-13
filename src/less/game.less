@@ -1,0 +1,91 @@
+.canvas-container {
+    width: 280 / 64rem;
+    height: 280 / 64rem;
+    padding-top: 1 / 64rem;
+    margin: 0 auto;
+}
+
+.imgs {
+    width: 100 / 64rem;
+    height: 100 / 64rem;
+    border-radius: 5 / 64rem;
+}
+
+.imgs-active {
+    animation: 1s move;
+}
+
+@keyframes move {
+    0% {
+        width: 100 / 64rem;
+        height: 100 / 64rem;
+    }
+    50% {
+        width: 106 / 64rem;
+        height: 70 / 64rem;
+        border-radius: 20%;
+    }
+    100% {
+        width: 100 / 64rem;
+        height: 100 / 64rem;
+    }
+}
+
+.header {
+    width: 100%;
+    margin-top: 16 / 64rem;
+}
+
+.time-oldman-container {
+    width: 100%;
+    overflow: hidden;
+}
+
+.time-oldman {
+    width: 153 / 64rem;
+    height: 54 / 64rem;
+    float: right;
+    margin-right: 10 / 64rem;
+}
+
+.oldman {
+    width: 52 / 64rem;
+    height: 54 / 64rem;
+    border: 4 / 64rem solid #cccccc;
+    padding: 1 / 64rem;
+    float: left;
+}
+
+.oldman img {
+    width: 42 / 64rem;
+    height: 44 / 64rem;
+}
+
+.time-container {
+    width: 91 / 64rem;
+    height: 54 / 64rem;
+    float: right;
+    border: 1 / 64rem solid #797979;
+}
+
+.time-container p {
+    text-align: center;
+    line-height: 26 / 64rem;
+}
+
+.score-container {
+    width: 86 / 64rem;
+    height: 34 / 64rem;
+    border: 1 / 64rem solid #797979;
+    margin-left: -1 / 64rem;
+    line-height: 34 / 64rem;
+    margin-top: 18 / 64rem;
+    letter-spacing: -1 / 64rem;
+}
+
+.title {
+    font-weight: bold;
+    text-align: center;
+    margin-top: 8 / 64rem;
+    margin-bottom: 42 / 64rem;
+}

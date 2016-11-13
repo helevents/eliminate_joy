@@ -1,0 +1,79 @@
+.canvas-container {
+  width: 4.375rem;
+  height: 4.375rem;
+  padding-top: 0.015625rem;
+  margin: 0 auto;
+}
+.imgs {
+  width: 1.5625rem;
+  height: 1.5625rem;
+  border-radius: 0.078125rem;
+}
+.imgs-active {
+  animation: 1s move;
+}
+@keyframes move {
+  0% {
+    width: 1.5625rem;
+    height: 1.5625rem;
+  }
+  50% {
+    width: 1.65625rem;
+    height: 1.09375rem;
+    border-radius: 20%;
+  }
+  100% {
+    width: 1.5625rem;
+    height: 1.5625rem;
+  }
+}
+.header {
+  width: 100%;
+  margin-top: 0.25rem;
+}
+.time-oldman-container {
+  width: 100%;
+  overflow: hidden;
+}
+.time-oldman {
+  width: 2.390625rem;
+  height: 0.84375rem;
+  float: right;
+  margin-right: 0.15625rem;
+}
+.oldman {
+  width: 0.8125rem;
+  height: 0.84375rem;
+  border: 0.0625rem solid #cccccc;
+  padding: 0.015625rem;
+  float: left;
+}
+.oldman img {
+  width: 0.65625rem;
+  height: 0.6875rem;
+}
+.time-container {
+  width: 1.421875rem;
+  height: 0.84375rem;
+  float: right;
+  border: 0.015625rem solid #797979;
+}
+.time-container p {
+  text-align: center;
+  line-height: 0.40625rem;
+}
+.score-container {
+  width: 1.34375rem;
+  height: 0.53125rem;
+  border: 0.015625rem solid #797979;
+  margin-left: -0.015625rem;
+  line-height: 0.53125rem;
+  margin-top: 0.28125rem;
+  letter-spacing: -0.015625rem;
+}
+.title {
+  font-weight: bold;
+  text-align: center;
+  margin-top: 0.125rem;
+  margin-bottom: 0.65625rem;
+}

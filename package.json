@@ -1,0 +1,27 @@
+{
+  "name": "happy-chrimstmas",
+  "version": "1.0.0",
+  "description": "圣诞消消乐",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/helevents/eliminate_joy.git"
+  },
+  "author": "fawn <1982248849@qq.com>",
+  "license": "Unlicense",
+  "bugs": {
+    "url": "https://github.com/helevents/eliminate_joy/issues"
+  },
+  "homepage": "https://github.com/helevents/eliminate_joy#readme",
+  "devDependencies": {
+    "browser-sync": "^2.17.5",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^6.1.2",
+    "gulp-imagemin": "^3.1.1",
+    "gulp-less": "^3.3.0",
+    "less-plugin-autoprefix": "^1.5.1"
+  }
+}

@@ -1,0 +1,81 @@
+.content {
+  width: 4.34375rem;
+  margin: 0 auto;
+  text-align: center;
+}
+.back-to-homepage {
+  width: 0.5rem;
+  cursor: pointer;
+  margin: 0.234375rem 0 0.171875rem 0;
+}
+.rank-title {
+  width: 100%;
+  overflow-x: hidden;
+}
+.rank-title p {
+  width: 1.984375rem;
+  height: 0.671875rem;
+  border: 0.015625rem solid #797979;
+  float: left;
+  border-radius: 0.03125rem;
+  line-height: 0.671875rem;
+  cursor: pointer;
+}
+.time-ranking {
+  margin-right: 0.375rem;
+}
+.rank-detail {
+  width: 4.265625rem;
+  height: 6.015625rem;
+}
+.change-page {
+  width: 3.1875rem;
+  height: 0.640625rem;
+  margin: 0 auto;
+  overflow-x: hidden;
+  margin-top: 0.265625rem;
+}
+.change-page p {
+  width: 1.40625rem;
+  height: 100%;
+}
+.to-homepage {
+  float: left;
+  margin-right: 0.375rem;
+}
+.to-nextpage {
+  float: right;
+}
+.rank-detail {
+  width: 4.34375rem;
+}
+.single-detail {
+  width: 4.265625rem;
+  height: 0.671875rem;
+  margin: 0 auto;
+  border-bottom: 0.015625rem solid #797979;
+  line-height: 0.671875rem;
+  overflow-x: hidden;
+  margin-left: 0.078125rem;
+}
+.single-detail span {
+  display: block;
+  width: 1.421875rem;
+  float: left;
+}
+.rank-num {
+  text-align: left;
+}
+.rank-name {
+  text-align: center;
+}
+.rank-score {
+  text-align: right;
+}
+.rank-detail li:nth-child(1) {
+  border: 0;
+  margin-left: 0;
+}
+.rank-detail li:nth-child(1) span {
+  /*此处 278/3*/
+}

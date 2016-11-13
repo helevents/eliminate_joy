@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>game</title>
+    <meta name="viewport" content="initial-scale=1, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0, width=device-width">
+    <meta name="screen-orientation" content="portrait">
+    <link rel="stylesheet" type="text/css" href="../css/style.css">
+    <link rel="stylesheet" type="text/css" href="../css/game.css">
+</head>
+
+<body>
+    <!-- 游戏主界面 -->
+    <div id="container" class="container">
+        <div class="header">
+            <div class="time-oldman-container">
+                <div class="time-oldman">
+                    <div class="oldman">
+                        <img src="../images/1.jpg" alt="">
+                    </div>
+                    <div class="time-container">
+                        <p>时间</p>
+                        <p class="timt">00:00</p>
+                    </div>
+                </div>
+            </div>
+            <div class="score-container">
+                <p>得分:
+                    <cite class="score">666</cite>分
+                </p>
+            </div>
+            <p class="title">计时模式</p>
+        </div>
+        <div id="canvas-container" class="canvas-container">
+            <canvas id="canvas" class="canvas" width="280" height="280"></canvas>
+        </div>
+    </div>
+    <!-- 
+    <ul id="imgs-container" class="imgs-container">
+        <li><img src="./images/1.jpg" class="imgs" id="img-left"></li>
+        <li><img src="./images/2.jpg" class="imgs" id="img-right"></li>
+    </ul> -->
+    <script src="../js/zepto.js"></script>
+    <script type="text/javascript" src="../js/main.js"></script>
+</body>
+
+</html>

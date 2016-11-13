@@ -1,0 +1,28 @@
+body,
+h1,
+p,
+ul {
+    margin: 0;
+    padding: 0;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+li {
+    list-style: none;
+}
+
+cite {
+    font-style: normal;
+}
+a {
+    color: black;
+    text-decoration: none;
+}
+.container {
+    width: 100%;
+    height: 800px;
+    border: 1px solid #797979;
+}
