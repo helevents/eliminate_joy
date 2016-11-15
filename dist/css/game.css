@@ -1,31 +1,8 @@
 .canvas-container {
-  width: 4.375rem;
-  height: 4.375rem;
-  padding-top: 0.015625rem;
+  width: 280px;
   margin: 0 auto;
-}
-.imgs {
-  width: 1.5625rem;
-  height: 1.5625rem;
-  border-radius: 0.078125rem;
-}
-.imgs-active {
-  animation: 1s move;
-}
-@keyframes move {
-  0% {
-    width: 1.5625rem;
-    height: 1.5625rem;
-  }
-  50% {
-    width: 1.65625rem;
-    height: 1.09375rem;
-    border-radius: 20%;
-  }
-  100% {
-    width: 1.5625rem;
-    height: 1.5625rem;
-  }
+  height: 280px;
+  padding-top: 0.015625rem;
 }
 .header {
   width: 100%;
