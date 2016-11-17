@@ -1,49 +1,71 @@
+.container {
+    position: fixed;  
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+.main-background {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
 .homepage-content {
-  width: 18.75rem;
-  margin: 0 auto;
+    width: 10.0rem;
+    margin: 0 auto;
+    position: fixed;
+    bottom: 0;
 }
 .main-img {
-  width: 100%;
-  height: 13.5rem;
-  border: 0.9375rem solid #CCCCCC;
-  padding: 0.375rem;
-  margin-top: 1.75rem;
+    width: 9.146667rem;
+    margin: 0 auto;
+    margin-top: 1.306667rem;
 }
 .main-img img {
-  width: 16.125rem;
-  height: 11rem;
+    width: 100%;
+    height: 4.16rem;
+}
+.main-img:after {
+    display: block;
+    content: '';
+    width: 4.666667rem;
+    height: 4.533333rem;
+    background-image: url('../images/school-badge.png');
+    background-size: 4.666667rem 4.533333rem;
+    margin: 0 auto;
+    margin-top: -3.733333rem;
 }
 .modes {
-  width: 15.75rem;
-  margin: 0 auto;
-  margin-top: 1.875rem;
-  text-align: center;
-  line-height: 3.0625rem;
+    width: 4.053333rem;
+    margin: 0 auto;
+    margin-top: 1.866667rem;
+    margin-bottom: 2.853333rem;
+    font-family: 'ARTianniuGB Heavy';
+    text-align: center;
 }
 .modes p {
-  width: 100%;
-  height: 3.0625rem;
-  margin-bottom: 2.5625rem;
-  background-color: transparent;
-  border: 0.0625rem solid #797979;
-  border-radius: 0.125rem;
-  cursor: pointer;
+    width: 100%;
+    height: 1.653333rem;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    line-height: 1.653333rem;
+    color: #ffffff;
+    padding-top: 0.24rem;
 }
-.game-over-text {
-  width: 100%;
-  height: 17.125rem;
-  text-align: center;
+.mode-time {
+    font-size: 0.586667rem;
+    background-image: url('../images/main-btn-time.png');
+    margin-bottom: 0.16rem;
+}   
+.mode-pass-through {
+    font-size: 0.506667rem;
+    background-image: url('../images/main-btn-through.png');
+    margin-bottom: 0.16rem;
 }
-.homepage-content h2 {
-  margin-bottom: 2.3125rem;
-}
-.homepage-content h4:nth-child(1) {
-  margin-bottom: 2rem;
-}
-.homepage-content h4:nth-child(2) {
-  margin-bottom: 0.1875rem;
-}
-.homepage-content h4,
-.homepage-content h6 {
-  font-weight: normal;
+.ranking-list {
+    font-size: 0.506667rem;
+    background-image: url('../images/main-btn-rank.png');
 }
