@@ -64,15 +64,15 @@ $(document).ready(() => {
         drawNewStage () {
             for (let i = 0; i <= pub.xNum-1; i++) {
                 matrix[i] = new Array();
-                imgDissloved[i] = new Array();
+                // imgDissloved[i] = new Array();
                 for (let j = 0; j <= pub.yNum-1; j++) {
                     let len = pub.allImgs.length;
                     let index = Math.round(Math.random()*(len-1) + 0);
-                    let animal = new Animal(pub.ctx, i*pub.imgWidth, j*pub.imgHeight, pub.allImgs[index]);
+                    let animal = new Animal(pub.ctx, i*pub.imgWidth, j*pub.imgHeight, pub.allImgs[index], false);
 
                     matrix[i][j] = animal;
                     animal.paint();
-                    imgDissloved[i][j] = 0;
+                    // imgDissloved[i][j] = 0;
                 }
             }
 
@@ -109,7 +109,7 @@ $(document).ready(() => {
             return index;
         }
 
-        //如果 Y方向 有可以消除的小动物
+        //消除 Y方向 可以消去的小动物
         repaintY (z, i, j) {
             for (let k = 0; k <= z; k++) {
                 matrix[i][j+k].refresh();
@@ -138,7 +138,7 @@ $(document).ready(() => {
             }
         }
 
-        //如果 X方向 有可以消去的小动物
+        //消除 X方向 可以消去的小动物
         repaintX (z, i, j) {
             for (let k = 0; k <= z; k++) {
                 matrix[i+k][j].refresh();
@@ -159,23 +159,19 @@ $(document).ready(() => {
         //如果 y方向 有可以消除的小动物, 返回 count
         findYSameImg(count, i, j) {
             if (matrix[i][j+count]) {
-                if (matrix[i][j-count]) {
-                    //Find a picture with a duplicate number of count
-                    for (var z = 0; z < count; z++) {
-                        if (matrix[i][j+z-1]) {
-                            if (matrix[i][j-z].img !== matrix[i][j-z-1].img) {
-                                break;
-                            }
-                        } 
-                    }
-                    if (z === count) {
-                        for (let k = count; k >= 0 ; k--) {
-                            imgDissloved[i][j+k] = 1;
-                        }
-                        console.log('imgDissloved in for ', z);
-                        return j-count;
-                    }
-                }
+                // if (matrix[i][j-count]) {
+                //     //Find a picture with a duplicate number of count
+                //     for (var z = 0; z < count; z++) {
+                //         if (matrix[i][j+z-1]) {
+                //             if (matrix[i][j-z].img !== matrix[i][j-z-1].img) {
+                //                 break;
+                //             }
+                //         } 
+                //     }
+                //     if (z === count) {
+                //         return j-count;
+                //     }
+                // }
                 for (var z = 0; z < count; z++) {
                     //如果下一张图片不为空
                     if (matrix[i][j+z+1]) {
@@ -186,25 +182,11 @@ $(document).ready(() => {
                 }
                 if (z === count) {
                     for (let k = 0; k <= count; k++) {
-                        imgDissloved[i][j+k] = 1;
-                        console.log('imgDissloved[i][j] = ', imgDissloved[i][j]);
+                        matrix[i][j+k].toRemove = true;
                     }
                     return z;
                 }
             } 
-            // else if (matrix[i][j-count]) {
-            //     for (var z = 0; z < count; z++) {
-            //         if (matrix[i][j+z-1]) {
-            //             if (matrix[i][j-z].img !== matrix[i][j-z-1].img) {
-            //                 break;
-            //             }
-            //         } 
-            //     }
-            //     if (z === count) {
-            //         console.log('in j-count');
-            //         return j-count;
-            //     }
-            // }
         }
 
         //如果 x方向 可以消除的小动物, 返回 count
@@ -217,6 +199,47 @@ $(document).ready(() => {
                     } 
                 }
                 if (z === count) {
+                    //同时消除两个方向的小动物
+                    // if (count === 2) {  
+                        //如果 x方向 有可以消去的小动物 检查四周
+                        // for (let m = 0; m <= count; m++) {
+                        //     console.log(m);
+                        //     if (j >= 1) {
+                        //         for (var k = count; k > 0; k--) {
+                        //             console.log('test');
+                        //             console.log(i, j, k);
+                        //             console.log(i+m, j+k, j+k-1);
+                        //             // if (matrix[i+m＋1][j+k].img !== matrix[i+m+1][j+k-1].img) 
+                        //                 // break;
+                        //         }
+                        //         if (k === 0) {
+                        //             // console.log('test');
+                        //             // stage.repaintY(count, i+m＋1, j-count);
+                        //         }
+                        //     }
+                        //     // if (matrix[i+m+1][j+count]) {
+                        //     //     for (let k = 0; k < count; k++) {
+                        //     //         if (matrix[i+m＋1][j+k].img !== matrix[i+m+1][j+k+1].img) 
+                        //     //             break;
+                        //     //     }
+                        //     //     if (k === 0) {
+                        //     //         stage.repaintY(count, i+m＋1, j);
+                        //     //     }
+                        //     // }
+                        //     // if (matrix[i+m+1][j-1] &&　matrix[i+m+1][j+1]) {
+                        //     //     for (let k = 0; k < count; k++) {
+                        //     //         if (matrix[i+m＋1][j+k-1].img !== matrix[i+m+1][j+k].img) 
+                        //     //             break;
+                        //     //     }
+                        //     //     if (k === 0) {
+                        //     //         stage.repaintY(count, i+m＋1, j-1);
+                        //     //     }
+                        //     // } 
+                        // }
+                    // }
+                    // for (let k = 0; k <= count; k++) {
+                    //     matrix[i+k][j].toRemove = true;
+                    // }
                     return z;
                 }
             }
@@ -251,7 +274,6 @@ $(document).ready(() => {
                         setTimeout(function () {
                             stage.drawStage();
                         }, 500);
-
                     }
 
                     if (stage.findXSameImg(4, i, j) === 4) {
@@ -277,10 +299,6 @@ $(document).ready(() => {
                             stage.drawStage();
                         }, 500);
                     }
-
-                    if (stage.findYSameImg(2, i, j) === 2 && stage.findXSameImg(2, i, j) === 2) {
-                        console.log('both3');
-                    }
                 }
             }   
             return repeatImg;
@@ -288,11 +306,12 @@ $(document).ready(() => {
     }
 
     class Animal {
-        constructor (ctx, x, y, img) {
+        constructor (ctx, x, y, img, toRemove) {
             this.ctx = ctx;
             this.x = x;
             this.y = y;
             this.img = img;
+            this.toRemove = toRemove;
         }
 
         paint () {
@@ -314,6 +333,7 @@ $(document).ready(() => {
         refresh () {
             this.ctx.clearRect(this.x, this.y, pub.imgWidth, pub.imgHeight);
         }
+
     }
 
     let stage = new Stage();
@@ -415,8 +435,6 @@ $(document).ready(() => {
             setTimeout(function () {
                 stage.isDissloved();
             }, 500);
-
-            console.log(imgDissloved);
         } 
         pubdata.moveFlag = false;
     });
