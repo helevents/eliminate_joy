@@ -159,19 +159,6 @@ $(document).ready(() => {
         //如果 y方向 有可以消除的小动物, 返回 count
         findYSameImg(count, i, j) {
             if (matrix[i][j+count]) {
-                // if (matrix[i][j-count]) {
-                //     //Find a picture with a duplicate number of count
-                //     for (var z = 0; z < count; z++) {
-                //         if (matrix[i][j+z-1]) {
-                //             if (matrix[i][j-z].img !== matrix[i][j-z-1].img) {
-                //                 break;
-                //             }
-                //         } 
-                //     }
-                //     if (z === count) {
-                //         return j-count;
-                //     }
-                // }
                 for (var z = 0; z < count; z++) {
                     //如果下一张图片不为空
                     if (matrix[i][j+z+1]) {
@@ -199,47 +186,9 @@ $(document).ready(() => {
                     } 
                 }
                 if (z === count) {
-                    //同时消除两个方向的小动物
-                    // if (count === 2) {  
-                        //如果 x方向 有可以消去的小动物 检查四周
-                        // for (let m = 0; m <= count; m++) {
-                        //     console.log(m);
-                        //     if (j >= 1) {
-                        //         for (var k = count; k > 0; k--) {
-                        //             console.log('test');
-                        //             console.log(i, j, k);
-                        //             console.log(i+m, j+k, j+k-1);
-                        //             // if (matrix[i+m＋1][j+k].img !== matrix[i+m+1][j+k-1].img) 
-                        //                 // break;
-                        //         }
-                        //         if (k === 0) {
-                        //             // console.log('test');
-                        //             // stage.repaintY(count, i+m＋1, j-count);
-                        //         }
-                        //     }
-                        //     // if (matrix[i+m+1][j+count]) {
-                        //     //     for (let k = 0; k < count; k++) {
-                        //     //         if (matrix[i+m＋1][j+k].img !== matrix[i+m+1][j+k+1].img) 
-                        //     //             break;
-                        //     //     }
-                        //     //     if (k === 0) {
-                        //     //         stage.repaintY(count, i+m＋1, j);
-                        //     //     }
-                        //     // }
-                        //     // if (matrix[i+m+1][j-1] &&　matrix[i+m+1][j+1]) {
-                        //     //     for (let k = 0; k < count; k++) {
-                        //     //         if (matrix[i+m＋1][j+k-1].img !== matrix[i+m+1][j+k].img) 
-                        //     //             break;
-                        //     //     }
-                        //     //     if (k === 0) {
-                        //     //         stage.repaintY(count, i+m＋1, j-1);
-                        //     //     }
-                        //     // } 
-                        // }
-                    // }
-                    // for (let k = 0; k <= count; k++) {
-                    //     matrix[i+k][j].toRemove = true;
-                    // }
+                    for (let k = 0; k <= count; k++) {
+                        matrix[i+k][j].toRemove = true;
+                    }
                     return z;
                 }
             }
@@ -247,61 +196,74 @@ $(document).ready(() => {
 
         
         isDissloved () {
-            let repeatImg = [];
             for (let i = 0; i < pub.xNum; i++) {
-                repeatImg[i] = new Array(); 
                 for (let j = 0; j < pub.yNum; j++) {
-                    
-                    if (stage.findYSameImg(4, i, j) === 4) {
-                        console.log('y success5');
-                        stage.repaintY(4, i, j);
-
-                        setTimeout(function () {
-                            stage.drawStage();
-                        }, 500);
-                    } else 
-                    if (stage.findYSameImg(3, i, j) === 3) {
-                        console.log('y success4');
-                        stage.repaintY(3, i, j);
-
-                        setTimeout(function () {
-                            stage.drawStage();
-                        }, 500);
-                    } else if (stage.findYSameImg(2, i, j) === 2) {
-                        console.log('y success3');
-                        stage.repaintY(2, i, j);
-
-                        setTimeout(function () {
-                            stage.drawStage();
-                        }, 500);
+                    for (let k = 2; k <= 4; k++) {
+                        stage.findXSameImg(k, i, j);
+                        stage.findYSameImg(k, i, j);
                     }
 
-                    if (stage.findXSameImg(4, i, j) === 4) {
-                        console.log('x success5');
-                        stage.repaintX(4, i, j);
 
-                        setTimeout(function () {
-                            stage.drawStage();
-                        }, 500);
-                    } else if (stage.findXSameImg(3, i, j) === 3) {
-                        console.log('x success4');
-                        stage.repaintX(3, i, j);
+                    // if (stage.findYSameImg(4, i, j) === 4) {
+                    //     console.log('y success5');
+                    //     stage.repaintY(4, i, j);
 
-                        setTimeout(function () {
-                            stage.drawStage();
-                        }, 500);
-                    } else 
-                    if (stage.findXSameImg(2, i, j) === 2) {
-                        console.log('x success3');
-                        stage.repaintX(2, i, j);
+                    //     setTimeout(function () {
+                    //         stage.drawStage();
+                    //     }, 500);
+                    // } else 
+                    // if (stage.findYSameImg(3, i, j) === 3) {
+                    //     console.log('y success4');
+                    //     stage.repaintY(3, i, j);
 
-                        setTimeout(function () {
-                            stage.drawStage();
-                        }, 500);
-                    }
+                    //     setTimeout(function () {
+                    //         stage.drawStage();
+                    //     }, 500);
+                    // } else if (stage.findYSameImg(2, i, j) === 2) {
+                    //     console.log('y success3');
+                    //     stage.repaintY(2, i, j);
+
+                    //     setTimeout(function () {
+                    //         stage.drawStage();
+                    //     }, 500);
+                    // }
+
+
+                    // if (stage.findXSameImg(4, i, j) === 4) {
+                    //     console.log('x success5');
+                    //     stage.repaintX(4, i, j);
+
+                    //     setTimeout(function () {
+                    //         stage.drawStage();
+                    //     }, 500);
+                    // } else if (stage.findXSameImg(3, i, j) === 3) {
+                    //     console.log('x success4');
+                    //     stage.repaintX(3, i, j);
+
+                    //     setTimeout(function () {
+                    //         stage.drawStage();
+                    //     }, 500);
+                    // } else 
+                    // if (stage.findXSameImg(2, i, j) === 2) {
+                    //     console.log('x success3');
+                    //     stage.repaintX(2, i, j);
+
+                    //     setTimeout(function () {
+                    //         stage.drawStage();
+                    //     }, 500);
+                    // }
                 }
             }   
-            return repeatImg;
+
+            var k = 1; 
+            for (let i = 0; i < pub.xNum; i++) {
+                for (let j = 0; j < pub.yNum; j++) {
+                    if (matrix[i][j].toRemove) {
+                        k++;
+                    }
+                }
+            }
+            console.log('yigong you ' + k);
         }
     }
 
