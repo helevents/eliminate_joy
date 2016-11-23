@@ -14,7 +14,7 @@
     z-index: -1;
 }
 .homepage-content {
-    width: 10.0rem;
+    width: 100%;
     margin: 0 auto;
     position: fixed;
     bottom: 0;
@@ -22,22 +22,22 @@
 .main-img {
     width: 9.146667rem;
     margin: 0 auto;
-    margin-top: 1.306667rem;
 }
 .main-img img {
     width: 100%;
     height: 4.16rem;
+    margin-top: 1.333333rem;
 }
-.main-img:after {
-    display: block;
-    content: '';
-    width: 4.666667rem;
-    height: 4.533333rem;
-    background-image: url('../images/school-badge.png');
-    background-size: 4.666667rem 4.533333rem;
-    margin: 0 auto;
-    margin-top: -3.733333rem;
-}
+// .main-img:after {
+//     display: block;
+//     content: '';
+//     width: 4.666667rem;
+//     height: 4.533333rem;
+//     background-image: url('../images/school-badge.png');
+//     background-size: 4.666667rem 4.533333rem;
+//     margin: 0 auto;
+//     margin-top: -3.733333rem;
+// }
 .modes {
     width: 4.053333rem;
     margin: 0 auto;
@@ -45,27 +45,29 @@
     margin-bottom: 2.853333rem;
     font-family: 'ARTianniuGB Heavy';
     text-align: center;
+    padding-top: 0.266667rem;
 }
-.modes p {
-    width: 100%;
-    height: 1.653333rem;
+.modes a {
+    display: block;
+    width: 4.0rem;
+    height: 1.733333rem;
     background-repeat: no-repeat;
     background-size: 100% 100%;
-    line-height: 1.653333rem;
-    color: #ffffff;
     padding-top: 0.24rem;
+}
+.modes img {
+    display: block;
+    width: 100%;
+    height: 1.653333rem;
 }
 .mode-time {
     font-size: 0.586667rem;
-    background-image: url('../images/main-btn-time.png');
     margin-bottom: 0.16rem;
 }   
 .mode-pass-through {
     font-size: 0.506667rem;
-    background-image: url('../images/main-btn-through.png');
     margin-bottom: 0.16rem;
 }
 .ranking-list {
     font-size: 0.506667rem;
-    background-image: url('../images/main-btn-rank.png');
 }

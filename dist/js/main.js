@@ -3,27 +3,27 @@ $(window).on('scroll.elasticity', function (e){
 }).on('touchmove.elasticity', function(e){
     e.preventDefault();
 });
-
+document.querySelector('.container').style.height = screen.height;
 $(document).ready(() => {
     // let 
     const pub = {
         canvas: document.getElementById('canvas'),
         ctx: document.getElementById('canvas').getContext('2d'),
         //第一行图片的数量
-        xNum: 7,
+        xNum: 6,
         //第一列图片的数量
-        yNum: 7,
-        imgWidth: parseInt((screen.width) / 7),
-        imgHeight: parseInt((screen.width) / 7),
+        yNum: 8,
+        imgWidth: parseInt((screen.width) / 6),
+        imgHeight: parseInt((screen.width) / 6),
         halfWidth: 20,
         allImgs: document.querySelector('.allimg').children,
         gameOver () {
             alert('gameover');
         }
     }
-
+// console.log(screen.height);
     pub.canvas.width = screen.width;
-    pub.canvas.height = screen.width;
+    pub.canvas.height = screen.height;
 
     // document.getElementById('canvas-container ').style.width = screen.width;
 
@@ -109,53 +109,6 @@ $(document).ready(() => {
             return index;
         }
 
-        //消除 Y方向 可以消去的小动物
-        repaintY (z, i, j) {
-            for (let k = 0; k <= z; k++) {
-                matrix[i][j+k].refresh();
-            }
-            if (j <= 2) {
-                //先将已有的元素下移
-                for (let k = j; k >= 1; k--) {
-                    let zCopy = z;
-                    matrix[i][k+zCopy].img = matrix[i][k-1].img;
-                    zCopy--;
-                }
-                //随机生成
-                for (let k = 0; k <= z; k++) {
-                    stage.drawNewImg(matrix, i, k);
-                }
-            } else {
-                for (let k = j; k > 0; k--) {
-                    let zCopy = z;
-                    matrix[i][k+zCopy].img = matrix[i][k-1].img;
-                    zCopy--;
-                } 
-                for (let k = 0; k <= z; k++) {
-                    stage.drawNewImg(matrix, i, k);
-                } 
-                stage.drawStage();
-            }
-        }
-
-        //消除 X方向 可以消去的小动物
-        repaintX (z, i, j) {
-            for (let k = 0; k <= z; k++) {
-                matrix[i+k][j].refresh();
-            }
-            if (j == 0) {
-                for (let m = i; m <= i + z; m++)
-                    stage.drawNewImg(matrix, m, 0);
-            } else {
-                for (let m = i; m <= i + z; m++) {
-                    for (let k = j; k >= 1; k--) {
-                        matrix[m][k].img = matrix[m][k-1].img;
-                        stage.drawNewImg(matrix, m, 0);
-                    }
-                }
-            }
-        }
-
         //如果 y方向 有可以消除的小动物, 返回 count
         findYSameImg(count, i, j) {
             if (matrix[i][j+count]) {
@@ -202,68 +155,61 @@ $(document).ready(() => {
                         stage.findXSameImg(k, i, j);
                         stage.findYSameImg(k, i, j);
                     }
-
-
-                    // if (stage.findYSameImg(4, i, j) === 4) {
-                    //     console.log('y success5');
-                    //     stage.repaintY(4, i, j);
-
-                    //     setTimeout(function () {
-                    //         stage.drawStage();
-                    //     }, 500);
-                    // } else 
-                    // if (stage.findYSameImg(3, i, j) === 3) {
-                    //     console.log('y success4');
-                    //     stage.repaintY(3, i, j);
-
-                    //     setTimeout(function () {
-                    //         stage.drawStage();
-                    //     }, 500);
-                    // } else if (stage.findYSameImg(2, i, j) === 2) {
-                    //     console.log('y success3');
-                    //     stage.repaintY(2, i, j);
-
-                    //     setTimeout(function () {
-                    //         stage.drawStage();
-                    //     }, 500);
-                    // }
-
-
-                    // if (stage.findXSameImg(4, i, j) === 4) {
-                    //     console.log('x success5');
-                    //     stage.repaintX(4, i, j);
-
-                    //     setTimeout(function () {
-                    //         stage.drawStage();
-                    //     }, 500);
-                    // } else if (stage.findXSameImg(3, i, j) === 3) {
-                    //     console.log('x success4');
-                    //     stage.repaintX(3, i, j);
-
-                    //     setTimeout(function () {
-                    //         stage.drawStage();
-                    //     }, 500);
-                    // } else 
-                    // if (stage.findXSameImg(2, i, j) === 2) {
-                    //     console.log('x success3');
-                    //     stage.repaintX(2, i, j);
-
-                    //     setTimeout(function () {
-                    //         stage.drawStage();
-                    //     }, 500);
-                    // }
                 }
             }   
 
-            var k = 1; 
             for (let i = 0; i < pub.xNum; i++) {
                 for (let j = 0; j < pub.yNum; j++) {
                     if (matrix[i][j].toRemove) {
-                        k++;
+                        matrix[i][j].refresh();
+                        
+                        if (j !== 0) {
+                            for (let k = j-1; k >= 0; k--) {
+                                matrix[i][k+1].img = matrix[i][k].img;
+                            }
+                            stage.drawNewImg(matrix, i, 0);
+                        } else {
+                            stage.drawNewImg(matrix, i, 0);
+                        }
+                        matrix[i][j].toRemove = false;
                     }
                 }
             }
-            console.log('yigong you ' + k);
+
+
+            setTimeout(function () {
+                stage.drawStage();
+            }, 500);
+
+            setTimeout(function () {
+                for (let i = 0; i < pub.xNum; i++) {
+                    for (let j = 0; j < pub.yNum; j++) {
+                        if (matrix[i][j].toRemove) {
+                            console.log(matrix[i][j].toRemove);
+                            // matrix[i][j].refresh();
+                            
+                            // if (j !== 0) {
+                            //     for (let k = j-1; k >= 0; k--) {
+                            //         console.log(i, j);
+                            //         matrix[i][k+1].img = matrix[i][k].img;
+                            //     }
+                            //     stage.drawNewImg(matrix, i, 0);
+                            // } else {
+                            //     stage.drawNewImg(matrix, i, 0);
+                            // }
+
+                            // matrix[i][j].toRemove = false;
+                        }
+                    }
+                }
+            }, 400);
+        }
+
+        //交换两个位置的图片
+        changeImg (a, b) {
+            let temp = a;
+            a = b;
+            b = temp;
         }
     }
 
@@ -383,8 +329,10 @@ $(document).ready(() => {
         if (pubdata.moveFlag) {
             //交换两个位置的图片
             let temp = matrix[startInt.x / pub.imgWidth][startInt.y / pub.imgWidth].img;
+            let temp1 = matrix[imgPlace.x/pub.imgWidth][imgPlace.y/pub.imgWidth].img;
             matrix[startInt.x / pub.imgWidth][startInt.y / pub.imgWidth].img = matrix[imgPlace.x/pub.imgWidth][imgPlace.y/pub.imgWidth].img;
             matrix[imgPlace.x/pub.imgWidth][imgPlace.y/pub.imgWidth].img = temp;
+            // stage.changeImg(temp, temp1);
 
             //将 matrix 里面的图片重绘
             stage.drawStage();
@@ -400,5 +348,8 @@ $(document).ready(() => {
         } 
         pubdata.moveFlag = false;
     });
-        // stage.isDissloved();
+
+    setTimeout(function () {
+        stage.isDissloved();
+    }, 500);
 });
