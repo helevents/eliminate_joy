@@ -5,7 +5,7 @@
     width: 100%;
     height: 100%;
 }
-.main-background {
+.main_background {
     position: absolute;
     bottom: 0;
     left: 0;
@@ -13,17 +13,17 @@
     height: 100%;
     z-index: -1;
 }
-.homepage-content {
+.homepage_content {
     width: 100%;
     margin: 0 auto;
     position: fixed;
     bottom: 0;
 }
-.main-img {
+.main_img {
     width: 9.146667rem;
     margin: 0 auto;
 }
-.main-img img {
+.main_img img {
     width: 100%;
     height: 4.16rem;
     margin-top: 1.333333rem;
@@ -60,14 +60,14 @@
     width: 100%;
     height: 1.653333rem;
 }
-.mode-time {
+.mode_time {
     font-size: 0.586667rem;
     margin-bottom: 0.16rem;
 }   
-.mode-pass-through {
+.mode_pass_through {
     font-size: 0.506667rem;
     margin-bottom: 0.16rem;
 }
-.ranking-list {
+.ranking_list {
     font-size: 0.506667rem;
 }
