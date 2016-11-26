@@ -20,6 +20,7 @@ $(document).ready(() => {
         imgHeight: parseInt ((window.getComputedStyle(container, null).getPropertyValue('width')).slice(0, -3)) / 6,
         halfWidth: 20,
         allImgs: document.querySelector('.allimg').children,
+        clickedImg: document.querySelector('.img-clicked').children,
         gameOver () {
             alert('gameover');
         }
@@ -349,7 +350,7 @@ $(document).ready(() => {
                 if (!boolis) {
                     clearInterval(timer0);
                 }
-            }, 1000);
+            }, 1000); 
         } 
 
         pubdata.moveFlag = false;

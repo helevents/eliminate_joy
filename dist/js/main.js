@@ -26,6 +26,7 @@ $(document).ready(function () {
         imgHeight: parseInt(window.getComputedStyle(container, null).getPropertyValue('width').slice(0, -3)) / 6,
         halfWidth: 20,
         allImgs: document.querySelector('.allimg').children,
+        clickedImg: document.querySelector('.img-clicked').children,
         gameOver: function gameOver() {
             alert('gameover');
         }

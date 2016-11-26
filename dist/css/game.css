@@ -72,3 +72,6 @@
     background-size: 100% 100%;
     margin-top: 1rem;
 }
+.allimg, .img-clicked {
+    display: none;
+}
