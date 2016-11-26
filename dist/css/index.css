@@ -1,10 +1,11 @@
 .container {
-    position: fixed;  
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
 }
+
 .main_background {
     position: absolute;
     bottom: 0;
@@ -13,21 +14,25 @@
     height: 100%;
     z-index: -1;
 }
+
 .homepage_content {
     width: 100%;
     margin: 0 auto;
     position: fixed;
     bottom: 0;
 }
+
 .main_img {
     width: 9.146667rem;
     margin: 0 auto;
 }
+
 .main_img img {
     width: 100%;
     height: 4.16rem;
     margin-top: 1.333333rem;
 }
+
 // .main-img:after {
 //     display: block;
 //     content: '';
@@ -47,6 +52,7 @@
     text-align: center;
     padding-top: 0.266667rem;
 }
+
 .modes a {
     display: block;
     width: 4.0rem;
@@ -55,19 +61,23 @@
     background-size: 100% 100%;
     padding-top: 0.24rem;
 }
+
 .modes img {
     display: block;
     width: 100%;
     height: 1.653333rem;
 }
+
 .mode_time {
     font-size: 0.586667rem;
     margin-bottom: 0.16rem;
-}   
+}
+
 .mode_pass_through {
     font-size: 0.506667rem;
     margin-bottom: 0.16rem;
 }
+
 .ranking_list {
     font-size: 0.506667rem;
 }

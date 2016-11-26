@@ -8,7 +8,6 @@ $(document).ready(() => {
 
     const container = document.querySelector('.canvas_container');
 
-    console.log();
     const pub = {
         canvas: document.getElementById('canvas'),
         ctx: document.getElementById('canvas').getContext('2d'),
@@ -20,7 +19,7 @@ $(document).ready(() => {
         imgHeight: parseInt ((window.getComputedStyle(container, null).getPropertyValue('width')).slice(0, -3)) / 6,
         halfWidth: 20,
         allImgs: document.querySelector('.allimg').children,
-        clickedImg: document.querySelector('.img-clicked').children,
+        disslovedImg: document.querySelector('.img-clicked').children,
         gameOver () {
             alert('gameover');
         }
@@ -235,6 +234,16 @@ $(document).ready(() => {
         } 
 
         refresh () {
+            console.log(pub.disslovedImg instanceof Array);
+            //let imgIndex = 0;
+            // pub.disslovedImg.forEach(function(element, index) {
+            //     if (this.img === element) {
+            //         console.log(index);
+            //     }
+            // });
+            // console.log(this.img);
+            // this.img = pub.disslovedImg[imgIndex];
+            console.log(this.img);
             this.ctx.clearRect(this.x, this.y, pub.imgWidth, pub.imgHeight);
         }
 
@@ -334,6 +343,7 @@ $(document).ready(() => {
             let temp1 = matrix[imgPlace.x/pub.imgWidth][imgPlace.y/pub.imgWidth].img;
             matrix[startInt.x / pub.imgWidth][startInt.y / pub.imgWidth].img = matrix[imgPlace.x/pub.imgWidth][imgPlace.y/pub.imgWidth].img;
             matrix[imgPlace.x/pub.imgWidth][imgPlace.y/pub.imgWidth].img = temp;
+
             // stage.changeImg(temp, temp1);
 
             //将 matrix 里面的图片重绘
