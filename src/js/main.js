@@ -16,10 +16,12 @@ $(document).ready(() => {
         //第一列图片的数量
         yNum: 8,
         imgWidth: parseInt((window.getComputedStyle(container, null).getPropertyValue('width')).slice(0, -3)) / 6,
-        imgHeight: parseInt ((window.getComputedStyle(container, null).getPropertyValue('width')).slice(0, -3)) / 6,
+        imgHeight: parseInt ((window.getComputedStyle(container, null).getPropertyValue('height')).slice(0, -3)) / 8,
         halfWidth: 20,
         allImgs: document.querySelector('.allimg').children,
-        disslovedImg: document.querySelector('.img-clicked').children,
+        clickedImg: document.querySelector('.img-clicked').children,
+        disslovedImg: document.querySelector('.img-dissloved').children,
+        clickedImgIndex: 0,
         gameOver () {
             alert('gameover');
         }
@@ -29,7 +31,7 @@ $(document).ready(() => {
     pub.canvas.height = screen.height;
 
     let pubdata = {
-        moveFlag : false,
+        moveFlag: false,
         //移动位置不合理时 
         imgPlaceStay () {
             imgPlace = {
@@ -149,20 +151,23 @@ $(document).ready(() => {
 
         //遍历所有图片, 为toRemove值为true的图片进行操作
         isDissloved () {
-            for (let i = 0; i < pub.xNum; i++) {
-                for (let j = 0; j < pub.yNum; j++) {
+            matrix.forEach( function(element, index) {
+                element.forEach( function(e, i) {
                     for (let k = 2; k <= 4; k++) {
-                        stage.findXSameImg(k, i, j);
-                        stage.findYSameImg(k, i, j);
+                        stage.findXSameImg(k, index, i);
+                        stage.findYSameImg(k, index, i);
                     }
-                }
-            }   
+                });
+            });
 
             for (let i = 0; i < pub.xNum; i++) {
                 for (let j = 0; j < pub.yNum; j++) {
                     if (matrix[i][j].toRemove) {
-                        matrix[i][j].refresh();
-                        
+                        // setTimeout(function () {
+                        // }, 1000);
+                            matrix[i][j].refresh();
+
+                        // matrix[i][j].dissloved(); 
                         //如果不是第一行的元素
                         if (j !== 0) {
                             for (let k = j-1; k >= 0; k--) {
@@ -234,25 +239,57 @@ $(document).ready(() => {
         } 
 
         refresh () {
-            console.log(pub.disslovedImg instanceof Array);
-            //let imgIndex = 0;
-            // pub.disslovedImg.forEach(function(element, index) {
-            //     if (this.img === element) {
-            //         console.log(index);
-            //     }
-            // });
-            // console.log(this.img);
-            // this.img = pub.disslovedImg[imgIndex];
-            console.log(this.img);
             this.ctx.clearRect(this.x, this.y, pub.imgWidth, pub.imgHeight);
         }
 
-    }
+        //消去的时候图片会发生的变化
+        dissloved () {
+            let allImgs = Array.prototype.slice.call(pub.allImgs);
+            let imgIndex = 0;
+            let that = this;
+                console.log(element);
 
+            allImgs.forEach(function(element, index) {
+                console.log(element);
+                console.log(that.img);
+                if (that.img === element) {
+                    imgIndex = index;
+                    console.log(imgIndex);
+                }
+            });
+
+            this.img = pub.disslovedImg[imgIndex];
+            setTimeout(function () {
+                stage.drawStage();
+            }, 500);
+        }
+
+        //点击的时候图片发生的变化
+        clicked () {
+            let allImgs = Array.prototype.slice.call(pub.allImgs);
+            let imgIndex = 0;
+            let that = this;
+
+            allImgs.forEach(function(element, index) {                
+                if (that.img === element) {
+                    imgIndex = index;
+                }
+            });
+
+            this.img = pub.clickedImg[imgIndex];
+            stage.drawStage();
+
+            return imgIndex;
+        }
+
+    }
     let stage = new Stage();
 
-
     stage.drawNewStage();
+
+    // setTimeout(function () {
+        // stage.isDissloved();
+    // }, 2500);
     
     //如果 新生成 的图片有可以消去的, 继续调用消去函数
     let timer = setInterval(function () {
@@ -271,11 +308,27 @@ $(document).ready(() => {
             x: e.touches[0].clientX,
             y: e.touches[0].clientY
         };
-
+        //转化为 图片宽度和高度 的整数倍
         startInt = {
             x: parseInt((start.x - this.offsetLeft) / pub.imgWidth) * pub.imgWidth,
-            y: parseInt((start.y - this.offsetTop) / pub.imgWidth) * pub.imgWidth
+            y: parseInt((start.y - this.offsetTop) / pub.imgHeight) * pub.imgHeight
         };
+
+        //每次点击之前 将所有图片重置为没有clickedImg的图片
+        // let clickedImg = Array.prototype.slice.call(pub.clickedImg);
+        // matrix.forEach( function(element, index) {
+        //     element.forEach( function(ele, ind) {
+        //         clickedImg.forEach( function(e, i) {
+        //                 console.log(element[ind].img);
+        //             if (element[ind].img === e.img) {
+        //                 element[ind].img = pub.allImgs[i];
+        //             }
+        //         });
+        //     });
+        // });
+
+        pub.clickedImgIndex = matrix[startInt.x / pub.imgWidth][startInt.y / pub.imgHeight].clicked(); 
+
     });
 
     pub.canvas.addEventListener('touchmove', function(e) {
@@ -286,6 +339,7 @@ $(document).ready(() => {
             x: e.touches[0].clientX,
             y: e.touches[0].clientY
         };
+
         //手指拖动图片向 水平 方向运动
         if (Math.abs(mouse.y - start.y) <= Math.abs(mouse.x - start.x)) {
             //鼠标向右移动
@@ -318,7 +372,7 @@ $(document).ready(() => {
                 if (mouse.y - start.y >= pub.halfWidth) {
                     imgPlace = {
                         x: startInt.x,
-                        y: startInt.y + pub.imgWidth
+                        y: startInt.y + pub.imgHeight
                     }                    
                 } else {
                     pubdata.imgPlaceStay();
@@ -327,7 +381,7 @@ $(document).ready(() => {
                 if (start.y - mouse.y >= pub.halfWidth) {
                     imgPlace = {
                         x: startInt.x,
-                        y: startInt.y - pub.imgWidth
+                        y: startInt.y - pub.imgHeight
                     };
                 } else {
                     pubdata.imgPlaceStay();
@@ -339,10 +393,24 @@ $(document).ready(() => {
     pub.canvas.addEventListener('touchend', function (e) {
         if (pubdata.moveFlag) {
             //交换两个位置的图片
-            let temp = matrix[startInt.x / pub.imgWidth][startInt.y / pub.imgWidth].img;
-            let temp1 = matrix[imgPlace.x/pub.imgWidth][imgPlace.y/pub.imgWidth].img;
-            matrix[startInt.x / pub.imgWidth][startInt.y / pub.imgWidth].img = matrix[imgPlace.x/pub.imgWidth][imgPlace.y/pub.imgWidth].img;
-            matrix[imgPlace.x/pub.imgWidth][imgPlace.y/pub.imgWidth].img = temp;
+            let s = {
+                x: startInt.x / pub.imgWidth, 
+                y: startInt.y / pub.imgHeight
+            };
+            let i = {
+                x: imgPlace.x / pub.imgWidth, 
+                y: imgPlace.y / pub.imgHeight
+            };
+
+            //点击完成后 需要将 ckickedImg 换回原图片
+            matrix[s.x][s.y].img = pub.allImgs[pub.clickedImgIndex];
+
+            // let temp1 = matrix[i.x][i.y].img;
+            if (matrix[s.x][s.y].img !== matrix[i.x][i.y].img) {
+                let temp = matrix[s.x][s.y].img;
+                matrix[s.x][s.y].img = matrix[i.x][i.y].img;
+                matrix[i.x][i.y].img = temp;
+            }
 
             // stage.changeImg(temp, temp1);
 
@@ -353,6 +421,10 @@ $(document).ready(() => {
                 x: imgPlace.x,
                 y: imgPlace.y
             }
+
+            // setTimeout(function () {
+            //     stage.isDissloved();
+            // }, 2500);
 
             let timer0 = setInterval(function () {
                 let boolis = stage.isDissloved();
