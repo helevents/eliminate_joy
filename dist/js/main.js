@@ -5,12 +5,11 @@ $(window).on('scroll.elasticity', function (e){
 });
 
 $(document).ready(() => {
-
     const container = document.querySelector('.canvas_container');
     const conNum = {
-        width: parseInt((window.getComputedStyle(container, null).getPropertyValue('width')).slice(0, -3)), 
-        height: parseInt((window.getComputedStyle(container, null).getPropertyValue('height')).slice(0, -3))
-    }
+        width: parseInt((window.getComputedStyle(container, null).getPropertyValue('width')).slice(0, -3)) - 12, 
+        height: parseInt((window.getComputedStyle(container, null).getPropertyValue('height')).slice(0, -3)) - 12
+    };
 
     const pub = {
         canvas: document.getElementById('canvas'),
@@ -26,10 +25,7 @@ $(document).ready(() => {
         allImgs: document.querySelector('.allimg').children,
         clickedImg: document.querySelector('.img-clicked').children,
         disslovedImg: document.querySelector('.img-dissloved').children,
-        clickedImgIndex: 0,
-        gameOver () {
-            alert('gameover');
-        }
+        clickedImgIndex: 0
     }
 
     pub.canvas.width = conNum.width;
@@ -75,7 +71,7 @@ $(document).ready(() => {
                 for (let j = 0; j <= pub.yNum-1; j++) {
                     let len = pub.allImgs.length;
                     let index = Math.round(Math.random()*(len-1) + 0);
-                    let animal = new Animal(pub.ctx, i*pub.imgWidth, j*pub.imgHeight, pub.allImgs[index], false);
+                    let animal = new Animal(pub.ctx, i*pub.imgWidth, j*pub.imgHeight, pub.allImgs[index], false, true);
 
                     matrix[i][j] = animal;
                     animal.paint();
@@ -97,11 +93,47 @@ $(document).ready(() => {
             // }
         }
 
+        //计时模式图案填充
+        drawTimeStage () {
+            //left-top
+            let k = 0; 
+            matrix[k][k].toClick = false;
+            matrix[k+1][k].toClick = false;
+            matrix[k][k+1].toClick = false;
+
+            //right-top
+            let m = pub.xNum - 1;
+            matrix[m][k].toClick = false;
+            matrix[m-1][k].toClick = false;
+            matrix[m][k+1].toClick = false;
+
+            //left-bottom
+            let n = pub.yNum - 1;
+            matrix[k][n].toClick = false;
+            matrix[k][n-1].toClick = false;
+            matrix[k+1][n].toClick = false;
+
+            //right-bottom
+            matrix[m][n].toClick = false;
+            matrix[m-1][n].toClick = false;
+            matrix[m][n-1].toClick = false;
+
+            matrix.forEach( function(element, index) {
+                element.forEach( function(ele, ind) {
+                    if (!ele.toClick) {
+                        ele.refresh();
+                    }
+                });
+            });
+        }
+
         //对 存入matrix 的图片进行重绘
         drawStage () {
             for (let i = 0; i <= pub.xNum-1; i++) {
                 for (let j = 0; j <= pub.yNum-1; j++) {
-                    matrix[i][j].paint();
+                    if (matrix[i][j].toClick) {
+                        matrix[i][j].paint();
+                    }
                 }
             }
         }
@@ -160,9 +192,11 @@ $(document).ready(() => {
         isDissloved () {
             matrix.forEach( function(element, index) {
                 element.forEach( function(e, i) {
-                    for (let k = 2; k <= 4; k++) {
-                        stage.findXSameImg(k, index, i);
-                        stage.findYSameImg(k, index, i);
+                    if (e.toClick) {
+                        for (let k = 2; k <= 4; k++) {
+                            stage.findXSameImg(k, index, i);
+                            stage.findYSameImg(k, index, i);
+                        }
                     }
                 });
             });
@@ -170,33 +204,37 @@ $(document).ready(() => {
             //可以消去的图片 消去之前会发生的变化 (边界出现亮圆点)
             for (let i = 0; i < pub.xNum; i++) {
                 for (let j = 0; j < pub.yNum; j++) {
-                    if (matrix[i][j].toRemove) {
+                    if (matrix[i][j].toClick) {
+                        if (matrix[i][j].toRemove) {
 
-                        matrix[i][j].dissloved();
+                            matrix[i][j].dissloved();
+                        }
                     }
                 }
             }
 
             for (let i = 0; i < pub.xNum; i++) {
                 for (let j = 0; j < pub.yNum; j++) {
-                    if (matrix[i][j].toRemove) {
-                        //要等亮圆点出现之后, 再清除当前图片区域
-                        setTimeout(function () {
-                            matrix[i][j].refresh();
-                        }, 300);
+                    if (matrix[i][j].toClick) {
+                        if (matrix[i][j].toRemove) {
+                            //要等亮圆点出现之后, 再清除当前图片区域
+                            setTimeout(function () {
+                                matrix[i][j].refresh();
+                            }, 300);
 
-                        //模仿图片下落的操作
-                        if (j !== 0) {
-                            //如果不是第一行的元素
-                            for (let k = j-1; k >= 0; k--) {
-                                matrix[i][k+1].img = matrix[i][k].img;
+                            //模仿图片下落的操作
+                            if (j !== 0) {
+                                //如果不是第一行的元素
+                                for (let k = j-1; k >= 0; k--) {
+                                    matrix[i][k+1].img = matrix[i][k].img;
+                                }
+                                stage.drawNewImg(matrix, i, 0);
+                            } else {
+                                stage.drawNewImg(matrix, i, 0);
                             }
-                            stage.drawNewImg(matrix, i, 0);
-                        } else {
-                            stage.drawNewImg(matrix, i, 0);
-                        }
 
-                        matrix[i][j].toRemove = false;
+                            matrix[i][j].toRemove = false;
+                        }
                     }
                 }
             }
@@ -208,17 +246,21 @@ $(document).ready(() => {
             //如果重新生成的图片中有可以消去的图片, 改变它们的toRemove值
             for (let i = 0; i < pub.xNum; i++) {
                 for (let j = 0; j < pub.yNum; j++) {
-                    for (let k = 2; k <= 4; k++) {
-                        stage.findXSameImg(k, i, j);
-                        stage.findYSameImg(k, i, j);
+                    if (matrix[i][j].toClick) {
+                        for (let k = 2; k <= 4; k++) {
+                            stage.findXSameImg(k, i, j);
+                            stage.findYSameImg(k, i, j);
+                        }
                     }
                 }
             }   
 
             for (let i = 0; i < pub.xNum; i++) {
                 for (let j = 0; j < pub.yNum; j++) {
-                    if (matrix[i][j].toRemove) {
-                        return true;
+                    if (matrix[i][j].toClick) {
+                        if (matrix[i][j].toRemove) {
+                            return true;
+                        }
                     }
                 }
             }
@@ -229,11 +271,13 @@ $(document).ready(() => {
             let clickedImg = Array.prototype.slice.call(pub.clickedImg);
             matrix.forEach( function(element, index) {
                 element.forEach( function(ele, ind) {
-                    clickedImg.forEach( function(e, i) {
-                        if (element[ind].img === e) {
-                            element[ind].img = pub.allImgs[i];
-                        }
-                    });
+                    if (ele.toClick) {
+                        clickedImg.forEach( function(e, i) {
+                            if (element[ind].img === e) {
+                                element[ind].img = pub.allImgs[i];
+                            }
+                        });
+                    }
                 });
             });
         }
@@ -255,12 +299,13 @@ $(document).ready(() => {
     }
 
     class Animal {
-        constructor (ctx, x, y, img, toRemove) {
+        constructor (ctx, x, y, img, toRemove, toClick) {
             this.ctx = ctx;
             this.x = x;
             this.y = y;
             this.img = img;
             this.toRemove = toRemove;
+            this.toClick = toClick;
         }
 
         paint () {
@@ -274,7 +319,6 @@ $(document).ready(() => {
         }
 
         refresh () {
-            // stage.drawStage();
             this.ctx.clearRect(this.x, this.y, pub.imgWidth, pub.imgHeight);
         }
 
@@ -299,6 +343,7 @@ $(document).ready(() => {
     let stage = new Stage();
 
     stage.drawNewStage();
+    stage.drawTimeStage();
     
     //如果 新生成 的图片有可以消去的, 继续调用消去函数
     let timer = setInterval(function () {
@@ -327,7 +372,7 @@ $(document).ready(() => {
 
         pub.clickedImgIndex = matrix[startInt.x / pub.imgWidth][startInt.y / pub.imgHeight].clicked(); 
 
-        pubdata.clickedImgIndex = stage.rewriteClickedImg();
+        stage.rewriteClickedImg();
 
         pubdata.clickedFlag = false;
     });
@@ -414,7 +459,6 @@ $(document).ready(() => {
                 matrix[i.x][i.y].img = temp;
             }
 
-            // stage.changeImg(temp, temp1);
             //将 matrix 里面的图片重绘
             stage.drawStage();
 
@@ -435,4 +479,19 @@ $(document).ready(() => {
 
         pubdata.moveFlag = false;
     });
+
+
+    //
+    const processCurrent = document.querySelector('#process_current');
+    let processWidth = window.getComputedStyle(processCurrent, null).getPropertyValue('width');
+
+    let timer1 = setInterval(function () {
+// console.log(processCurrent.style.marginLeft);
+        // console.log(processCurrent.style.marginLeft);
+        // console.log(processWidth);
+        processCurrent.style.marginLeft += (Number(processWidth.slice(0, -3)) / 300) + 'px';
+        if (window.getComputedStyle(processCurrent, null).getPropertyValue('marginLeft') ===  processWidth){
+            clearInterval(timer);
+        }
+    }, 1000);
 });

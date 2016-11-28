@@ -8,6 +8,7 @@ ul {
 
 * {
     box-sizing: border-box;
+    font-family: 'font';
 }
 
 li {

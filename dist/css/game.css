@@ -10,7 +10,7 @@
 .homepage_content {
     width: 100%;
     height: 2.746667rem;
-    background-image: url('../images/game_time_title.png');
+    // background-image: url('../images/game_time_title.png');
     background-position: 0 0;
     background-size: 100% 100%;
 }
@@ -34,22 +34,31 @@
     margin-bottom: 0.133333rem;
 }
 
-.time_score {
+.time_btn {
     width: 3.066667rem;
     height: 0.68rem;
-    float: left;
-    background-image: url('../images/game_time_bg_score.png');
+    line-height: 0.68rem;
+    text-align: center;
+    background-image: url('../images/game_time_bg_record&score.png');
     background-position: 0 0;
     background-size: 100% 100%;
+    // -webkit-text-stroke: 1px #fff;
+    // text-shadow: #fff 0 1px 0;
+}
+
+.time_score {
+    float: left;
 }
 
 .time_record {
-    width: 3.066667rem;
-    height: 0.68rem;
     float: right;
-    background-image: url('../images/game_time_bg_record.png');
-    background-position: 0 0;
-    background-size: 100% 100%;
+}
+
+.time_btn span {
+    color: #FFB23B;
+}
+.time_btn cite {
+    color: #FF7764;
 }
 
 .time_bar {
@@ -58,6 +67,32 @@
     background-image: url('../images/game_time_processbar.png');
     background-position: 0 0;
     background-size: 100% 100%;
+    border-radius: 0.2rem;
+    overflow: hidden;
+    position: relative;
+    // border: 1px solid #000;
+    // border-left: 2px solid #fff;
+}
+
+.time_bar:before {
+    display: block;
+    content: '';
+    width: 100%;
+    height: 0.32rem;
+    border: 0.6px solid #fff;
+    border-radius: 0.2rem;
+    position: absolute;
+    left: 0;
+    z-index: 2;
+}
+.time_bar img {
+    display: block;
+    width: 6.276rem;
+    height: 0.32rem;
+    margin: 0.026667rem;
+    margin-left: -50%;
+    position: relative;
+    z-index: 0;
 }
 
 .time_stop {
@@ -74,12 +109,16 @@
 
 .canvas_container {
     width: 8.8rem;
-    height: 11.6rem;
+    height: 12.533333rem;
     margin: 0 auto;
     background-image: url('../images/game_time_border.png');
     background-position: 0 0;
     background-size: 100% 100%;
-    margin-top: 1rem;
+    margin-top: 0.346667rem;
+}
+
+.canvas {
+    margin: 0.16rem;
 }
 
 .allimg,
