@@ -10,7 +10,7 @@
 .homepage_content {
     width: 100%;
     height: 2.746667rem;
-    // background-image: url('../images/game_time_title.png');
+    background-image: url('../images/game_time_title.png');
     background-position: 0 0;
     background-size: 100% 100%;
 }
@@ -87,10 +87,10 @@
 }
 .time_bar img {
     display: block;
-    width: 6.276rem;
+    width: 6.27rem;
     height: 0.32rem;
     margin: 0.026667rem;
-    margin-left: -50%;
+    margin-left: -6.27rem;
     position: relative;
     z-index: 0;
 }
@@ -126,3 +126,12 @@
 .img-clicked {
     display: none;
 }
+
+//gameover
+.time_gameover {
+    background-image: url('../images/gameover_bg.png');
+    background-size: 100% 11.28rem;
+    background-position: 0 0;
+}
+
+

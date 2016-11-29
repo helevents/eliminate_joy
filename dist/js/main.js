@@ -481,17 +481,4 @@ $(document).ready(() => {
     });
 
 
-    //
-    const processCurrent = document.querySelector('#process_current');
-    let processWidth = window.getComputedStyle(processCurrent, null).getPropertyValue('width');
-
-    let timer1 = setInterval(function () {
-// console.log(processCurrent.style.marginLeft);
-        // console.log(processCurrent.style.marginLeft);
-        // console.log(processWidth);
-        processCurrent.style.marginLeft += (Number(processWidth.slice(0, -3)) / 300) + 'px';
-        if (window.getComputedStyle(processCurrent, null).getPropertyValue('marginLeft') ===  processWidth){
-            clearInterval(timer);
-        }
-    }, 1000);
 });
