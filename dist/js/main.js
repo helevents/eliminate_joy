@@ -5,7 +5,9 @@ $(window).on('scroll.elasticity', function (e){
 });
 
 $(document).ready(() => {
-    const container = document.querySelector('.canvas-container');
+    const container = document.querySelector('#canvas-container');
+
+    console.log(container);
     const conNum = {
         width: parseInt((window.getComputedStyle(container, null).getPropertyValue('width')).slice(0, -3)) - 12, 
         height: parseInt((window.getComputedStyle(container, null).getPropertyValue('height')).slice(0, -3)) - 12

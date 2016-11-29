@@ -1,4 +1,4 @@
-.game_background {
+.game-background {
     position: fixed;
     top: 0;
     left: 0;
@@ -7,64 +7,64 @@
     z-index: -1;
 }
 
-.homepage_content {
+.homepage-content {
     width: 100%;
     height: 2.746667rem;
-    background-image: url('../images/game_time_title.png');
+    background-image: url('../images/game-time-title.png');
     background-position: 0 0;
     background-size: 100% 100%;
 }
 
-.time_title_content {
+.time-title-content {
     width: 7.866667rem;
     margin: 0 auto;
     overflow: hidden;
     padding-top: 1.2rem;
 }
 
-.time_text {
+.time-text {
     width: 6.32rem;
     float: left;
 }
 
-.time_score_record {
+.time-score-record {
     width: 6.32rem;
     height: 0.68rem;
     overflow: hidden;
     margin-bottom: 0.133333rem;
 }
 
-.time_btn {
+.time-btn {
     width: 3.066667rem;
     height: 0.68rem;
     line-height: 0.68rem;
     text-align: center;
-    background-image: url('../images/game_time_bg_record&score.png');
+    background-image: url('../images/game-time-bg-record&score.png');
     background-position: 0 0;
     background-size: 100% 100%;
     // -webkit-text-stroke: 1px #fff;
     // text-shadow: #fff 0 1px 0;
 }
 
-.time_score {
+.time-score {
     float: left;
 }
 
-.time_record {
+.time-record {
     float: right;
 }
 
-.time_btn span {
+.time-btn span {
     color: #FFB23B;
 }
-.time_btn cite {
+.time-btn cite {
     color: #FF7764;
 }
 
-.time_bar {
+.time-bar {
     width: 6.32rem;
     height: 0.373333rem;
-    background-image: url('../images/game_time_processbar.png');
+    background-image: url('../images/game-time-processbar.png');
     background-position: 0 0;
     background-size: 100% 100%;
     border-radius: 0.2rem;
@@ -74,7 +74,7 @@
     // border-left: 2px solid #fff;
 }
 
-.time_bar:before {
+.time-bar:before {
     display: block;
     content: '';
     width: 100%;
@@ -85,7 +85,7 @@
     left: 0;
     z-index: 2;
 }
-.time_bar img {
+.time-bar img {
     display: block;
     width: 6.27rem;
     height: 0.32rem;
@@ -95,23 +95,23 @@
     z-index: 0;
 }
 
-.time_stop {
+.time-stop {
     width: 1.253333rem;
     height: 1.253333rem;
     float: right;
 }
 
-.time_stop img {
+.time-stop img {
     display: block;
     width: 1.253333rem;
     height: 1.253333rem;
 }
 
-.canvas_container {
+.canvas-container {
     width: 8.8rem;
     height: 12.533333rem;
     margin: 0 auto;
-    background-image: url('../images/game_time_border.png');
+    background-image: url('../images/game-time-border.png');
     background-position: 0 0;
     background-size: 100% 100%;
     margin-top: 0.346667rem;
@@ -126,12 +126,3 @@
 .img-clicked {
     display: none;
 }
-
-//gameover
-.time_gameover {
-    background-image: url('../images/gameover_bg.png');
-    background-size: 100% 11.28rem;
-    background-position: 0 0;
-}
-
-
