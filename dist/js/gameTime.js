@@ -1,11 +1,11 @@
-const gameOver = document.querySelector('.time_gameover');
+const gameOver = document.querySelector('.time-gameover');
 
 gameOver.style.width = screen.width + 'px';
 gameOver.style.height = screen.height + 'px';
 
 console.log(gameOver.style.height);
 
-// const processCurrent = document.querySelector('#process_current');
+// const processCurrent = document.querySelector('#process-current');
 // //获取 processBar 需要移动的距离, 并转化为数值
 // let processWidth = Number((getComputedStyle(processCurrent).width).slice(0, -3));
 
@@ -16,7 +16,7 @@ console.log(gameOver.style.height);
 // let timer1 = setInterval(function () {
 //     currentSmallWidth += smallWidth;
 
-//     document.querySelector('#process_current').style.marginLeft = (currentSmallWidth - processWidth) + 'px';
+//     document.querySelector('#process-current').style.marginLeft = (currentSmallWidth - processWidth) + 'px';
 
 //     if (Number(processCurrent.style.marginLeft.slice(0, -3)) >= 0) {
 //         clearInterval(timer1);
