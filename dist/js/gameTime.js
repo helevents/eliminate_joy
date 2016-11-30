@@ -1,7 +1,10 @@
-const gameOver = document.querySelector('.time-over');
+if (document.querySelector('.time-over')) {
+    const gameOver = document.querySelector('.time-over');
 
-gameOver.style.width = screen.width + 'px';
-gameOver.style.height = screen.height + 'px';
+    gameOver.style.width = screen.width + 'px';
+    gameOver.style.height = screen.height + 'px';
+}
+
 
 if (document.querySelector('#process-current')) {
     const processCurrent = document.querySelector('#process-current');
@@ -19,6 +22,12 @@ if (document.querySelector('#process-current')) {
 
         if (Number(processCurrent.style.marginLeft.slice(0, -3)) >= 0) {
             clearInterval(timer1);
+            console.log('game is over');
+            console.log(document.querySelector('.time-over'));
+            console.log(document.querySelector('.container'));
+
+            document.querySelector('.time-over').style.display = 'block';
+            document.querySelector('.container').style.display = 'none';
         }
     }, 1000);
 }

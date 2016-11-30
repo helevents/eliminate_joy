@@ -84,3 +84,6 @@
     width: 2.266667rem;
     height: 2.266667rem;
 }
+.time-over {
+    display: none;
+}

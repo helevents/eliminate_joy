@@ -7,7 +7,6 @@ $(window).on('scroll.elasticity', function (e){
 $(document).ready(() => {
     const container = document.querySelector('#canvas-container');
 
-    console.log(container);
     const conNum = {
         width: parseInt((window.getComputedStyle(container, null).getPropertyValue('width')).slice(0, -3)) - 12, 
         height: parseInt((window.getComputedStyle(container, null).getPropertyValue('height')).slice(0, -3)) - 12
@@ -208,7 +207,6 @@ $(document).ready(() => {
                 for (let j = 0; j < pub.yNum; j++) {
                     if (matrix[i][j].toClick) {
                         if (matrix[i][j].toRemove) {
-
                             matrix[i][j].dissloved();
                         }
                     }
@@ -298,6 +296,15 @@ $(document).ready(() => {
 
             return imgIndex;
         }
+
+        //
+        gameOver () {
+            matrix.forEach( function(element, index) {
+                element.forEach( function(ele, ind) {
+                    ele.toClick = false;
+                });
+            });
+        }
     }
 
     class Animal {
@@ -357,6 +364,7 @@ $(document).ready(() => {
     }, 1000);
 
     pub.canvas.addEventListener('touchstart', function(e) {
+        // stage.drawNewStage();
         pubdata.clickedFlag = false;
         var e = e || window.event;
 
