@@ -6,6 +6,7 @@ $(window).on('scroll.elasticity', function (e){
 
 $(document).ready(() => {
     const container = document.querySelector('#canvas-container');
+    const timeScore = document.querySelector('.time-score cite');
 
     const conNum = {
         width: parseInt((window.getComputedStyle(container, null).getPropertyValue('width')).slice(0, -3)) - 12, 
@@ -35,6 +36,7 @@ $(document).ready(() => {
     let pubdata = {
         moveFlag: false,
         clickedFlag: false,
+        score: 0,
         //移动位置不合理时 
         imgPlaceStay () {
             imgPlace = {
@@ -52,6 +54,8 @@ $(document).ready(() => {
     let imgPlace = {};
     //存放页面上所有的图片信息
     let matrix = [];
+
+    let ct = 0;
 
     class Stage {
         constructor () {
@@ -148,43 +152,52 @@ $(document).ready(() => {
             return index;
         }
 
-        //如果 y方向 有可以消除的小动物, 返回 count
-        //目前count还没什么用
+        //判断 y方向 是否有 count+1 个可消去的小动物
         findYSameImg(count, i, j) {
             if (matrix[i][j+count]) {
-                for (var z = 0; z < count; z++) {
-                    //如果下一张图片不为空
-                    if (matrix[i][j+z+1]) {
-                        if (matrix[i][j+z].img !== matrix[i][j+z+1].img) {
-                            break;
-                        }
-                    } 
-                }
-                if (z === count) {
-                    //为可以消去的图片把toRemove改成true
-                    for (let k = 0; k <= count; k++) {
-                        matrix[i][j+k].toRemove = true;
+                if (matrix[i][j+count].toClick) {
+                    for (var z = 0; z < count; z++) {
+                        //如果下一张图片不为空
+                        if (matrix[i][j+z+1]) {
+                            if (matrix[i][j+z].img !== matrix[i][j+z+1].img) {
+                                break;
+                            }
+                        } 
                     }
-                    return z;
-                }
-            } 
+                    if (z === count) {
+                        //为可以消去的图片把toRemove改成true
+                        for (let k = 0; k <= count; k++) {
+                            matrix[i][j+k].toRemove = true;
+                        }
+                        return z;
+                    }
+
+                    return false;
+                } 
+            }
         }
 
-        //如果 x方向 可以消除的小动物, 返回 count
+        //判断 x方向 是否有 count+1 个可消去的小动物
         findXSameImg(count, i, j) {
             if (i < pub.xNum - count) {
-                for (var z = 0; z < count; z++) {
-                    if (matrix[i+z+1][j]) {
-                        if (matrix[i+z][j].img !== matrix[i+z+1][j].img) 
-                            break;
-                    } 
-                }
-                if (z === count) {
-                    //为可以消去的图片把toRemove改成true
-                    for (let k = 0; k <= count; k++) {
-                        matrix[i+k][j].toRemove = true;
+                if (matrix[i+count][j]) {
+                    if (matrix[i+count][j].toClick) {
+                        for (var z = 0; z < count; z++) {
+                            if (matrix[i+z+1][j]) {
+                                if (matrix[i+z][j].img !== matrix[i+z+1][j].img) 
+                                    break;
+                            } 
+                        }
+                        if (z === count) {
+                            //为可以消去的图片把toRemove改成true
+                            for (let k = 0; k <= count; k++) {
+                                matrix[i+k][j].toRemove = true;
+                            }
+                            return z;
+                        }
+
+                        return false;
                     }
-                    return z;
                 }
             }
         }
@@ -194,20 +207,67 @@ $(document).ready(() => {
             matrix.forEach( function(element, index) {
                 element.forEach( function(e, i) {
                     if (e.toClick) {
-                        for (let k = 2; k <= 4; k++) {
+                        // console.log('i = ', index, ', j = ', i);
+                        for (let k = 4; k >= 2; k--) {
                             stage.findXSameImg(k, index, i);
-                            stage.findYSameImg(k, index, i);
+                            stage.findYSameImg(k, index, i)
                         }
+                            // console.log('11111');
+                            // if (stage.findXSameImg(4, index, i)) {
+                            //     pubdata.score += (4+1)*10;
+                            //     e.dissloved();
+
+                                
+                            //     //模仿图片下落的操作
+                            //     if (i !== 0) {
+                            //         //如果不是第一行的元素
+                            //         for (let k = i-1; k >= 0; k--) {
+                            //             matrix[index][k+1].img = matrix[index][k].img;
+                            //         }
+                            //         stage.drawNewImg(matrix, index, 0);
+                            //     } else {
+                            //         stage.drawNewImg(matrix, index, 0);
+                            //     }
+
+                            //     e.toRemove = false;
+
+                            //     console.log(5);
+                            //     console.log(pubdata.score);
+                            // } else if (stage.findXSameImg(3, index, i)) {
+                            //     pubdata.score += (3+1)*10;
+                            //     e.dissloved();
+
+                            //     console.log(4);
+                            //     console.log(pubdata.score);
+                            // } else if (stage.findXSameImg(2, index, i)) {
+                            //     pubdata.score += (2+1)*10;
+                            //     e.dissloved();
+
+                            //     console.log(3);
+                            //     console.log(pubdata.score);
+                            // }
+
+                            // if (stage.findYSameImg(4, index, i)) {
+                            //     pubdata.score += (4+1)*10;
+                            // } else if (stage.findYSameImg(3, index, i)) {
+                            //     pubdata.score += (3+1)*10;
+                            // } else if (stage.findYSameImg(2, index, i)) {
+                            //     pubdata.score += (2+1)*10;
+                            // }
+                        // }
                     }
+
+                    // console.log(pubdata.score);
                 });
             });
-
+            
             //可以消去的图片 消去之前会发生的变化 (边界出现亮圆点)
             for (let i = 0; i < pub.xNum; i++) {
                 for (let j = 0; j < pub.yNum; j++) {
                     if (matrix[i][j].toClick) {
                         if (matrix[i][j].toRemove) {
                             matrix[i][j].dissloved();
+                            ct++;
                         }
                     }
                 }
@@ -298,6 +358,27 @@ $(document).ready(() => {
         }
 
         //
+        getScore () {
+            pubdata.score = ct * 10;
+            timeScore.innerHTML = pubdata.score;
+        }
+
+
+        //连续消去函数
+        continueToDissloved () {
+            //如果 新生成 的图片有可以消去的, 继续调用消去函数
+            let timer = setInterval(function () {
+                let boolis = stage.isDissloved();
+
+                stage.getScore();
+
+                if (!boolis) {
+                    clearInterval(timer);
+                }
+            }, 1000);
+        }
+
+        //
         gameOver () {
             matrix.forEach( function(element, index) {
                 element.forEach( function(ele, ind) {
@@ -354,17 +435,10 @@ $(document).ready(() => {
     stage.drawNewStage();
     stage.drawTimeStage();
     
-    //如果 新生成 的图片有可以消去的, 继续调用消去函数
-    let timer = setInterval(function () {
-        let boolis = stage.isDissloved();
-
-        if (!boolis) {
-            clearInterval(timer);
-        }
-    }, 1000);
+    //调用消去函数
+    stage.continueToDissloved();
 
     pub.canvas.addEventListener('touchstart', function(e) {
-        // stage.drawNewStage();
         pubdata.clickedFlag = false;
         var e = e || window.event;
 
@@ -381,7 +455,7 @@ $(document).ready(() => {
 
 
         pub.clickedImgIndex = matrix[startInt.x / pub.imgWidth][startInt.y / pub.imgHeight].clicked(); 
-
+        //点击图片时会发生的
         stage.rewriteClickedImg();
 
         pubdata.clickedFlag = false;
@@ -477,13 +551,8 @@ $(document).ready(() => {
                 y: imgPlace.y
             }
 
-            let timer0 = setInterval(function () {
-                let boolis = stage.isDissloved();
-
-                if (!boolis) {
-                    clearInterval(timer0);
-                }
-            }, 1000); 
+            //调用消去函数
+            stage.continueToDissloved();
         } 
         stage.drawStage();
 

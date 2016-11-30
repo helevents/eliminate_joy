@@ -1,4 +1,5 @@
 if (document.querySelector('.time-over')) {
+    //动态设置宽度和高度
     const gameOver = document.querySelector('.time-over');
 
     gameOver.style.width = screen.width + 'px';
@@ -12,10 +13,12 @@ if (document.querySelector('#process-current')) {
     let processWidth = Number((getComputedStyle(processCurrent).width).slice(0, -3));
 
     //每过 1s 后的增量
-    let smallWidth = processWidth / 10;
+    let smallWidth = processWidth / 200;
     let currentSmallWidth = smallWidth;
+    let btnTimeOver = document.querySelector('.time-over');
+    let btnAgain = document.querySelector('.time-again');
 
-    let timer1 = setInterval(function () {
+    let timer1 = setInterval(function() {
         currentSmallWidth += smallWidth;
 
         document.querySelector('#process-current').style.marginLeft = (currentSmallWidth - processWidth) + 'px';
@@ -23,11 +26,12 @@ if (document.querySelector('#process-current')) {
         if (Number(processCurrent.style.marginLeft.slice(0, -3)) >= 0) {
             clearInterval(timer1);
             console.log('game is over');
-            console.log(document.querySelector('.time-over'));
-            console.log(document.querySelector('.container'));
 
-            document.querySelector('.time-over').style.display = 'block';
-            document.querySelector('.container').style.display = 'none';
+            btnTimeOver.style.display = 'block';
         }
     }, 1000);
+
+    btnAgain.addEventListener('click', function(e) {
+        btnTimeOver.style.display = 'none';
+    })
 }
