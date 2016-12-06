@@ -11,8 +11,8 @@ if (document.querySelector('#canvas-container') && document.querySelector('.time
     $(document).ready(() => {
 
         const conNum = {
-            width: parseInt((window.getComputedStyle(container, null).getPropertyValue('width')).slice(0, -3)) - 12, 
-            height: parseInt((window.getComputedStyle(container, null).getPropertyValue('height')).slice(0, -3)) - 12
+            width: parseInt((window.getComputedStyle(container, null).getPropertyValue('width')).slice(0, -2)) - 12, 
+            height: parseInt((window.getComputedStyle(container, null).getPropertyValue('height')).slice(0, -2)) - 12
         };
 
         const pub = {
@@ -34,6 +34,10 @@ if (document.querySelector('#canvas-container') && document.querySelector('.time
 
         pub.canvas.width = conNum.width;
         pub.canvas.height = conNum.height;
+
+        console.log(typeof(pub.imgWidth));
+
+        // console.log(document.querySelector(''));
 
         let pubdata = {
             moveFlag: false,
@@ -214,52 +218,7 @@ if (document.querySelector('#canvas-container') && document.querySelector('.time
                                 stage.findXSameImg(k, index, i);
                                 stage.findYSameImg(k, index, i)
                             }
-                                // console.log('11111');
-                                // if (stage.findXSameImg(4, index, i)) {
-                                //     pubdata.score += (4+1)*10;
-                                //     e.dissloved();
-
-                                    
-                                //     //模仿图片下落的操作
-                                //     if (i !== 0) {
-                                //         //如果不是第一行的元素
-                                //         for (let k = i-1; k >= 0; k--) {
-                                //             matrix[index][k+1].img = matrix[index][k].img;
-                                //         }
-                                //         stage.drawNewImg(matrix, index, 0);
-                                //     } else {
-                                //         stage.drawNewImg(matrix, index, 0);
-                                //     }
-
-                                //     e.toRemove = false;
-
-                                //     console.log(5);
-                                //     console.log(pubdata.score);
-                                // } else if (stage.findXSameImg(3, index, i)) {
-                                //     pubdata.score += (3+1)*10;
-                                //     e.dissloved();
-
-                                //     console.log(4);
-                                //     console.log(pubdata.score);
-                                // } else if (stage.findXSameImg(2, index, i)) {
-                                //     pubdata.score += (2+1)*10;
-                                //     e.dissloved();
-
-                                //     console.log(3);
-                                //     console.log(pubdata.score);
-                                // }
-
-                                // if (stage.findYSameImg(4, index, i)) {
-                                //     pubdata.score += (4+1)*10;
-                                // } else if (stage.findYSameImg(3, index, i)) {
-                                //     pubdata.score += (3+1)*10;
-                                // } else if (stage.findYSameImg(2, index, i)) {
-                                //     pubdata.score += (2+1)*10;
-                                // }
-                            // }
                         }
-
-                        // console.log(pubdata.score);
                     });
                 });
                 
@@ -560,7 +519,5 @@ if (document.querySelector('#canvas-container') && document.querySelector('.time
 
             pubdata.moveFlag = false;
         });
-
-
     });
 }

@@ -67,32 +67,47 @@
     background-image: url('../images/game-time-processbar.png');
     background-position: 0 0;
     background-size: 100% 100%;
-    border-radius: 0.2rem;
+    border-radius: 1.2rem;
     overflow: hidden;
     position: relative;
     // border: 1px solid #000;
     // border-left: 2px solid #fff;
 }
 
-.time-bar:before {
+// .time-bar:before {
+//     display: block;
+//     content: '';
+//     width: 6.34rem;
+//     height: 0.373333rem;
+//     border: 0.04rem solid #fff;
+//     border-radius: 0.2rem;
+//     position: absolute;
+//     left: -1.008px;
+//     z-index: 2;
+//     box-sizing: border-box;
+// }
+.time-bar:after {
     display: block;
     content: '';
-    width: 100%;
-    height: 0.32rem;
-    border: 0.6px solid #fff;
+    width: 6.32rem;
+    height: 0.373333rem;
+    border: 0.04rem solid #fff;
     border-radius: 0.2rem;
     position: absolute;
     left: 0;
+    top: 0;
     z-index: 2;
+    box-sizing: border-box;
 }
 #process-current {
     display: block;
     width: 6.27rem;
-    height: 0.32rem;
+    height: 0.30rem;
     margin: 0.026667rem;
     margin-left: -6.27rem;
-    position: relative;
-    z-index: 0;
+    // margin-top: 3px;
+    // position: relative;
+    // z-index: 0;
     transition: margin-left 1s;
     -moz-transition: margin-left 1s; /* Firefox 4 */
     -webkit-transition: margin-left 1s; /* Safari 和 Chrome */
@@ -121,7 +136,8 @@
     margin: 0 auto;
     background-image: url('../images/game-time-border.png');
     background-position: 0 0;
-    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-size: 8.8rem 12.533333rem;
     margin-top: 0.346667rem;
 }
 
@@ -138,14 +154,19 @@
 
 //gameover
 
+.time-over {
+}
+
 .time-over-container {
-    background-color: rgba(0, 0, 0, 0.5);
     width: 100%;
     height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
     background-image: url('../images/gameover-bg.png');
     background-size: 100% 11.28rem;
     background-position: 0 0;
     background-repeat: no-repeat;
+    position: absolute;
+    top: 0;
 }
 
 .time-over-content {
@@ -246,8 +267,3 @@
     height: 2.266667rem;
 }
 
-.time-over {
-    display: none;
-    position: absolute;
-    top: 0;
-}
