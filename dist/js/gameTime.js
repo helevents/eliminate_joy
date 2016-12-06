@@ -1,40 +1,40 @@
+'use strict';
+
 if (document.querySelector('.time-over')) {
     //动态设置宽度和高度
-    const gameOver = document.querySelector('.time-over');
+    var gameOver = document.querySelector('.time-over');
 
     gameOver.style.width = screen.width + 'px';
     gameOver.style.height = screen.height + 'px';
-
-    gameOver.style.display = 'none';
 }
 
+//设置计时滚动条的滑动 和 重新游戏
 if (document.querySelector('#process-current')) {
-    const processCurrent = document.querySelector('#process-current');
-    //获取 processBar 需要移动的距离, 并转化为数值
-    let processWidth = Number((getComputedStyle(processCurrent).width).slice(0, -3));
+    (function () {
+        var processCurrent = document.querySelector('#process-current');
+        //获取 processBar 需要移动的距离, 并转化为数值
+        var processWidth = Number(getComputedStyle(processCurrent).width.slice(0, -3));
+        //每过 1s 后的增量
+        var smallWidth = processWidth / 500;
+        var currentSmallWidth = smallWidth;
+        var btnTimeOver = document.querySelector('.time-over');
+        var btnAgain = document.querySelector('.time-again');
 
-    //每过 1s 后的增量
-    let smallWidth = processWidth / 50;
+        var timer1 = setInterval(function () {
+            currentSmallWidth += smallWidth;
 
-    let currentSmallWidth = smallWidth;
-    let btnTimeOver = document.querySelector('.time-over');
-    let btnAgain = document.querySelector('.time-again');
+            document.querySelector('#process-current').style.marginLeft = currentSmallWidth - processWidth + 'px';
 
-    let timer1 = setInterval(function() {
-        currentSmallWidth += smallWidth;
+            if (Number(processCurrent.style.marginLeft.slice(0, -3)) >= 0) {
+                clearInterval(timer1);
+                console.log('game is over');
 
-        document.querySelector('#process-current').style.marginLeft = (currentSmallWidth - processWidth) + 'px';
+                btnTimeOver.style.display = 'block';
+            }
+        }, 1000);
 
-        if (Number(processCurrent.style.marginLeft.slice(0, -3)) >= 0) {
-            clearInterval(timer1);
-            console.log('game is over');
-
-            btnTimeOver.style.display = 'block';
-        }
-    }, 1000);
-
-
-    btnAgain.addEventListener('click', function(e) {
-        btnTimeOver.style.display = 'none';
-    })
+        btnAgain.addEventListener('click', function (e) {
+            btnTimeOver.style.display = 'none';
+        });
+    })();
 }

@@ -32,6 +32,7 @@ if (document.querySelector('#canvas-container') && document.querySelector('.time
             clickedImgIndex: 0
         }
 
+
         pub.canvas.width = conNum.width;
         pub.canvas.height = conNum.height;
 
