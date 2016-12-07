@@ -2,8 +2,6 @@
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 $(window).on('scroll.elasticity', function (e) {
@@ -43,10 +41,6 @@ if (document.querySelector('#canvas-container') && document.querySelector('.time
 
             pub.canvas.width = conNum.width;
             pub.canvas.height = conNum.height;
-
-            console.log(_typeof(pub.imgWidth));
-
-            // console.log(document.querySelector(''));
 
             var pubdata = {
                 moveFlag: false,
@@ -238,6 +232,9 @@ if (document.querySelector('#canvas-container') && document.querySelector('.time
                         }
                     }
 
+                    //查找矩阵里面所有 可以消去 的元素
+
+
                     //遍历所有图片, 为toRemove值为true的图片进行操作
 
                 }, {
@@ -390,18 +387,6 @@ if (document.querySelector('#canvas-container') && document.querySelector('.time
                             }
                         }, 1000);
                     }
-
-                    //
-
-                }, {
-                    key: 'gameOver',
-                    value: function gameOver() {
-                        matrix.forEach(function (element, index) {
-                            element.forEach(function (ele, ind) {
-                                ele.toClick = false;
-                            });
-                        });
-                    }
                 }]);
 
                 return Stage;
@@ -488,7 +473,8 @@ if (document.querySelector('#canvas-container') && document.querySelector('.time
                 };
 
                 pub.clickedImgIndex = matrix[startInt.x / pub.imgWidth][startInt.y / pub.imgHeight].clicked();
-                //点击图片时会发生的
+
+                //点击图片时 图片背景 会发生的变化 
                 stage.rewriteClickedImg();
 
                 pubdata.clickedFlag = false;

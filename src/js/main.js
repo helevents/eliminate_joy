@@ -32,13 +32,8 @@ if (document.querySelector('#canvas-container') && document.querySelector('.time
             clickedImgIndex: 0
         }
 
-
         pub.canvas.width = conNum.width;
         pub.canvas.height = conNum.height;
-
-        console.log(typeof(pub.imgWidth));
-
-        // console.log(document.querySelector(''));
 
         let pubdata = {
             moveFlag: false,
@@ -209,6 +204,10 @@ if (document.querySelector('#canvas-container') && document.querySelector('.time
                 }
             }
 
+            //查找矩阵里面所有 可以消去 的元素
+            
+
+
             //遍历所有图片, 为toRemove值为true的图片进行操作
             isDissloved () {
                 matrix.forEach( function(element, index) {
@@ -339,15 +338,6 @@ if (document.querySelector('#canvas-container') && document.querySelector('.time
                     }
                 }, 1000);
             }
-
-            //
-            gameOver () {
-                matrix.forEach( function(element, index) {
-                    element.forEach( function(ele, ind) {
-                        ele.toClick = false;
-                    });
-                });
-            }
         }
 
         class Animal {
@@ -415,9 +405,9 @@ if (document.querySelector('#canvas-container') && document.querySelector('.time
                 y: parseInt((start.y - this.offsetTop) / pub.imgHeight) * pub.imgHeight
             };
 
-
             pub.clickedImgIndex = matrix[startInt.x / pub.imgWidth][startInt.y / pub.imgHeight].clicked(); 
-            //点击图片时会发生的
+
+            //点击图片时 图片背景 会发生的变化 
             stage.rewriteClickedImg();
 
             pubdata.clickedFlag = false;
@@ -517,6 +507,8 @@ if (document.querySelector('#canvas-container') && document.querySelector('.time
                 stage.continueToDissloved();
             } 
             stage.drawStage();
+
+            
 
             pubdata.moveFlag = false;
         });
