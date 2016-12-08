@@ -4,10 +4,12 @@ $(window).on('scroll.elasticity', function (e){
     e.preventDefault();
 });
 
+
+
 if (document.querySelector('#canvas-container') && document.querySelector('.time-score cite')) {
     const container = document.querySelector('#canvas-container');
     const timeScore = document.querySelector('.time-score cite');
-    
+
     $(document).ready(() => {
 
         const conNum = {
@@ -382,135 +384,39 @@ if (document.querySelector('#canvas-container') && document.querySelector('.time
             }
         }
 
-        let stage = new Stage();
+        if (document.querySelector('.time-over')) {
+            //动态设置 游戏结束div 的宽度和高度
+            const gameOver = document.querySelector('.time-over');
 
-        stage.drawNewStage();
-        stage.drawTimeStage();
-        
-        //调用消去函数
-        stage.continueToDissloved();
+            gameOver.style.width = screen.width + 'px';
+            gameOver.style.height = screen.height + 'px';
+        }
 
-        pub.canvas.addEventListener('touchstart', function(e) {
-            pubdata.clickedFlag = false;
-            var e = e || window.event;
+        //设置计时滚动条的滑动 和 重新游戏
+        if (document.querySelector('#process-current')) {
+            const processCurrent = document.querySelector('#process-current');
+            //获取 processBar 需要移动的距离, 并转化为数值
+            let processWidth = Number((getComputedStyle(processCurrent).width).slice(0, -3));
+            //每过 1s 后的增量
+            let smallWidth = processWidth / 50;
+            let currentSmallWidth = smallWidth;
+            let btnTimeOver = document.querySelector('.time-over');
+            let btnAgain = document.querySelector('.time-again');
 
-            //保存点击图片时的位置
-            start = {
-                x: e.touches[0].clientX,
-                y: e.touches[0].clientY
-            };
-            //转化为 图片宽度和高度 的整数倍
-            startInt = {
-                x: parseInt((start.x - this.offsetLeft) / pub.imgWidth) * pub.imgWidth,
-                y: parseInt((start.y - this.offsetTop) / pub.imgHeight) * pub.imgHeight
-            };
+            let timer1 = setInterval(function() {
+                currentSmallWidth += smallWidth;
 
-            pub.clickedImgIndex = matrix[startInt.x / pub.imgWidth][startInt.y / pub.imgHeight].clicked(); 
+                document.querySelector('#process-current').style.marginLeft = (currentSmallWidth - processWidth) + 'px';
 
-            //点击图片时 图片背景 会发生的变化 
-            stage.rewriteClickedImg();
+                if (Number(processCurrent.style.marginLeft.slice(0, -3)) >= 0) {
+                    clearInterval(timer1);
+                    console.log('game is over');
 
-            pubdata.clickedFlag = false;
-        });
-
-        pub.canvas.addEventListener('touchmove', function(e) {
-            pubdata.moveFlag = true;
-            var e = e || window.event;
-
-            let mouse = {
-                x: e.touches[0].clientX,
-                y: e.touches[0].clientY
-            };
-
-            //手指拖动图片向 水平 方向运动
-            if (Math.abs(mouse.y - start.y) <= Math.abs(mouse.x - start.x)) {
-                //鼠标向右移动
-                if (mouse.x - start.x >= 0) {
-                    //如果鼠标 向右 拖动图片移动的距离 超过 图片的halfwidth
-                    if (mouse.x - start.x >= pub.halfWidth) {
-                        imgPlace = {
-                            x: startInt.x + pub.imgWidth,
-                            y: startInt.y
-                        };        
-                    } else {
-                        pubdata.imgPlaceStay();
-                    }
-                    //鼠标向左移动
-                } else {
-                    if (mouse.x - start.x <= -pub.halfWidth) {
-                        imgPlace = {
-                            x: startInt.x - pub.imgWidth,
-                            y: startInt.y
-                        };
-                    } else {
-                        pubdata.imgPlaceStay();
-                    }
-                } 
-                //拖动图片向竖直方向运动
-            } else {
-                //鼠标向下移动
-                if (mouse.y - start.y >= 0) {
-                    //如果鼠标 向下 拖动图片移动的距离 超过 图片的halfwidth
-                    if (mouse.y - start.y >= pub.halfWidth) {
-                        imgPlace = {
-                            x: startInt.x,
-                            y: startInt.y + pub.imgHeight
-                        }                    
-                    } else {
-                        pubdata.imgPlaceStay();
-                    }
-                } else {
-                    if (start.y - mouse.y >= pub.halfWidth) {
-                        imgPlace = {
-                            x: startInt.x,
-                            y: startInt.y - pub.imgHeight
-                        };
-                    } else {
-                        pubdata.imgPlaceStay();
-                    }
+                    btnTimeOver.style.display = 'block';
                 }
-            }
-        });
+            }, 1000);
+        }
 
-        pub.canvas.addEventListener('touchend', function (e) {
-            pubdata.clickedFlag = false;
-
-            let s = {
-                x: startInt.x / pub.imgWidth, 
-                y: startInt.y / pub.imgHeight
-            };
-            let i = {
-                x: imgPlace.x / pub.imgWidth, 
-                y: imgPlace.y / pub.imgHeight
-            };
-
-            //点击完成后 需要将 clickedImg 换回原图片
-            matrix[s.x][s.y].img = pub.allImgs[pub.clickedImgIndex];
-
-            if (pubdata.moveFlag) {
-                //如果两张图片不相同
-                if (matrix[s.x][s.y].img !== matrix[i.x][i.y].img) {
-                    let temp = matrix[s.x][s.y].img;
-                    matrix[s.x][s.y].img = matrix[i.x][i.y].img;
-                    matrix[i.x][i.y].img = temp;
-                }
-
-                //将 matrix 里面的图片重绘
-                stage.drawStage();
-
-                startInt = {
-                    x: imgPlace.x,
-                    y: imgPlace.y
-                }
-
-                //调用消去函数
-                stage.continueToDissloved();
-            } 
-            stage.drawStage();
-
-            
-
-            pubdata.moveFlag = false;
-        });
+        // export { Stage, Animal };
     });
 }

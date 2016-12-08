@@ -1,8 +1,5 @@
 // touch 事件的绑定
-
-function attachEvet (stage, pub, pubdata) {
-    stage.drawNewStage();
-    stage.drawTimeStage();
+function attachEvet (stage, matrix, pub, pubdata, start, startInt, imgPlace) {
     
     //调用消去函数
     stage.continueToDissloved();
@@ -123,9 +120,10 @@ function attachEvet (stage, pub, pubdata) {
             //调用消去函数
             stage.continueToDissloved();
         } 
+        
         stage.drawStage();
 
-        
+        attachEvet(stage, matrix, pub, pubdata, start, startInt, imgPlace);
 
         pubdata.moveFlag = false;
     });

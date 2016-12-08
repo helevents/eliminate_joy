@@ -15,7 +15,7 @@ if (document.querySelector('#process-current')) {
         //获取 processBar 需要移动的距离, 并转化为数值
         var processWidth = Number(getComputedStyle(processCurrent).width.slice(0, -3));
         //每过 1s 后的增量
-        var smallWidth = processWidth / 50;
+        var smallWidth = processWidth / 500;
         var currentSmallWidth = smallWidth;
         var btnTimeOver = document.querySelector('.time-over');
         var btnAgain = document.querySelector('.time-again');
@@ -32,5 +32,9 @@ if (document.querySelector('#process-current')) {
                 btnTimeOver.style.display = 'block';
             }
         }, 1000);
+
+        btnAgain.addEventListener('click', function (e) {
+            btnTimeOver.style.display = 'none';
+        });
     })();
 }
