@@ -86,20 +86,6 @@ if (document.querySelector('#canvas-container') && document.querySelector('.time
                         animal.paint();
                     }
                 }
-
-                //动画部分
-                // for (let i = 0; i <= 0; i++) {
-                //     for (let j = 0; j <= 0; j++) {
-                //         matrix[i][j].setY(matrix[i][j].getY() - (240 - j*pub.imgHeight));
-                //         console.log(matrix[i]);
-                //         var timer = setInterval(function () {
-                //             matrix[i][j].fall();
-                //             if (matrix[i][j].getY() > i*pub.imgHeight) {
-                //                 clearInterval(timer);
-                //             }
-                //         }, 10);
-                //     }
-                // }
             }
 
             //计时模式图案填充
@@ -243,7 +229,7 @@ if (document.querySelector('#canvas-container') && document.querySelector('.time
                                 //要等亮圆点出现之后, 再清除当前图片区域
                                 setTimeout(function () {
                                     matrix[i][j].refresh();
-                                }, 300);
+                                }, 60);
 
                                 //模仿图片下落的操作
                                 if (j !== 0) {
@@ -264,7 +250,7 @@ if (document.querySelector('#canvas-container') && document.querySelector('.time
 
                 setTimeout(function () {
                     stage.drawStage();
-                }, 500);
+                }, 300);
 
                 //如果重新生成的图片中有可以消去的图片, 改变它们的toRemove值
                 for (let i = 0; i < pub.xNum; i++) {
