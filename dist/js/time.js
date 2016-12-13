@@ -1,1 +1,0 @@
-// attachEvet(stage, matrix, pub, pubdata, start, startInt, imgPlace);

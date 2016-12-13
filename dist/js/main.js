@@ -26,6 +26,8 @@ if (document.querySelector('#canvas-container') && document.querySelector('.time
             yNum: 8,
             imgWidth: (conNum.width) / 6,
             imgHeight: (conNum.height) / 8,
+            //计时模式需要的时间
+            timeCount: 60,
             //当图片的移动位移超过 halfwidth 时, 会进行上下左右的移动
             halfWidth: 20,
             allImgs: document.querySelector('.allimg').children,
@@ -63,9 +65,45 @@ if (document.querySelector('#canvas-container') && document.querySelector('.time
 
         class Stage {
             constructor () {
-                this.ctx = pub.ctx,
-                this.width = 280,
-                this.height = 280
+                this.ctx = pub.ctx
+            }
+
+            gameBegin () {
+                if (document.querySelector('.time-over')) {
+                    //动态设置宽度和高度游戏结束时 页面的 宽度和高度
+                    const gameOver = document.querySelector('.time-over');
+
+                    gameOver.style.width = screen.width + 'px';
+                    gameOver.style.height = screen.height + 'px';
+                }
+
+                //设置计时滚动条的滑动 和 重新游戏
+                if (document.querySelector('#process-current')) {
+                    const processCurrent = document.querySelector('#process-current');
+                    //获取 processBar 需要移动的距离, 并转化为数值
+                    let processWidth = Number((getComputedStyle(processCurrent).width).slice(0, -3));
+                    //每过 1s 后的增量
+                    let smallWidth = processWidth / pub.timeCount;
+                    let currentSmallWidth = smallWidth;
+                    let btnTimeOver = document.querySelector('.time-over');
+                    let btnAgain = document.querySelector('.time-again');
+
+                    let timer1 = setInterval(function() {
+                        currentSmallWidth += smallWidth;
+                        document.querySelector('#process-current').style.marginLeft = (currentSmallWidth - processWidth) + 'px';
+
+                        if (Number(processCurrent.style.marginLeft.slice(0, -3)) >= 0) {
+                            clearInterval(timer1);
+                            console.log('game is over');
+
+                            btnTimeOver.style.display = 'block';
+                        }
+                    }, 1000);
+
+                    btnAgain.addEventListener('click', function(e) {
+                        btnTimeOver.style.display = 'none';
+                    });
+                }
             }
 
             //每次消除小动物之后 刷新页面
@@ -74,7 +112,7 @@ if (document.querySelector('#canvas-container') && document.querySelector('.time
             }
 
             //游戏开始时 填充图片
-            drawNewStage () {
+            drawBeginStage () {
                 for (let i = 0; i <= pub.xNum-1; i++) {
                     matrix[i] = new Array();
                     for (let j = 0; j <= pub.yNum-1; j++) {
@@ -120,6 +158,17 @@ if (document.querySelector('#canvas-container') && document.querySelector('.time
                         }
                     });
                 });
+            }
+
+            //闯关模式第一关
+            drawPassTwo () {
+                let m = pub.xNum - 1;
+                let n = pub.yNum - 1;
+
+                matrix[0][0].toClick = false;
+                matrix[m][0].toClick = false;
+                matrix[0][n].toClick = false;
+                matrix[m][n].toClick = false;
             }
 
             //对 存入matrix 的图片进行重绘
@@ -192,12 +241,8 @@ if (document.querySelector('#canvas-container') && document.querySelector('.time
                 }
             }
 
-            //查找矩阵里面所有 可以消去 的元素
-            
-
-
             //遍历所有图片, 为toRemove值为true的图片进行操作
-            isDissloved () {
+            Dissloved () {
                 matrix.forEach( function(element, index) {
                     element.forEach( function(e, i) {
                         if (e.toClick) {
@@ -252,6 +297,15 @@ if (document.querySelector('#canvas-container') && document.querySelector('.time
                     stage.drawStage();
                 }, 300);
 
+                if (stage.isDissloved()) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+
+            //检测当前矩阵中是否还有可以消去的小动物
+            isDissloved () {
                 //如果重新生成的图片中有可以消去的图片, 改变它们的toRemove值
                 for (let i = 0; i < pub.xNum; i++) {
                     for (let j = 0; j < pub.yNum; j++) {
@@ -273,6 +327,8 @@ if (document.querySelector('#canvas-container') && document.querySelector('.time
                         }
                     }
                 }
+
+                return false;
             }
 
             //每次点击之前, 将所有图片重置为没有 clickedImg 的图片
@@ -315,9 +371,14 @@ if (document.querySelector('#canvas-container') && document.querySelector('.time
 
             //连续消去函数
             continueToDissloved () {
+                //如果页面中没有可以消去的图片
+                if (!stage.isDissloved()) {
+
+                }
+
                 //如果 新生成 的图片有可以消去的, 继续调用消去函数
                 let timer = setInterval(function () {
-                    let boolis = stage.isDissloved();
+                    let boolis = stage.Dissloved();
 
                     stage.getScore();
 
@@ -371,9 +432,19 @@ if (document.querySelector('#canvas-container') && document.querySelector('.time
         }
 
         let stage = new Stage();
+        stage.gameBegin();
+        
+        // 游戏刚开始时填充图片
+        stage.drawBeginStage();
+        //根据不同的模式填充不同的图片
+        const currentHref = window.location.href;
 
-        stage.drawNewStage();
-        stage.drawTimeStage();
+        if (currentHref.indexOf('time') > -1 || currentHref.indexOf('one') > -1) {
+            stage.drawTimeStage();
+        } else if (currentHref.indexOf('two') > -1) {
+            stage.drawPassTwo();
+        } 
+
 
         //调用消去函数
         stage.continueToDissloved();
@@ -491,8 +562,18 @@ if (document.querySelector('#canvas-container') && document.querySelector('.time
                     y: imgPlace.y
                 }
 
-                //调用消去函数
-                stage.continueToDissloved();
+                if (stage.isDissloved()) {
+                    //调用消去函数
+                    stage.continueToDissloved();
+                } else {
+                    let temp = matrix[s.x][s.y].img;
+                    matrix[s.x][s.y].img = matrix[i.x][i.y].img;
+                    matrix[i.x][i.y].img = temp;
+                }
+
+                setTimeout(function () {
+                    stage.drawStage();
+                },3000);
             } 
             stage.drawStage();
 
