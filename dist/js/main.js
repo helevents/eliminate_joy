@@ -171,6 +171,19 @@ if (document.querySelector('#canvas-container') && document.querySelector('.time
                 matrix[m][n].toClick = false;
             }
 
+            //
+            drawAllStage () {
+                stage.drawBeginStage();
+                //根据不同的模式填充不同的图片
+                const currentHref = window.location.href;
+
+                if (currentHref.indexOf('time') > -1 || currentHref.indexOf('one') > -1) {
+                    stage.drawTimeStage();
+                } else if (currentHref.indexOf('two') > -1) {
+                    stage.drawPassTwo();
+                } 
+            }
+
             //对 存入matrix 的图片进行重绘
             drawStage () {
                 for (let i = 0; i <= pub.xNum-1; i++) {
@@ -373,7 +386,17 @@ if (document.querySelector('#canvas-container') && document.querySelector('.time
             continueToDissloved () {
                 //如果页面中没有可以消去的图片
                 if (!stage.isDissloved()) {
+                    setTimeout(function() {
+                        for (let i = 0; i < pub.xNum; i++) {
+                            for (let j = 0; j < pub.yNum; j++) {
+                                if (matrix[i][j].toClick) {
+                                    matrix[i][j].refresh();
+                                }
+                            }
+                        }   
 
+                        stage.drawAllStage();
+                    }, 300);
                 }
 
                 //如果 新生成 的图片有可以消去的, 继续调用消去函数
@@ -385,7 +408,7 @@ if (document.querySelector('#canvas-container') && document.querySelector('.time
                     if (!boolis) {
                         clearInterval(timer);
                     }
-                }, 500);
+                }, 600);
             }
         }
 
@@ -435,18 +458,8 @@ if (document.querySelector('#canvas-container') && document.querySelector('.time
         stage.gameBegin();
         
         // 游戏刚开始时填充图片
-        stage.drawBeginStage();
-        //根据不同的模式填充不同的图片
-        const currentHref = window.location.href;
+        stage.drawAllStage();
 
-        if (currentHref.indexOf('time') > -1 || currentHref.indexOf('one') > -1) {
-            stage.drawTimeStage();
-        } else if (currentHref.indexOf('two') > -1) {
-            stage.drawPassTwo();
-        } 
-
-
-        //调用消去函数
         stage.continueToDissloved();
 
         pub.canvas.addEventListener('touchstart', function(e) {
