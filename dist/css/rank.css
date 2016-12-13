@@ -1,6 +1,7 @@
 .container {
     width: 100%;
     overflow: hidden;
+    font-family: font;
 }
 .container-bg {
     position: fixed;
@@ -32,6 +33,7 @@
 .rank-btn-container {
     width: 100%;
     overflow: hidden;
+    font-size: 0.414rem;
 }
 
 .rank-btn {
@@ -116,9 +118,9 @@
 .rank-list-top .rank-num {
     background-image: url('../images/rank-list-top.png');
     background-size: 0.613333rem 0.72rem;
-    background-position: 0.133333rem 0;
+    background-position: 0.143334rem 0;
     background-repeat: no-repeat;
-    padding-top: 0.053333rem;
+    padding-top: 0.073333rem;
 }
 
 .rank-list-top .rank-name, 

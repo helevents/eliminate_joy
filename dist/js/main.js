@@ -324,7 +324,7 @@ if (document.querySelector('#canvas-container') && document.querySelector('.time
                     if (!boolis) {
                         clearInterval(timer);
                     }
-                }, 1000);
+                }, 500);
             }
         }
 
