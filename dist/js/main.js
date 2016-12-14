@@ -283,9 +283,6 @@ if (document.querySelector('#canvas-container') && document.querySelector('.time
                     element.forEach( function(e, i) {
                         if (e.toClick) {
                             for (let k = 4; k >= 2; k--) {
-                                if (stage.findYSameImg(k, index, i) == k) {
-
-                                } else if (stage.findYSameImg(k, index, i) == k) {} 
                                 stage.findXSameImg(k, index, i);
                                 stage.findYSameImg(k, index, i);
                             }
@@ -399,44 +396,165 @@ if (document.querySelector('#canvas-container') && document.querySelector('.time
 
             //判断下一步是否有可以消去的元素 
             nextTouchToDisslove () {
-                matrix.forEach( function(element, i) {
-                    element.forEach( function(e, j) {
-                        if (e.toClick) {
+                let touchToDisslove = false;
 
+                //将每一项都往四个方向移动一次,
+                for (let i = 0; i < pub.xNum-1; i++) {
+                    for (let j = 0; j < pub.yNum; j++) {
+                        if (matrix[i][j].toClick && matrix[i+1][j].toClick) {
+                            stage.exchangeImg(matrix[i+1][j], matrix[i][j]);  
+                            
+                            //交换图片后, 查看当前是否有可消去的小动物
+                            matrix.forEach( function(element, index) {
+                                element.forEach( function(e, i) {
+                                    if (e.toClick) {
+                                        for (let k = 4; k >= 2; k--) {
+                                            stage.findXSameImg(k, index, i);
+                                            stage.findYSameImg(k, index, i);
+                                        }
+                                    }
+                                });
+                            });
+
+                            //为了不影响后续的操作, 需要将图片再次交换回来
+                            stage.exchangeImg(matrix[i+1][j], matrix[i][j]);    
+                            
+                            //findXSameImg 函数会将可以消去的图片的 toRemove 值设置为 true
+                            //这里只需要检测 toRemove 的值即可
+                            for (let i = 0; i < pub.xNum; i++) {
+                                for (let j = 0; j < pub.yNum; j++) {
+                                    if (matrix[i][j].toClick) {
+                                        if (matrix[i][j].toRemove) {
+                                            touchToDisslove =  true;
+                                            matrix[i][j].toRemove = false;
+                                        }
+                                    }
+                                }
+                            }
                         }
-                    });
-                });
+                    };
+                };
 
-                // matrix.forEach( function(element, i) {
-                //     element.forEach( function(e, j) {
-                //         if (e.toClick) {
-                //             imgPlace = {
-                //                 x: startInt.x - pub.imgWidth,
-                //                 y: startInt.y
-                //             };  
-                //         }
-                //     });
-                // });
-                // matrix.forEach( function(element, i) {
-                //     element.forEach( function(e, j) {
-                //         if (e.toClick) {
-                //             imgPlace = {
-                //                 x: startInt.x,
-                //                 y: startInt.y + pub.imgHeight
-                //             };  
-                //         }
-                //     });
-                // });
-                // matrix.forEach( function(element, i) {
-                //     element.forEach( function(e, j) {
-                //         if (e.toClick) {
-                //             mgPlace = {
-                //                 x: startInt.x,
-                //                 y: startInt.y - pub.imgHeight
-                //             };  
-                //         }
-                //     });
-                // });
+                for (let i = 1; i < pub.xNum; i++) {
+                    for (let j = 0; j < pub.yNum; j++) {
+                        if (matrix[i][j].toClick && matrix[i-1][j].toClick) {
+                            stage.exchangeImg(matrix[i-1][j], matrix[i][j]);  
+                            
+                            //交换图片后, 查看当前是否有可消去的小动物
+                            matrix.forEach( function(element, index) {
+                                element.forEach( function(e, i) {
+                                    if (e.toClick) {
+                                        for (let k = 4; k >= 2; k--) {
+                                            stage.findXSameImg(k, index, i);
+                                            stage.findYSameImg(k, index, i);
+                                        }
+                                    }
+                                });
+                            });
+
+                            //为了不影响后续的操作, 需要将图片再次交换回来
+                            stage.exchangeImg(matrix[i-1][j], matrix[i][j]);    
+                            
+                            //findXSameImg 函数会将可以消去的图片的 toRemove 值设置为 true
+                            //这里只需要检测 toRemove 的值即可
+                            for (let i = 0; i < pub.xNum; i++) {
+                                for (let j = 0; j < pub.yNum; j++) {
+                                    if (matrix[i][j].toClick) {
+                                        if (matrix[i][j].toRemove) {
+                                            touchToDisslove =  true;
+                                            matrix[i][j].toRemove = false;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    };
+                };
+
+                for (let i = 0; i < pub.xNum; i++) {
+                    for (let j = 0; j < pub.yNum-1; j++) {
+                        if (matrix[i][j].toClick && matrix[i][j+1].toClick) {
+                            stage.exchangeImg(matrix[i][j+1], matrix[i][j]);  
+                            
+                            //交换图片后, 查看当前是否有可消去的小动物
+                            matrix.forEach( function(element, index) {
+                                element.forEach( function(e, i) {
+                                    if (e.toClick) {
+                                        for (let k = 4; k >= 2; k--) {
+                                            stage.findXSameImg(k, index, i);
+                                            stage.findYSameImg(k, index, i);
+                                        }
+                                    }
+                                });
+                            });
+
+                            //为了不影响后续的操作, 需要将图片再次交换回来
+                            stage.exchangeImg(matrix[i][j+1], matrix[i][j]);    
+                            
+                            //findXSameImg 函数会将可以消去的图片的 toRemove 值设置为 true
+                            //这里只需要检测 toRemove 的值即可
+                            for (let i = 0; i < pub.xNum; i++) {
+                                for (let j = 0; j < pub.yNum; j++) {
+                                    if (matrix[i][j].toClick) {
+                                        if (matrix[i][j].toRemove) {
+                                            touchToDisslove =  true;
+                                            matrix[i][j].toRemove = false;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    };
+                };
+
+                for (let i = 0; i < pub.xNum; i++) {
+                    for (let j = 1; j < pub.yNum; j++) {
+                        if (matrix[i][j].toClick && matrix[i][j-1].toClick) {
+                            stage.exchangeImg(matrix[i][j-1], matrix[i][j]);  
+                            
+                            //交换图片后, 查看当前是否有可消去的小动物
+                            matrix.forEach( function(element, index) {
+                                element.forEach( function(e, i) {
+                                    if (e.toClick) {
+                                        for (let k = 4; k >= 2; k--) {
+                                            stage.findXSameImg(k, index, i);
+                                            stage.findYSameImg(k, index, i);
+                                        }
+                                    }
+                                });
+                            });
+
+                            //为了不影响后续的操作, 需要将图片再次交换回来
+                            stage.exchangeImg(matrix[i][j-1], matrix[i][j]);    
+                            
+                            //findXSameImg 函数会将可以消去的图片的 toRemove 值设置为 true
+                            //这里只需要检测 toRemove 的值即可
+                            for (let i = 0; i < pub.xNum; i++) {
+                                for (let j = 0; j < pub.yNum; j++) {
+                                    if (matrix[i][j].toClick) {
+                                        if (matrix[i][j].toRemove) {
+                                            touchToDisslove =  true;
+                                            matrix[i][j].toRemove = false;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    };
+                };
+
+                return touchToDisslove;
+            }
+
+            //交换两个 obj 的 img属性值
+            exchangeImg (a, b) {
+                if (a && b) {
+                    if (a.toClick && b.toClick) {
+                        let temp = a.img;
+                        a.img = b.img;
+                        b.img = temp;
+                    }
+                }
             }
         }
 
@@ -484,9 +602,18 @@ if (document.querySelector('#canvas-container') && document.querySelector('.time
 
         let stage = new Stage();
         stage.gameBegin();
+
         
         // 游戏刚开始时填充图片
         stage.drawAllStage();
+
+        //如果没有可以消去的图片, 重绘当前页面
+        setTimeout(function () {
+            if (!stage.nextTouchToDisslove()) {
+                stage.drawAllStage();
+                console.log('no disslove');
+            }
+        }, 1000);
 
         stage.continueToDissloved();
 
@@ -590,11 +717,7 @@ if (document.querySelector('#canvas-container') && document.querySelector('.time
             if (pubdata.moveFlag) {
                 //如果两张图片不相同
                 if (matrix[s.x][s.y].img !== matrix[i.x][i.y].img) {
-                    if (matrix[s.x][s.y].toClick && matrix[i.x][i.y].toClick) {
-                        let temp = matrix[s.x][s.y].img;
-                        matrix[s.x][s.y].img = matrix[i.x][i.y].img;
-                        matrix[i.x][i.y].img = temp;
-                    }
+                        stage.exchangeImg(matrix[s.x][s.y], matrix[i.x][i.y]);
                 }
 
                 //将 matrix 里面的图片重绘
@@ -611,11 +734,7 @@ if (document.querySelector('#canvas-container') && document.querySelector('.time
                 } else {
                     //如果交换图片后没有可以消去的小动物，再把图片换回去
                     setTimeout(function () {
-                        if (matrix[s.x][s.y].toClick && matrix[i.x][i.y].toClick) {
-                            let temp = matrix[s.x][s.y].img;
-                            matrix[s.x][s.y].img = matrix[i.x][i.y].img;
-                            matrix[i.x][i.y].img = temp;
-                        }
+                        stage.exchangeImg(matrix[s.x][s.y], matrix[i.x][i.y]);
                         stage.drawStage();
                     }, 300);
                 }
