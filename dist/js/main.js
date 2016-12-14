@@ -60,7 +60,7 @@ if (document.querySelector('#canvas-container') && document.querySelector('.time
         let imgPlace = {};
         //存放页面上所有的图片信息
         let matrix = [];
-
+        //记录分数
         let ct = 0;
 
         class Stage {
@@ -171,7 +171,7 @@ if (document.querySelector('#canvas-container') && document.querySelector('.time
                 matrix[m][n].toClick = false;
             }
 
-            //
+            //为所有模式添加事件
             drawAllStage () {
                 stage.drawBeginStage();
                 //根据不同的模式填充不同的图片
@@ -221,10 +221,8 @@ if (document.querySelector('#canvas-container') && document.querySelector('.time
                             for (let k = 0; k <= count; k++) {
                                 matrix[i][j+k].toRemove = true;
                             }
-                            return z;
+                            return count;
                         }
-
-                        return false;
                     } 
                 }
             }
@@ -245,75 +243,10 @@ if (document.querySelector('#canvas-container') && document.querySelector('.time
                                 for (let k = 0; k <= count; k++) {
                                     matrix[i+k][j].toRemove = true;
                                 }
-                                return z;
-                            }
-
-                            return false;
-                        }
-                    }
-                }
-            }
-
-            //遍历所有图片, 为toRemove值为true的图片进行操作
-            Dissloved () {
-                matrix.forEach( function(element, index) {
-                    element.forEach( function(e, i) {
-                        if (e.toClick) {
-                            // console.log('i = ', index, ', j = ', i);
-                            for (let k = 4; k >= 2; k--) {
-                                stage.findXSameImg(k, index, i);
-                                stage.findYSameImg(k, index, i)
-                            }
-                        }
-                    });
-                });
-                
-                //可以消去的图片 消去之前会发生的变化 (边界出现亮圆点)
-                for (let i = 0; i < pub.xNum; i++) {
-                    for (let j = 0; j < pub.yNum; j++) {
-                        if (matrix[i][j].toClick) {
-                            if (matrix[i][j].toRemove) {
-                                matrix[i][j].dissloved();
-                                ct++;
+                                return count;
                             }
                         }
                     }
-                }
-
-                for (let i = 0; i < pub.xNum; i++) {
-                    for (let j = 0; j < pub.yNum; j++) {
-                        if (matrix[i][j].toClick) {
-                            if (matrix[i][j].toRemove) {
-                                //要等亮圆点出现之后, 再清除当前图片区域
-                                setTimeout(function () {
-                                    matrix[i][j].refresh();
-                                }, 60);
-
-                                //模仿图片下落的操作
-                                if (j !== 0) {
-                                    //如果不是第一行的元素
-                                    for (let k = j-1; k >= 0; k--) {
-                                        matrix[i][k+1].img = matrix[i][k].img;
-                                    }
-                                    stage.drawNewImg(matrix, i, 0);
-                                } else {
-                                    stage.drawNewImg(matrix, i, 0);
-                                }
-
-                                matrix[i][j].toRemove = false;
-                            }
-                        }
-                    }
-                }
-
-                setTimeout(function () {
-                    stage.drawStage();
-                }, 300);
-
-                if (stage.isDissloved()) {
-                    return true;
-                } else {
-                    return false;
                 }
             }
 
@@ -342,6 +275,71 @@ if (document.querySelector('#canvas-container') && document.querySelector('.time
                 }
 
                 return false;
+            }
+
+            //遍历所有图片, 为toRemove值为true的图片进行操作
+            Dissloved () {
+                matrix.forEach( function(element, index) {
+                    element.forEach( function(e, i) {
+                        if (e.toClick) {
+                            for (let k = 4; k >= 2; k--) {
+                                if (stage.findYSameImg(k, index, i) == k) {
+
+                                } else if (stage.findYSameImg(k, index, i) == k) {} 
+                                stage.findXSameImg(k, index, i);
+                                stage.findYSameImg(k, index, i);
+                            }
+                        }
+                    });
+                });
+                
+                //可以消去的图片 消去之前会发生的变化 (边界出现亮圆点)
+                for (let i = 0; i < pub.xNum; i++) {
+                    for (let j = 0; j < pub.yNum; j++) {
+                        if (matrix[i][j].toClick) {
+                            if (matrix[i][j].toRemove) {
+                                matrix[i][j].dissloved();
+                                // ct++;
+                            }
+                        }
+                    }
+                }
+
+                for (let i = 0; i < pub.xNum; i++) {
+                    for (let j = 0; j < pub.yNum; j++) {
+                        if (matrix[i][j].toClick) {
+                            if (matrix[i][j].toRemove) {
+                                //要等亮圆点出现之后, 再清除当前图片区域
+                                setTimeout(function () {
+                                    matrix[i][j].refresh();
+                                }, 30);
+
+                                //模仿图片下落的操作
+                                if (j !== 0) {
+                                    //如果不是第一行的元素
+                                    for (let k = j-1; k >= 0; k--) {
+                                        matrix[i][k+1].img = matrix[i][k].img;
+                                    }
+                                    stage.drawNewImg(matrix, i, 0);
+                                } else {
+                                    stage.drawNewImg(matrix, i, 0);
+                                }
+
+                                matrix[i][j].toRemove = false;
+                            }
+                        }
+                    }
+                }
+
+                setTimeout(function () {
+                    stage.drawStage();
+                }, 200);
+
+                if (stage.isDissloved()) {
+                    return true;
+                } else {
+                    return false;
+                }
             }
 
             //每次点击之前, 将所有图片重置为没有 clickedImg 的图片
@@ -384,20 +382,8 @@ if (document.querySelector('#canvas-container') && document.querySelector('.time
 
             //连续消去函数
             continueToDissloved () {
-                //如果页面中没有可以消去的图片
-                if (!stage.isDissloved()) {
-                    setTimeout(function() {
-                        for (let i = 0; i < pub.xNum; i++) {
-                            for (let j = 0; j < pub.yNum; j++) {
-                                if (matrix[i][j].toClick) {
-                                    matrix[i][j].refresh();
-                                }
-                            }
-                        }   
-
-                        stage.drawAllStage();
-                    }, 300);
-                }
+                //当连续消去的时候
+                let scoreCount = 1;
 
                 //如果 新生成 的图片有可以消去的, 继续调用消去函数
                 let timer = setInterval(function () {
@@ -409,6 +395,48 @@ if (document.querySelector('#canvas-container') && document.querySelector('.time
                         clearInterval(timer);
                     }
                 }, 600);
+            }
+
+            //判断下一步是否有可以消去的元素 
+            nextTouchToDisslove () {
+                matrix.forEach( function(element, i) {
+                    element.forEach( function(e, j) {
+                        if (e.toClick) {
+
+                        }
+                    });
+                });
+
+                // matrix.forEach( function(element, i) {
+                //     element.forEach( function(e, j) {
+                //         if (e.toClick) {
+                //             imgPlace = {
+                //                 x: startInt.x - pub.imgWidth,
+                //                 y: startInt.y
+                //             };  
+                //         }
+                //     });
+                // });
+                // matrix.forEach( function(element, i) {
+                //     element.forEach( function(e, j) {
+                //         if (e.toClick) {
+                //             imgPlace = {
+                //                 x: startInt.x,
+                //                 y: startInt.y + pub.imgHeight
+                //             };  
+                //         }
+                //     });
+                // });
+                // matrix.forEach( function(element, i) {
+                //     element.forEach( function(e, j) {
+                //         if (e.toClick) {
+                //             mgPlace = {
+                //                 x: startInt.x,
+                //                 y: startInt.y - pub.imgHeight
+                //             };  
+                //         }
+                //     });
+                // });
             }
         }
 
@@ -562,9 +590,11 @@ if (document.querySelector('#canvas-container') && document.querySelector('.time
             if (pubdata.moveFlag) {
                 //如果两张图片不相同
                 if (matrix[s.x][s.y].img !== matrix[i.x][i.y].img) {
-                    let temp = matrix[s.x][s.y].img;
-                    matrix[s.x][s.y].img = matrix[i.x][i.y].img;
-                    matrix[i.x][i.y].img = temp;
+                    if (matrix[s.x][s.y].toClick && matrix[i.x][i.y].toClick) {
+                        let temp = matrix[s.x][s.y].img;
+                        matrix[s.x][s.y].img = matrix[i.x][i.y].img;
+                        matrix[i.x][i.y].img = temp;
+                    }
                 }
 
                 //将 matrix 里面的图片重绘
@@ -579,14 +609,16 @@ if (document.querySelector('#canvas-container') && document.querySelector('.time
                     //调用消去函数
                     stage.continueToDissloved();
                 } else {
-                    let temp = matrix[s.x][s.y].img;
-                    matrix[s.x][s.y].img = matrix[i.x][i.y].img;
-                    matrix[i.x][i.y].img = temp;
+                    //如果交换图片后没有可以消去的小动物，再把图片换回去
+                    setTimeout(function () {
+                        if (matrix[s.x][s.y].toClick && matrix[i.x][i.y].toClick) {
+                            let temp = matrix[s.x][s.y].img;
+                            matrix[s.x][s.y].img = matrix[i.x][i.y].img;
+                            matrix[i.x][i.y].img = temp;
+                        }
+                        stage.drawStage();
+                    }, 300);
                 }
-
-                setTimeout(function () {
-                    stage.drawStage();
-                },3000);
             } 
             stage.drawStage();
 
