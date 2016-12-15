@@ -169,6 +169,14 @@ if (document.querySelector('#canvas-container') && document.querySelector('.time
                 matrix[m][0].toClick = false;
                 matrix[0][n].toClick = false;
                 matrix[m][n].toClick = false;
+
+                matrix.forEach( function(element, index) {
+                    element.forEach( function(ele, ind) {
+                        if (!ele.toClick) {
+                            ele.refresh();
+                        }
+                    });
+                });
             }
 
             //为所有模式添加事件
@@ -279,16 +287,26 @@ if (document.querySelector('#canvas-container') && document.querySelector('.time
 
             //遍历所有图片, 为toRemove值为true的图片进行操作
             Dissloved () {
+                //移动一次应该增加的分数
+                let countOnceScore = 0;
+
                 matrix.forEach( function(element, index) {
                     element.forEach( function(e, i) {
                         if (e.toClick) {
                             for (let k = 4; k >= 2; k--) {
                                 stage.findXSameImg(k, index, i);
                                 stage.findYSameImg(k, index, i);
+                                // if (k == 4) {
+                                //     if (stage.findXSameImg(k, index, i) == k || stage.findYSameImg(k, index, i)) {
+                                //         countOnceScore += 100;
+                                //     }
+                                // } 
                             }
                         }
                     });
                 });
+                //查看当前一共有多少个可以消去的元素
+                let a = 0;
                 
                 //可以消去的图片 消去之前会发生的变化 (边界出现亮圆点)
                 for (let i = 0; i < pub.xNum; i++) {
@@ -296,10 +314,16 @@ if (document.querySelector('#canvas-container') && document.querySelector('.time
                         if (matrix[i][j].toClick) {
                             if (matrix[i][j].toRemove) {
                                 matrix[i][j].dissloved();
-                                // ct++;
+                                a++;
                             }
                         }
                     }
+                }
+
+                if (a > 3) {
+                    countOnceScore += a * 2 * 10;
+                } else {
+                    countOnceScore += a * 10;
                 }
 
                 for (let i = 0; i < pub.xNum; i++) {
@@ -333,9 +357,15 @@ if (document.querySelector('#canvas-container') && document.querySelector('.time
                 }, 200);
 
                 if (stage.isDissloved()) {
-                    return true;
+                    return {
+                        bool: true,
+                        score: countOnceScore
+                    };
                 } else {
-                    return false;
+                    return {
+                        bool: false,
+                        score: countOnceScore
+                    };
                 }
             }
 
@@ -372,7 +402,7 @@ if (document.querySelector('#canvas-container') && document.querySelector('.time
 
             //
             getScore () {
-                pubdata.score = ct * 10;
+                // pubdata.score = ct * 10;
                 timeScore.innerHTML = pubdata.score;
             }
 
@@ -380,18 +410,30 @@ if (document.querySelector('#canvas-container') && document.querySelector('.time
             //连续消去函数
             continueToDissloved () {
                 //当连续消去的时候
-                let scoreCount = 1;
+                
+                let time = 600;
 
                 //如果 新生成 的图片有可以消去的, 继续调用消去函数
                 let timer = setInterval(function () {
-                    let boolis = stage.Dissloved();
+                    let scoreCount = 0;
+                    let result = stage.Dissloved();
 
-                    stage.getScore();
+                    if (time > 1200) {
+                        scoreCount += result.score * 2;
+                    } else {
+                        scoreCount += result.score;
+                    }
 
-                    if (!boolis) {
+                    if (!result.bool) {
                         clearInterval(timer);
                     }
-                }, 600);
+
+                    pubdata.score += scoreCount;
+
+                    timeScore.innerHTML = pubdata.score;
+
+                    time += 600;
+                }, time);
             }
 
             //判断下一步是否有可以消去的元素 
@@ -603,7 +645,6 @@ if (document.querySelector('#canvas-container') && document.querySelector('.time
         let stage = new Stage();
         stage.gameBegin();
 
-        
         // 游戏刚开始时填充图片
         stage.drawAllStage();
 
@@ -611,7 +652,7 @@ if (document.querySelector('#canvas-container') && document.querySelector('.time
         setTimeout(function () {
             if (!stage.nextTouchToDisslove()) {
                 stage.drawAllStage();
-                console.log('no disslove');
+                stage.continueToDissloved();
             }
         }, 1000);
 
@@ -740,6 +781,13 @@ if (document.querySelector('#canvas-container') && document.querySelector('.time
                 }
             } 
             stage.drawStage();
+
+            setTimeout(function () {
+                if (!stage.nextTouchToDisslove()) {
+                    stage.drawAllStage();
+                    stage.continueToDissloved();
+                }
+            }, 1000);
 
             pubdata.moveFlag = false;
         });
