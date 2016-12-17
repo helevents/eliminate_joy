@@ -4,11 +4,10 @@ $(window).on('scroll.elasticity', function (e){
     e.preventDefault();
 });
 
-
-
 if (document.querySelector('#canvas-container') && document.querySelector('.time-score cite')) {
     const container = document.querySelector('#canvas-container');
     const timeScore = document.querySelector('.time-score cite');
+    const btnStop = document.querySelector('.time-to-stop');
 
     $(document).ready(() => {
 
@@ -33,7 +32,15 @@ if (document.querySelector('#canvas-container') && document.querySelector('.time
             allImgs: document.querySelector('.allimg').children,
             clickedImg: document.querySelector('.img-clicked').children,
             disslovedImg: document.querySelector('.img-dissloved').children,
-            clickedImgIndex: 0
+            clickedImgIndex: 0, 
+            //动态设置宽度和高度
+            setWH (ele) {
+                console.log(ele);
+                ele.style.width = screen.width + 'px';
+                ele.style.height = screen.height + 'px';
+                console.log(ele.width);
+                console.log(ele.height);
+            }
         }
 
         pub.canvas.width = conNum.width;
@@ -62,49 +69,14 @@ if (document.querySelector('#canvas-container') && document.querySelector('.time
         let matrix = [];
         //记录分数
         let ct = 0;
+        //记录当前时间
+        let currentTime = 0;
 
         class Stage {
             constructor () {
                 this.ctx = pub.ctx
             }
 
-            gameBegin () {
-                if (document.querySelector('.time-over')) {
-                    //动态设置宽度和高度游戏结束时 页面的 宽度和高度
-                    const gameOver = document.querySelector('.time-over');
-
-                    gameOver.style.width = screen.width + 'px';
-                    gameOver.style.height = screen.height + 'px';
-                }
-
-                //设置计时滚动条的滑动 和 重新游戏
-                if (document.querySelector('#process-current')) {
-                    const processCurrent = document.querySelector('#process-current');
-                    //获取 processBar 需要移动的距离, 并转化为数值
-                    let processWidth = Number((getComputedStyle(processCurrent).width).slice(0, -3));
-                    //每过 1s 后的增量
-                    let smallWidth = processWidth / pub.timeCount;
-                    let currentSmallWidth = smallWidth;
-                    let btnTimeOver = document.querySelector('.time-over');
-                    let btnAgain = document.querySelector('.time-again');
-
-                    let timer1 = setInterval(function() {
-                        currentSmallWidth += smallWidth;
-                        document.querySelector('#process-current').style.marginLeft = (currentSmallWidth - processWidth) + 'px';
-
-                        if (Number(processCurrent.style.marginLeft.slice(0, -3)) >= 0) {
-                            clearInterval(timer1);
-                            console.log('game is over');
-
-                            btnTimeOver.style.display = 'block';
-                        }
-                    }, 1000);
-
-                    btnAgain.addEventListener('click', function(e) {
-                        btnTimeOver.style.display = 'none';
-                    });
-                }
-            }
 
             //每次消除小动物之后 刷新页面
             refresh () {
@@ -296,11 +268,6 @@ if (document.querySelector('#canvas-container') && document.querySelector('.time
                             for (let k = 4; k >= 2; k--) {
                                 stage.findXSameImg(k, index, i);
                                 stage.findYSameImg(k, index, i);
-                                // if (k == 4) {
-                                //     if (stage.findXSameImg(k, index, i) == k || stage.findYSameImg(k, index, i)) {
-                                //         countOnceScore += 100;
-                                //     }
-                                // } 
                             }
                         }
                     });
@@ -320,6 +287,7 @@ if (document.querySelector('#canvas-container') && document.querySelector('.time
                     }
                 }
 
+                //如果大于3, 将分数 *2
                 if (a > 3) {
                     countOnceScore += a * 2 * 10;
                 } else {
@@ -400,13 +368,6 @@ if (document.querySelector('#canvas-container') && document.querySelector('.time
                 return imgIndex;
             }
 
-            //
-            getScore () {
-                // pubdata.score = ct * 10;
-                timeScore.innerHTML = pubdata.score;
-            }
-
-
             //连续消去函数
             continueToDissloved () {
                 //当连续消去的时候
@@ -418,7 +379,7 @@ if (document.querySelector('#canvas-container') && document.querySelector('.time
                     let scoreCount = 0;
                     let result = stage.Dissloved();
 
-                    if (time > 1200) {
+                    if (time >= 1200) {
                         scoreCount += result.score * 2;
                     } else {
                         scoreCount += result.score;
@@ -598,6 +559,100 @@ if (document.querySelector('#canvas-container') && document.querySelector('.time
                     }
                 }
             }
+
+
+            gameBegin () {
+                if (document.querySelector('.time-over')) {
+                    const gameOver = document.querySelector('.time-over');
+                    const gameStop = document.querySelector('.game-stop');
+                    const btnStop = document.querySelector('.time-to-stop');
+                    const btnContinue = document.querySelector('.btn-to-continue');
+                    const nextCheckpoint = document.querySelector('.next-checkpoint');
+                    const processCurrent = document.querySelector('#process-current');
+                    //获取 processBar 需要移动的距离, 并转化为数值
+                    let processWidth = Number((getComputedStyle(processCurrent).width).slice(0, -3));
+                    //每过 1s 后的增量
+                    let smallWidth = processWidth / pub.timeCount;
+                    let currentSmallWidth = smallWidth;
+                    let timeOver = document.querySelector('.time-over');
+                    let btnAgain = document.querySelector('.time-again');
+                    //是否继续游戏
+                    let toContinue = true;
+
+                    //动态设置宽度和高度游戏结束时 页面的 宽度和高度
+                    pub.setWH(gameOver);
+                    pub.setWH(gameStop);
+                    pub.setWH(nextCheckpoint);
+
+                    //游戏暂停
+                    btnStop.addEventListener('click', function () {
+                        gameStop.style.display = 'block';
+                        btnStop.classList.add('time-to-continue');
+
+                        toContinue = false;
+                    },false);
+
+                    //游戏继续
+                    btnContinue.addEventListener('click', function () {
+                        document.querySelector('.time-to-continue').classList.remove('time-to-continue');
+                        gameStop.style.display = 'none';
+
+                        toContinue = true;
+
+                        let timer1 = setInterval(function() {
+                            currentTime += 1;
+
+                            currentSmallWidth += smallWidth;
+                            document.querySelector('#process-current').style.marginLeft = (currentSmallWidth - processWidth) + 'px';
+                            
+                            //如果点击了停止游戏按钮 
+                            if (!toContinue) {
+                                clearInterval(timer1);
+                            }   
+
+                            if (Number(processCurrent.style.marginLeft.slice(0, -3)) >= 0) {
+                                clearInterval(timer1);
+                                console.log('game is over');
+
+                                timeOver.style.display = 'block';
+                            }
+                        }, 1000);
+                    }, false);
+
+                    //重新游戏
+                    btnAgain.addEventListener('click', function(e) {
+                        timeOver.style.display = 'none';
+                    }, false);
+                
+                    //设置计时滚动条的滑动 和 重新游戏
+                    let timer1 = setInterval(function() {
+                        //如果点击了停止游戏按钮 
+                        if (!toContinue) {
+                            clearInterval(timer1);
+                        }
+
+                        currentTime += 1;
+                        currentSmallWidth += smallWidth;
+                        document.querySelector('#process-current').style.marginLeft = (currentSmallWidth - processWidth) + 'px';
+
+                        if (Number(processCurrent.style.marginLeft.slice(0, -3)) >= 0) {
+                            clearInterval(timer1);
+                            console.log('game is over');
+
+                            // 如果是闯关模式
+                            if (pubdata.score > 10000) {
+                                timeOver.style.display = 'block';
+                                console.log('闯关失败');
+                            } else if (window.location.href.indexOf('pass') > -1) {
+                                nextCheckpoint.style.display = 'block';
+                            } else {
+                                timeOver.style.display = 'block';
+                            }
+                        }
+                    }, 1000);
+                }
+            }
+            
         }
 
         class Animal {
@@ -782,6 +837,7 @@ if (document.querySelector('#canvas-container') && document.querySelector('.time
             } 
             stage.drawStage();
 
+            //如果没有可以消去的元素, 重绘当前页面
             setTimeout(function () {
                 if (!stage.nextTouchToDisslove()) {
                     stage.drawAllStage();

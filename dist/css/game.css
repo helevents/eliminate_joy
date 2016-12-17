@@ -57,6 +57,7 @@
 .time-btn span {
     color: #FFB23B;
 }
+
 .time-btn cite {
     color: #FF7764;
 }
@@ -99,6 +100,7 @@
     z-index: 2;
     box-sizing: border-box;
 }
+
 #process-current {
     display: block;
     width: 6.27rem;
@@ -109,25 +111,32 @@
     // position: relative;
     // z-index: 0;
     transition: margin-left 1s;
-    -moz-transition: margin-left 1s; /* Firefox 4 */
-    -webkit-transition: margin-left 1s; /* Safari 和 Chrome */
-    -o-transition: margin-left 1s; /* Opera */
+    -moz-transition: margin-left 1s;
+    /* Firefox 4 */
+    -webkit-transition: margin-left 1s;
+    /* Safari 和 Chrome */
+    -o-transition: margin-left 1s;
+    /* Opera */
     transition-timing-function: linear;
-    -moz-transition-timing-function: linear; /* Firefox 4 */
-    -webkit-transition-timing-function: linear; /* Safari 和 Chrome */
-    -o-transition-timing-function: linear; /* Opera */
+    -moz-transition-timing-function: linear;
+    /* Firefox 4 */
+    -webkit-transition-timing-function: linear;
+    /* Safari 和 Chrome */
+    -o-transition-timing-function: linear;
+    /* Opera */
 }
 
-.time-stop {
+.time-to-stop {
     width: 1.253333rem;
     height: 1.253333rem;
     float: right;
+    background-image: url('../images/icon-stop.png');
+    background-size: 100% 100%;
+    background-position: 0 0;
 }
 
-.time-stop img {
-    display: block;
-    width: 1.253333rem;
-    height: 1.253333rem;
+.time-to-continue {
+    background-image: url('../images/stop.png');
 }
 
 .canvas-container {
@@ -145,24 +154,23 @@
     margin: 0.16rem;
 }
 
-.allimg,
-.img-dissloved,
-.img-clicked {
+.imgDiv {
     display: none;
 }
 
-
-//gameover
-
-.time-over {
+.pass1-img, .pass2-img, .pass3-img {
+    display: none;
 }
 
-.time-over-container {
+//gameover
+.time-over,
+.game-stop {}
+
+.time-over-container,
+.game-stop-container {
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
-    background-image: url('../images/gameover-bg.png');
-    background-size: 100% 11.28rem;
     background-position: 0 0;
     background-repeat: no-repeat;
     position: absolute;
@@ -170,16 +178,36 @@
     z-index: 5;
 }
 
+.time-over-container {
+    background-image: url('../images/gameover-bg.png');
+    background-size: 100% 11.28rem;
+}
+
+.game-stop-container {
+}
+
 .time-over-content {
     width: 7.466667rem;
     margin: 0 auto;
-    padding-top: 2.88rem;
     text-align: center;
+}
+
+.time-over-content {
+    padding-top: 2.88rem;
+}
+
+.game-stop-content {
+    width: 100%;
+    height: 6.714rem;
+    background-image: url('../images/game-stop-bg.png');
+    background-size: 100% 6.714rem;
+    margin-top: 4rem;
 }
 
 .time-over-title {
     color: #FFC448;
     font-size: 0.88rem;
+    text-align: center;
 }
 
 .higest-score {
@@ -194,6 +222,25 @@
     padding-top: 0.333333rem;
 }
 
+.score-to-success {
+    width: 6.8rem;
+    margin: 0 auto;
+    height: 1.286rem;
+    background-size: 100% 1.286rem;
+    background-position: 0 0;
+    position: relative;
+    line-height: 1.286rem;
+    text-align: center;
+    margin-top: 0.486rem;
+    color: #FFC347;
+    font-size: 0.573333rem;
+    background-image: url('../images/game-bg-score.png');
+}
+.score-to-end {
+    color: #fff;
+    margin-left: 2px;
+    margin-right: 2px;
+}
 .higest-score:before {
     display: block;
     content: '新纪录';
@@ -218,6 +265,7 @@
     background-color: #ffe7e5;
     border-radius: 0.2rem;
     line-height: 0.586667rem;
+    text-align: center;
 }
 
 .time-over-detail {
@@ -267,4 +315,71 @@
     width: 2.266667rem;
     height: 2.266667rem;
 }
+
+.game-stop .time-over-btn {
+    width: 4.571rem;
+    height: 1.886rem;
+    margin: 0 auto;
+    margin-top: 0.343rem;
+}
+
+.btn-to-continue {
+    width: 1.857rem;
+    height: 1.857rem;
+    background-position: 0 0;
+    background-size: 100% 100%;
+}
+.game-stop .time-over-title {
+    padding-top: 1.143rem;
+}
+
+
+.next-checkpoint {
+    
+}
+.checkpoint-container {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    position: absolute;
+    top: 0;
+    z-index: 5;
+    color: #FFCD70;
+    text-align: center;
+}
+.next-pass {
+    width: 5.429rem;
+    font-size: 1.0rem;
+    margin: 0 auto;
+}
+.congratulate {
+    width: 7.2rem;
+    font-size: 0.8rem;
+    position: relative;
+    margin: 0 auto;
+    margin-top: 5.857rem;
+}
+
+.congratulate:before, .congratulate:after {
+    content: '';
+    display: block;
+    width: 1.057rem;
+    height: 0.886rem;
+    background-size: 100% 100%;
+    background-position: 0 0;
+    position: absolute;
+    top: -0.657rem;
+}
+
+.congratulate:before {
+    background-image: url('../images/star-left.png');
+    left: -1.007rem;
+}
+
+.congratulate:after {
+    background-image: url('../images/start-right.png');
+    right: -1.007rem;
+}
+
+
 
