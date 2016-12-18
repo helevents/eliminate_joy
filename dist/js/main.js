@@ -10,12 +10,20 @@ if (document.querySelector('#canvas-container') && document.querySelector('.time
     const btnStop = document.querySelector('.time-to-stop');
     //如果没有可以消去的小建筑
     const noDissloved = document.querySelector('.no-dissloved');
+    let currentUrl = window.location.href;
+
+    if (document.querySelector('.result-score')) {
+        var gameOverScore = document.querySelector('.result-score');
+    }
 
     $(document).ready(() => {
+        
+        //根据不同的dataDpr，图片的宽度不同
+        const dataDpr = Number(document.querySelector('html').getAttribute('data-dpr'));
 
         const conNum = {
-            width: parseInt((window.getComputedStyle(container, null).getPropertyValue('width')).slice(0, -2)) - 12, 
-            height: parseInt((window.getComputedStyle(container, null).getPropertyValue('height')).slice(0, -2)) - 12
+            width: parseInt((window.getComputedStyle(container, null).getPropertyValue('width')).slice(0, -2)) - dataDpr * 13, 
+            height: parseInt((window.getComputedStyle(container, null).getPropertyValue('height')).slice(0, -2)) - dataDpr * 13
         };
 
         const pub = {
@@ -28,7 +36,7 @@ if (document.querySelector('#canvas-container') && document.querySelector('.time
             imgWidth: (conNum.width) / 6,
             imgHeight: (conNum.height) / 8,
             //每个模式需要的时间
-            timeCount: 10,
+            timeCount: 100,
             //闯关模式各关 通关 需要达到的分数
             passOneNeddScore: 10,
             passTwoNeedScore: 10,
@@ -156,12 +164,11 @@ if (document.querySelector('#canvas-container') && document.querySelector('.time
             //为所有模式添加事件
             drawAllStage () {
                 stage.drawBeginStage();
-                //根据不同的模式填充不同的图片
-                const currentHref = window.location.href;
 
-                if (currentHref.indexOf('time') > -1 || currentHref.indexOf('one') > -1) {
+                //根据不同的模式填充不同的图片
+                if (currentUrl.indexOf('time') > -1 || currentUrl.indexOf('one') > -1) {
                     stage.drawTimeStage();
-                } else if (currentHref.indexOf('two') > -1) {
+                } else if (currentUrl.indexOf('two') > -1) {
                     stage.drawPassTwo();
                 } 
             }
@@ -588,6 +595,14 @@ if (document.querySelector('#canvas-container') && document.querySelector('.time
                         var nextCheckpoint = document.querySelector('.next-checkpoint');
                         pub.setWH(nextCheckpoint);
                     }
+
+                    if (currentUrl.indexOf('two')) {
+                        pubdata.score = localStorage.getItem('passOneScore');
+                        gameOverScore.innerHTML = pubdata.score;
+                    } else if (currentUrl.indexOf('three')) {
+                        pubdata.score = localStorage.getItem('passTwoNeedScore') + localStorage.getItem('passOneScore');
+                        gameOverScore.innerHTML = pubdata.score;
+                    }
                     
                     //游戏暂停
                     btnStop.addEventListener('click', function () {
@@ -607,8 +622,8 @@ if (document.querySelector('#canvas-container') && document.querySelector('.time
                         let timer1 = setInterval(function() {
                             currentTime += 1;
 
-                            currentSmallWidth += smallWidth;
                             document.querySelector('#process-current').style.marginLeft = (currentSmallWidth - processWidth) + 'px';
+                            currentSmallWidth += smallWidth;
                             
                             //如果点击了停止游戏按钮 
                             if (!toContinue) {
@@ -620,7 +635,6 @@ if (document.querySelector('#canvas-container') && document.querySelector('.time
 
                                 //如果为闯关模式
                                  if (window.location.href.indexOf('pass') > -1) {
-                                     let currentUrl = window.location.href;
                                      if (nextCheckpoint) {
                                          nextCheckpoint.style.display = 'block';
                                          //第一关
@@ -646,7 +660,7 @@ if (document.querySelector('#canvas-container') && document.querySelector('.time
 
                                          setTimeout(function () {
                                              nextCheckpoint.style.display = 'none';
-                                         }, 1000);
+                                         }, 2000);
                                      //第三关
                                      } else {
                                          localStorage.setItem('passThreeScore', pubdata.score);
@@ -674,15 +688,14 @@ if (document.querySelector('#canvas-container') && document.querySelector('.time
                         }
 
                         currentTime += 1;
-                        currentSmallWidth += smallWidth;
                         document.querySelector('#process-current').style.marginLeft = (currentSmallWidth - processWidth) + 'px';
+                        currentSmallWidth += smallWidth;
 
-                        if (Number(processCurrent.style.marginLeft.slice(0, -3)) >= 0) {
+                        if (Number(processCurrent.style.marginLeft.slice(0, -3)) > -smallWidth+1) {
                             clearInterval(timer1);
 
                             //如果为闯关模式
                              if (window.location.href.indexOf('pass') > -1) {
-                                let currentUrl = window.location.href;
                                 if (nextCheckpoint) {
                                     nextCheckpoint.style.display = 'block';
                                     //第一关
@@ -690,7 +703,7 @@ if (document.querySelector('#canvas-container') && document.querySelector('.time
                                         localStorage.setItem('passOneScore', pubdata.score);
                                         //如果闯关成功
                                         if (pubdata.score > pub.passOneNeddScore) {
-                                            window.location.href = currentUrl.replace('one', 'two');   
+                                            window.location.href = currentUrl.replace('one', 'two'); 
                                         //闯关失败 
                                         } else {
                                             timeOver.style.display = 'block';
@@ -708,7 +721,7 @@ if (document.querySelector('#canvas-container') && document.querySelector('.time
 
                                     setTimeout(function () {
                                         nextCheckpoint.style.display = 'none';
-                                    }, 1000);
+                                    }, 2000);
                                 //第三关
                                 } else {
                                     localStorage.setItem('passThreeScore', pubdata.score);
@@ -769,10 +782,7 @@ if (document.querySelector('#canvas-container') && document.querySelector('.time
 
         let stage = new Stage();
 
-
         stage.gameBegin();
-
-        console.log(localStorage);
 
         // 游戏刚开始时填充图片
         stage.drawAllStage();
