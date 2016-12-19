@@ -50,11 +50,14 @@
 }
 .rank-btn-time {
     float: left;
-    background-image: url('../images/rank-btn-time.png');
+    background-image: url('../images/rank-btn-pass.png');
 }
 .rank-btn-pass {
     float: right;
     background-image: url('../images/rank-btn-pass.png');
+}
+.rank-clicked {
+    background-image: url('../images/rank-btn-time.png');
 }
 
 .rank-detail {
@@ -127,4 +130,9 @@
 .rank-list-top .rank-name, 
 .rank-list-top .rank-score {
     color: #FF7265;
+}
+
+.rank-detail {
+    height: 8.0rem;
+    overflow: hidden;
 }

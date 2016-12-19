@@ -12,8 +12,8 @@ if (document.querySelector('#canvas-container') && document.querySelector('.time
     const noDissloved = document.querySelector('.no-dissloved');
     let currentUrl = window.location.href;
 
-    if (document.querySelector('.result-score')) {
-        var gameOverScore = document.querySelector('.result-score');
+    if (document.querySelector('.higest-score p')) {
+        var gameOverScore = document.querySelector('.higest-score p');
     }
 
     $(document).ready(() => {
@@ -36,11 +36,11 @@ if (document.querySelector('#canvas-container') && document.querySelector('.time
             imgWidth: (conNum.width) / 6,
             imgHeight: (conNum.height) / 8,
             //每个模式需要的时间
-            timeCount: 100,
+            timeCount: 60,
             //闯关模式各关 通关 需要达到的分数
-            passOneNeddScore: 10,
-            passTwoNeedScore: 10,
-            passThreeNeedScore: 10,
+            passOneNeddScore: 300,
+            passTwoNeedScore: 300,
+            passThreeNeedScore: 300,
             //当图片的移动位移超过 halfwidth 时, 会进行上下左右的移动
             halfWidth: 20,
             allImgs: document.querySelector('.allimg').children,
@@ -585,6 +585,7 @@ if (document.querySelector('#canvas-container') && document.querySelector('.time
                     let btnAgain = document.querySelector('.time-again');
                     //是否继续游戏
                     let toContinue = true;
+                    const scoreToEnd = document.querySelector('.score-to-end');
 
                     //动态设置宽度和高度游戏结束时 页面的 宽度和高度
                     pub.setWH(gameOver);
@@ -596,18 +597,34 @@ if (document.querySelector('#canvas-container') && document.querySelector('.time
                         pub.setWH(nextCheckpoint);
                     }
 
-                    if (currentUrl.indexOf('two')) {
-                        pubdata.score = localStorage.getItem('passOneScore');
-                        gameOverScore.innerHTML = pubdata.score;
-                    } else if (currentUrl.indexOf('three')) {
-                        pubdata.score = localStorage.getItem('passTwoNeedScore') + localStorage.getItem('passOneScore');
-                        gameOverScore.innerHTML = pubdata.score;
+                    //设置 闯关模式 开始时 的分数
+                    if (currentUrl.indexOf('two') > -1) {
+                        pubdata.score = Number(localStorage.getItem('passOneScore'));
+                    } else if (currentUrl.indexOf('three') > -1) {
+                        pubdata.score = Number(localStorage.getItem('passTwoScore'));
                     }
+                    gameOverScore.innerHTML = pubdata.score;
                     
                     //游戏暂停
                     btnStop.addEventListener('click', function () {
+                        var timeStopScore = 0; 
+
                         gameStop.style.display = 'block';
                         btnStop.classList.add('time-to-continue');
+
+                        //设置距离目标还有多少分
+                        if (currentUrl.indexOf('one') > -1) {
+                            timeStopScore = pub.passOneNeddScore - pubdata.score;
+                        } else if (currentUrl.indexOf('two') > -1) {
+                            timeStopScore = pub.passTwoNeedScore - pubdata.score;
+                        } else if (currentUrl.indexOf('three') > -1) {
+                            timeStopScore = pub.passThreeNeedScore - pubdata.score;
+                        }
+
+                        if (timeStopScore < 0) {
+                            timeStopScore = 0;
+                        }
+                        scoreToEnd.innerHTML = timeStopScore;
 
                         toContinue = false;
                     },false);
@@ -628,9 +645,7 @@ if (document.querySelector('#canvas-container') && document.querySelector('.time
                             //如果点击了停止游戏按钮 
                             if (!toContinue) {
                                 clearInterval(timer1);
-                            }   
-
-                            if (Number(processCurrent.style.marginLeft.slice(0, -3)) >= 0) {
+                            } else if (Number(processCurrent.style.marginLeft.slice(0, -3)) > -smallWidth+1) {
                                 clearInterval(timer1);
 
                                 //如果为闯关模式
@@ -642,7 +657,9 @@ if (document.querySelector('#canvas-container') && document.querySelector('.time
                                              localStorage.setItem('passOneScore', pubdata.score);
                                              //如果闯关成功
                                              if (pubdata.score > pub.passOneNeddScore) {
-                                                 window.location.href = currentUrl.replace('one', 'two');   
+                                                 setTimeout(function () {
+                                                    window.location.href = currentUrl.replace('one', 'two');
+                                                 }, 2000);   
                                              //闯关失败 
                                              } else {
                                                  timeOver.style.display = 'block';
@@ -652,7 +669,9 @@ if (document.querySelector('#canvas-container') && document.querySelector('.time
                                              localStorage.setItem('passTwoScore', pubdata.score);
 
                                              if (pubdata.score > pub.passTwoNeedScore) {
-                                                 window.location.href = currentUrl.replace('two', 'three');
+                                                 setTimeout(function () {
+                                                    window.location.href = currentUrl.replace('two', 'three');
+                                                }, 2000);
                                              } else {
                                                  timeOver.style.display = 'block';
                                              }
@@ -671,6 +690,7 @@ if (document.querySelector('#canvas-container') && document.querySelector('.time
                                      localStorage.setItem('timeScore', pubdata.score);
                                      timeOver.style.display = 'block';
                                  }
+                                 gameOverScore.innerHTML = pubdata.score;
                             }
                         }, 1000);
                     }, false);
@@ -695,43 +715,48 @@ if (document.querySelector('#canvas-container') && document.querySelector('.time
                             clearInterval(timer1);
 
                             //如果为闯关模式
-                             if (window.location.href.indexOf('pass') > -1) {
-                                if (nextCheckpoint) {
-                                    nextCheckpoint.style.display = 'block';
-                                    //第一关
-                                    if (currentUrl.indexOf('one') > -1) {
-                                        localStorage.setItem('passOneScore', pubdata.score);
-                                        //如果闯关成功
-                                        if (pubdata.score > pub.passOneNeddScore) {
-                                            window.location.href = currentUrl.replace('one', 'two'); 
-                                        //闯关失败 
-                                        } else {
-                                            timeOver.style.display = 'block';
-                                        }
-                                    //第二关
-                                    } else if (currentUrl.indexOf('two') > -1) {
-                                        localStorage.setItem('passTwoScore', pubdata.score);
+                              if (window.location.href.indexOf('pass') > -1) {
+                                  if (nextCheckpoint) {
+                                      nextCheckpoint.style.display = 'block';
+                                      //第一关
+                                      if (currentUrl.indexOf('one') > -1) {
+                                          localStorage.setItem('passOneScore', pubdata.score);
+                                          //如果闯关成功
+                                          if (pubdata.score > pub.passOneNeddScore) {
+                                              setTimeout(function () {
+                                                 window.location.href = currentUrl.replace('one', 'two');
+                                              }, 2000);   
+                                          //闯关失败 
+                                          } else {
+                                              timeOver.style.display = 'block';
+                                          }
+                                      //第二关
+                                      } else if (currentUrl.indexOf('two') > -1) {
+                                          localStorage.setItem('passTwoScore', pubdata.score);
 
-                                        if (pubdata.score > pub.passTwoNeedScore) {
-                                            window.location.href = currentUrl.replace('two', 'three');
-                                        } else {
-                                            timeOver.style.display = 'block';
-                                        }
-                                    }
+                                          if (pubdata.score > pub.passTwoNeedScore) {
+                                              setTimeout(function () {
+                                                 window.location.href = currentUrl.replace('two', 'three');
+                                             }, 2000);
+                                          } else {
+                                              timeOver.style.display = 'block';
+                                          }
+                                      }
 
-                                    setTimeout(function () {
-                                        nextCheckpoint.style.display = 'none';
-                                    }, 2000);
-                                //第三关
-                                } else {
-                                    localStorage.setItem('passThreeScore', pubdata.score);
-                                    timeOver.style.display = 'block';
-                                }
-                            //计时模式
-                            } else {
-                                localStorage.setItem('timeScore', pubdata.score);
-                                timeOver.style.display = 'block';
-                            }
+                                      setTimeout(function () {
+                                          nextCheckpoint.style.display = 'none';
+                                      }, 2000);
+                                  //第三关
+                                  } else {
+                                      localStorage.setItem('passThreeScore', pubdata.score);
+                                      timeOver.style.display = 'block';
+                                  }
+                              //计时模式
+                              } else {
+                                  localStorage.setItem('timeScore', pubdata.score);
+                                  timeOver.style.display = 'block';
+                              }
+                              gameOverScore.innerHTML = pubdata.score;
                         }
                     }, 1000);
                 }
@@ -939,4 +964,65 @@ if (document.querySelector('#canvas-container') && document.querySelector('.time
             pubdata.moveFlag = false;
         });
     });
+}
+
+//排行榜 点击进入下一页
+if (document.querySelector('.rank-btn-time')) {
+    let btnTime = document.querySelector('.rank-btn-time');
+    let btnPass = document.querySelector('.rank-btn-pass');
+    let timeLists = document.querySelector('.rank-time-list');
+    let passLists = document.querySelector('.rank-pass-list');
+    let toNextPage = document.querySelector('.to-nextpage');
+    //判断当前显示的是 哪个模式 
+    let nowLists = 'time';
+    //判断 下一次被点击次数
+    let clickCount = 0;
+
+    btnTime.addEventListener('click', function () {
+        timeLists.style.display = 'block';
+        passLists.style.display = 'none';
+
+        let clicked = document.querySelector('.rank-clicked');
+        clicked.classList.remove('rank-clicked');
+        btnTime.classList.add('rank-clicked');
+
+        nowLists = 'time';
+    }, false);
+
+    btnPass.addEventListener('click', function () {
+        timeLists.style.display = 'none';
+        passLists.style.display = 'block';
+
+        let clicked = document.querySelector('.rank-clicked');
+        clicked.classList.remove('rank-clicked');
+        btnPass.classList.add('rank-clicked');
+
+        nowLists = 'pass';
+    }, false);
+
+    toNextPage.addEventListener('click', function () {
+        let lists, len;
+
+        clickCount++;
+
+        if (nowLists == 'pass') {
+            lists = passLists.children;
+            len = lists.length;
+        } else if (nowLists == 'time') {
+            lists = timeLists.children;
+            len = lists.length;
+        }
+
+        //消去 6 ＊ clickCount 个list，实现分页效果
+        if (clickCount <= 5) {
+            for (let j = 1; j <= clickCount; j++) {
+                for (let i = 0; i < len; i++) {
+                    if (i < 6 * clickCount) {
+                        lists[i].style.display = 'none';
+                    }
+                }
+            }
+        }
+        
+    }, false);
 }
