@@ -1,35 +1,24 @@
-var webpack = require('webpack');
-var commonsPlugin = new webpack.optimize.CommonsChunkPlugin('common.js');
- 
+const webpack = require('webpack')
+const path = require('path')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+
+const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
+    template: './client/index.html',
+    filename: 'index.html',
+    inject: 'body'
+})
+
 module.exports = {
-    //插件项
-    plugins: [commonsPlugin],
-    //页面入口文件配置
-    entry: {
-        index : './src/js/page/index.js'
-    },
-    //入口文件输出配置
+    entry: './client/index.js',
     output: {
-        path: 'dist/js/page',
-        filename: '[name].js'
+        path: path.resolve('dist'),
+        filename: 'index_bundle.js'
     },
     module: {
-        //加载器配置
         loaders: [
-            { test: /\.css$/, loader: 'style-loader!css-loader' },
-            { test: /\.js$/, loader: 'jsx-loader?harmony' },
-            { test: /\.scss$/, loader: 'style!css!sass?sourceMap'},
-            { test: /\.(png|jpg)$/, loader: 'url-loader?limit=8192'}
+            { test: /\.js$/, loader: 'babel-loader', exclude: /node_modules/ },
+            { test: /\.jsx$/, loader: 'babel-loader', exclude: /node_modules/ }
         ]
-    },
-    //其它解决方案配置
-    resolve: {
-        root: 'E:/github/flux-example/src', //绝对路径
-        extensions: ['', '.js', '.json', '.scss'],
-        alias: {
-            AppStore : 'js/stores/AppStores.js',
-            ActionType : 'js/actions/ActionType.js',
-            AppAction : 'js/actions/AppAction.js'
-        }
     }
-};
+}

@@ -1,4 +1,3 @@
-
 $(window).on('scroll.elasticity', function (e){
     e.preventDefault();
 }).on('touchmove.elasticity', function(e){
