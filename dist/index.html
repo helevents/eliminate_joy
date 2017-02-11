@@ -7,32 +7,231 @@
     <script src="js/mobileAdaption.js"></script>
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <link rel="stylesheet" type="text/css" href="css/index.css">
+    <link rel="stylesheet" href="css/game.css">
+    <link rel="stylesheet" href="css/rank.css">
+    <link rel="stylesheet" href="font_1480255822072/font.css">
 </head>
 
 <body>
     <!-- 首页 --> 
-    <div class="container">
+    <!-- <div class="container">
         <img src="images/main-background.png" class="main-background">
         <div class="homepage-content">
             <div class="main-img">
                 <img src="images/main-title.png">
             </div>
             <div class="modes">
-                <a href="html/time.html" class="mode-time">
+                <a href="#" class="mode-time">
                     <img src="images/main-btn-time.png" alt="">
                 </a>
-                <a href="html/pass.one.html" class="mode-pass-through">
+                <a href="#" class="mode-pass-through">
                     <img src="images/main-btn-through.png" alt="">
                 </a>
-                <a href="html/rank.html" class="ranking-list">
+                <a href="#" class="ranking-list">
                     <img src="images/main-btn-rank.png" alt="">
                 </a>
             </div>
+            <h5>©红岩网校工作站</h5>
+        </div>
+    </div> -->
+
+    <div id="container game-container" class="container" style="display: block;">
+        <img src="./images/game-time-bg.png" class="game-background" alt="">
+        <div class="homepage-content">
+            <div class="time-title-content">
+                <div class="time-text">
+                    <div class="time-score-record">
+                        <div class="time-btn time-score">
+                            <span>得分</span>
+                            <cite>1234</cite>
+                        </div>
+                        <div class="time-btn time-record">
+                            <span>记录</span>
+                            <cite>1234</cite>
+                        </div>
+                    </div>
+                    <div class="time-bar">
+                        <img id="process-current" src="./images/game-time-processbar-current.png" alt="">
+                    </div>
+                </div>
+                <div class="time-to-stop"></div>
+            </div>
+        </div>
+        <div id="canvas-container" class="canvas-container">
+            <canvas id="canvas" class="canvas"></canvas>
         </div>
     </div>
+
+    <div class="time-over" style="display: none;">
+        <div class="time-over-container">
+            <div class="time-over-content">
+                <h1 class="time-over-title">游戏结束</h1>
+                <div class="higest-score">
+                    <p class="result-score">24597</p>
+                </div>
+                <div class="time-over-detail">
+                    <p>
+                        当前模式排名
+                        <span class="time-rank">14</span>
+                        名
+                    </p>
+                    <p>
+                        历史最高纪录
+                        <span class="time-higest-score">343434</span>
+                        分
+                    </p>
+                </div>
+                <div class="time-over-btn">
+                    <a href="#" class="time-lbtn">
+                        <img src="./images/gameover-back.png" alt="">
+                    </a>
+                    <a href="#" class="time-again">
+                        <img src="./images/gameover-again.png" alt="">
+                    </a>
+                    <a href="" class="time-rbtn">
+                        <img src="./images/gameover-share.png" alt="">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="no-dissloved" style="display: none;">
+        <div class="no-dissloved-container">
+            <p class="congratulate no-dissloved-text">没有可以消去的小建筑了</p>
+        </div>
+    </div>
+
+    <div class="game-stop time-stop" style="display: none;">
+        <div class="game-stop-container">
+            <div class="game-stop-content">
+                <h1 class="time-over-title">暂停</h1>
+                <div class="score-to-success">
+                    <span class="score-to-end">24597</span>
+                </div>
+                <div class="time-over-btn">
+                    <a href="#" class="time-lbtn">
+                        <img src="./images/gameover-back.png" alt="">
+                    </a>
+                    <div class="btn-to-continue time-to-stop time-to-continue"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="small-imgs">
+        <div class="time-imgs img-div">
+            <div class="allimg">
+                <img src="./images/game-ani-3c.png" alt="">
+                <img src="./images/game-ani-8c.png" alt="">
+                <img src="./images/game-ani-badge.png" alt="">
+                <img src="./images/game-ani-msg.png" alt="">
+                <img src="./images/game-ani-newlib.png" alt="">
+            </div>
+            <div class="img-clicked">
+                <img src="./images/clicked-3c.png" alt="">
+                <img src="./images/clicked-8c.png" alt="">
+                <img src="./images/clicked-badge.png" alt="">
+                <img src="./images/clicked-msg.png" alt="">
+                <img src="./images/clicked-newlib.png" alt="">
+            </div>
+            <div class="img-dissloved">
+                <img src="./images/dissloved-3c.png" alt="">
+                <img src="./images/dissloved-8c.png" alt="">
+                <img src="./images/dissloved-school.png" alt="">
+                <img src="./images/dissloved-msg.png" alt="">
+                <img src="./images/dissloved-newlib.png" alt="">
+            </div>
+        </div>
+
+        <div class="pass-one-imgs img-div">
+            <div class="allimg">
+                <img src="./images/pass1-15.png" alt="">
+                <img src="./images/pass1-30.png" alt="">
+                <img src="./images/pass1-32.png" alt="">
+                <img src="./images/pass1-5.png" alt="">
+                <img src="./images/pass1-8.png" alt="">
+            </div>
+            <div class="img-clicked">
+                <img src="./images/pass1-clicked-15.png" alt="">
+                <img src="./images/pass1-clicked-30.png" alt="">
+                <img src="./images/pass1-clicked-32.png" alt="">
+                <img src="./images/pass1-clicked-5.png" alt="">
+                <img src="./images/pass1-clicked-8.png" alt="">
+            </div>
+            <div class="img-dissloved">
+                <img src="./images/pass1-dissloved-15.png" alt="">
+                <img src="./images/pass1-dissloved-30.png" alt="">
+                <img src="./images/pass1-dissloved-32.png" alt="">
+                <img src="./images/pass1-dissloved-5.png" alt="">
+                <img src="./images/pass1-dissloved-8.png" alt="">
+            </div>
+        </div>
+
+        <div class="pass-two-imgs img-div">
+            <div class="allimg">
+                <img src="./images/pass2-2c.png" alt="">
+                <img src="./images/pass2-gym.png" alt="">
+                <img src="./images/pass2-yifulou.png" alt="">
+                <img src="./images/game-ani-3c.png" alt="">
+                <img src="./images/game-ani-8c.png" alt="">
+            </div>
+            <div class="img-clicked">
+                <img src="./images/pass2-clicked-2c.png" alt="">
+                <img src="./images/pass2-clicked-gym.png" alt="">
+                <img src="./images/pass2-clicked-yifulou.png" alt="">
+                <img src="./images/clicked-3c.png" alt="">
+                <img src="./images/clicked-8c.png" alt="">
+            </div>
+            <div class="img-dissloved">
+                <img src="./images/pass2-dissloved-2c.png" alt="">
+                <img src="./images/pass2-dissloved-gym.png" alt="">
+                <img src="./images/pass2-dissloved-yifulou.png" alt="">
+                <img src="./images/dissloved-3c.png" alt="">
+                <img src="./images/dissloved-8c.png" alt="">
+            </div>
+        </div>
+
+        <div class="pass-three-imgs img-div">
+            <div class="allimg">
+                <img src="./images/pass3-art.png" alt="">
+                <img src="./images/pass3-dorm.png" alt="">
+                <img src="./images/pass3-hard.png" alt="">
+                <img src="./images/pass3-redrock.png" alt="">
+                <img src="./images/pass3-science.png" alt="">
+                <img src="./images/pass3-volunte.png" alt="">
+                <img src="./images/pass3-youth.png" alt="">
+                <img src="./images/pass3-stuUnion.png" alt="">
+                <img src="./images/pass3-societyUnion.png" alt="">
+            </div>
+            <div class="img-clicked">
+                <img src="./images/pass3-clicked-art.png" alt="">
+                <img src="./images/pass3-clicked-dorm.png" alt="">
+                <img src="./images/pass3-clicked-hard.png" alt="">
+                <img src="./images/pass3-clicked-redrock.png" alt="">
+                <img src="./images/pass3-clicked-science.png" alt="">
+                <img src="./images/pass3-clicked-volunte.png" alt="">
+                <img src="./images/pass3-clicked-youth.png" alt="">
+                <img src="./images/pass3-clicked-stuUnion.png" alt="">
+                <img src="./images/pass3-clicked-societyUnion.png" alt="">
+            </div>
+            <div class="img-dissloved">
+                <img src="./images/pass3-dissloved-art.png" alt="">
+                <img src="./images/pass3-dissloved-dorm.png" alt="">
+                <img src="./images/pass3-dissloved-hard.png" alt="">
+                <img src="./images/pass3-dissloved-redrock.png" alt="">
+                <img src="./images/pass3-dissloved-science.png" alt="">
+                <img src="./images/pass3-dissloved-volunte.png" alt="">
+                <img src="./images/pass3-dissloved-youth.png" alt="">
+                <img src="./images/pass3-dissloved-stuUnion.png" alt="">
+                <img src="./images/pass3-dissloved-societyUnion.png" alt="">
+            </div>
+        </div>
+    </div>
+
     <script src="./js/zepto.js"></script>
     <script src="./js/main.js"></script>
-    <script src="./js/clearStorge.js"></script>
+    <script src="js/rankList.js"></script>
 </body>
 
 </html>

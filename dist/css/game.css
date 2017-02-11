@@ -13,6 +13,9 @@
     background-image: url('../images/game-time-title.png');
     background-position: 0 0;
     background-size: 100% 100%;
+    margin-bottom: 0.346667rem;
+    position: absolute;
+    top: 0;
 }
 
 .time-title-content {
@@ -42,8 +45,6 @@
     background-image: url('../images/game-time-bg-record&score.png');
     background-position: 0 0;
     background-size: 100% 100%;
-    // -webkit-text-stroke: 1px #fff;
-    // text-shadow: #fff 0 1px 0;
 }
 
 .time-score {
@@ -94,6 +95,7 @@
     width: 6.27rem;
     height: 0.30rem;
     margin: 0.026667rem;
+    margin-top: 0.03rem;
     margin-left: -6.27rem;
     transition: margin-left 1s;
     -moz-transition: margin-left 1s;
@@ -126,13 +128,13 @@
 
 .canvas-container {
     width: 8.8rem;
-    height: 12.533333rem;
+    height: 10.833333rem;
     margin: 0 auto;
     background-image: url('../images/game-time-border.png');
     background-position: 0 0;
     background-repeat: no-repeat;
-    background-size: 8.8rem 12.533333rem;
-    margin-top: 0.346667rem;
+    background-size: 100% 100%;
+    margin-top: 3rem;
 }
 
 .canvas {
@@ -149,11 +151,12 @@
 
 //gameover
 .time-over,
-.game-stop {}
+.game-stop,
+.no-dissloved {}
 
 .time-over-container,
 .game-stop-container,
-.no-dissloved {
+.no-dissloved-container {
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
@@ -186,14 +189,19 @@
     width: 100%;
     height: 6.714rem;
     background-image: url('../images/game-stop-bg.png');
-    background-size: 100% 6.714rem;
+    background-size: 100% 100%;
     margin-top: 4rem;
+}
+
+.time-stop ..game-stop-content {
+    height: 5.714rem;
 }
 
 .time-over-title {
     color: #FFC448;
     font-size: 0.88rem;
     text-align: center;
+    padding-bottom: 0.3rem;
 }
 
 .higest-score {
@@ -217,10 +225,14 @@
     background-repeat: no-repeat;
     position: relative;
     text-align: center;
-    margin-top: 0.486rem;
+    margin-top: 0.286rem;
     color: #FFC347;
     background-image: url('../images/game-bg-score.png');
     font-size: 0.286rem;
+}
+
+.time-stop .score-to-success {
+    margin-top: 0.486rem;
 }
 
 .score-to-end {
@@ -235,10 +247,10 @@
 .score-to-end:after {
     content: '距离目标';
     display: block;
-    width: 1.2rem;
+    width: 2rem;
     height: 0.286rem;
     position: absolute;
-    left: -1.286rem;
+    left: -1.686rem;
     top: -0.34rem;
     color: #FFC448;
     font-size: 0.286rem;
@@ -258,7 +270,7 @@
 }
 .higest-score:before {
     display: block;
-    content: '新纪录';
+    content: attr(data-class);
     position: absolute;
     top: 0.48rem;
     left: 0.96rem;
@@ -296,11 +308,10 @@
 
 .time-over-btn {
     width: 100%;
-    display: -webkit-flex;
-    /* Safari */
+    /*display: -webkit-flex;
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: center;*/
 }
 
 .time-over-btn a {
@@ -364,12 +375,12 @@
 }
 .next-pass {
     width: 5.429rem;
-    font-size: 1.0rem;
+    font-size: 0.8rem;
     margin: 0 auto;
 }
 .congratulate {
     width: 7.2rem;
-    font-size: 0.8rem;
+    font-size: 0.6rem;
     position: relative;
     margin: 0 auto;
     margin-top: 5.857rem;
@@ -405,4 +416,30 @@
     margin-top: 7.857rem;
 }
 
+.time-over-btn {
+    position: relative;
+}
+.time-lbtn {
+    float: left;
+    margin-top: 0.2rem;
+}
 
+.time-rbtn {
+    float: right;
+    position: absolute;
+    right: 0;
+    top: 0.2rem;
+}
+
+.time-again {
+    margin: 0 auto;
+}
+
+.game-stop .time-lbtn {
+    margin-top: 0;
+}
+
+h5 {
+    text-align: center;
+    color: #4B5E5F;
+}
