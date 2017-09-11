@@ -38,6 +38,7 @@
     margin: 0 auto;
     margin-top: 1.866667rem;
     margin-bottom: 2.853333rem;
+    font-family: 'ARTianniuGB Heavy';
     text-align: center;
     padding-top: 0.266667rem;
 }
@@ -48,7 +49,7 @@
     height: 1.733333rem;
     background-repeat: no-repeat;
     background-size: 100% 100%;
-    padding-top: 1.24rem;
+    padding-top: 0.24rem;
 }
 
 .modes img {
@@ -69,13 +70,4 @@
 
 .ranking-list {
     font-size: 0.506667rem;
-}
-
-.img-div {
-    display: none;
-}
-
-.game-container {
-    position: absolute;
-    top: 0;
 }

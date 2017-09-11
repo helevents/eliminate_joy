@@ -14,7 +14,7 @@
 .content {
     width: 9.253333rem;
     margin: 0 auto;
-    /*height: 17.8rem;*/
+    height: 17.8rem;
 }
 .main-content {
     width: 7.466667rem;
@@ -27,7 +27,7 @@
     padding-top: 1.333333rem;
     color: #FFD174;
 }
-.rank-title span {
+.rank-title p {
     font-size: 0.746667rem;
 }
 
@@ -44,7 +44,7 @@
     line-height: 0.933333rem;
     background-size: 100% 100%;
     background-position: 0 0;
-    margin-top: 0.286rem;
+    margin-top: 2.6rem;
     margin-bottom: 0.4rem;
     color: #fff;
 }
@@ -62,21 +62,21 @@
 
 .rank-detail {
     width: 100%;
-    /*height: 7.8rem;*/
 }
 
 .single-detail {
     width: 100%;
-    height: 0.857rem;
+    height: 0.773333rem;
     margin: 0 auto;
     background-color: #FFE7E5;
     border-radius: 0.093333rem;
     border-bottom: 0.026667rem solid #FFE5E3;
     line-height: 0.773333rem;
-    margin-bottom: 0.143rem;
-    /*display: -webkit-flex; 
+    // margin-bottom: 0.146667rem;
+    margin-bottom: 0.26rem;
+    display: -webkit-flex; /* Safari */
     display: flex;
-    justify-content: space-between;*/
+    justify-content: space-between;
     color: #FFC448;
 }
 .single-title {
@@ -132,51 +132,7 @@
     color: #FF7265;
 }
 
-.congratulate:before, .congratulate:after {
-    content: '';
-    display: block;
-    width: 1.057rem;
-    height: 0.886rem;
-    background-size: 100% 100%;
-    background-position: 0 0;
-    position: absolute;
-    top: 1.1rem;
-}
-
-.congratulate:before {
-    background-image: url('../images/star-left.png');
-    left: 2.507rem;
-}
-
-.congratulate:after {
-    background-image: url('../images/start-right.png');
-    right: 2.507rem;
-}
-.rank-cup {
-    display: block;
-    width: 5.357rem;
-    height: 2.5rem;
-    margin: 0 auto;
-}
-.single-detail {
-    position: relative;
-}
-.rank-num {
-    float: left;
-}
-.rank-score {
-    float: right;
-    position: absolute;
-    top: 0;
-    right: 0;
-}
-.rank-name {
-    display: block;
-    width: 3.686rem;
-    margin: 0 auto;
-    text-align: center;
-}
-.rank-time-list, .rank-pass-list {
-    height: 5.8rem;
+.rank-detail {
+    height: 8.0rem;
     overflow: hidden;
 }

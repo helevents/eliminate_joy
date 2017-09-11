@@ -26,6 +26,7 @@
     "gulp-babel": "^6.1.2",
     "gulp-imagemin": "^3.1.1",
     "gulp-less": "^3.3.0",
+<<<<<<< HEAD
     "gulp-uglify": "^2.0.1",
     "less-plugin-autoprefix": "^1.5.1",
     "pump": "^1.0.2"
@@ -46,5 +47,8 @@
     "style-loader": "^0.13.1",
     "webpack": "^2.2.1",
     "webpack-dev-server": "^2.3.0"
+=======
+    "less-plugin-autoprefix": "^1.5.1"
+>>>>>>> parent of f7d813f... webpack
   }
 }
