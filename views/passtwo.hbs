@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>闯关模式第二关</title>
+    <script src="javascripts/mobileAdaption.js"></script>
+    <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
+    <link rel="stylesheet" type="text/css" href="stylesheets/game.css">
+    <link rel="stylesheet" href="font_1480255822072/font-embed.css">
+    <link rel="stylesheet" href="stylesheets/pas.two.css">
+</head>
+
+<body>
+    <div class="pass2-container">
+        <div id="container" class="container">
+            <img src="images/game-time-bg.png" class="game-background" alt="">
+            <div class="homepage-content">
+                <div class="time-title-content">
+                    <div class="time-text">
+                        <div class="time-score-record">
+                            <div class="time-btn time-score">
+                                <span>得分</span>
+                                <cite>0</cite>
+                            </div>
+                            <div class="time-btn time-record">
+                                <span>记录</span>
+                                <cite>0</cite>
+                            </div>
+                        </div>
+                        <div class="time-bar">
+                            <img id="process-current" src="images/game-time-processbar-current.png" alt="">
+                        </div>
+                    </div>
+                    <div class="time-to-stop"></div>
+                </div>
+            </div>
+            <div id="canvas-container" class="canvas-container">
+                <canvas id="canvas" class="canvas"></canvas>
+            </div>
+            <!-- <h5>©红岩网校工作站</h5> -->
+        </div>
+
+        <div class="next-checkpoint" style="display: none;">
+            <div class="checkpoint-container">
+                <p class="congratulate">恭喜你达到目标分数</p>
+                <p class="next-pass">进入第三关</p>
+            </div>
+        </div>
+
+        <div class="time-over" style="display: none;">
+            <div class="time-over-container">
+                <div class="time-over-content">
+                    <h1 class="time-over-title">游戏结束</h1>
+                    <div class="higest-score" data-class="新纪录">
+                        <p>24597</p>
+                    </div>
+                    <div class="time-over-detail">
+                        <p>
+                            当前模式排名
+                            <span class="time-rank">0</span>
+                            名
+                        </p>
+                        <p>
+                            历史最高纪录
+                            <span class="time-higest-score">0</span>
+                            分
+                        </p>
+                    </div>
+                    <div class="time-over-btn">
+                        <a href="/" class="time-lbtn">
+                            <img src="images/gameover-back.png" alt="">
+                        </a>
+                        <a href="passtwo" class="time-again">
+                            <img src="images/gameover-again.png" alt="">
+                        </a>
+                        <a href="/" class="time-rbtn">
+                            <img src="images/gameover-share.png" alt="">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="no-dissloved" style="display: none;">
+            <div class="no-dissloved-container">
+                <p class="congratulate no-dissloved-text">没有可以消去的小建筑了</p>
+            </div>
+        </div>
+
+        <div class="game-stop" style="display: none;">
+            <div class="game-stop-container">
+                <div class="game-stop-content">
+                    <h1 class="time-over-title">暂停</h1>
+                    <div class="score-to-success">
+                        <span class="score-to-end">0</span>
+                    </div>
+                    <div class="time-over-btn">
+                        <a href="/" class="time-lbtn">
+                            <img src="images/gameover-back.png" alt="">
+                        </a>
+                        <div class="btn-to-continue time-to-stop time-to-continue"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="imgDiv">
+            <div class="allimg">
+                <img src="images/pass2-2c.png" alt="">
+                <img src="images/pass2-gym.png" alt="">
+                <img src="images/pass2-yifulou.png" alt="">
+                <img src="images/game-ani-3c.png" alt="">
+                <img src="images/game-ani-8c.png" alt="">
+            </div>
+            <div class="img-clicked">
+                <img src="images/pass2-clicked-2c.png" alt="">
+                <img src="images/pass2-clicked-gym.png" alt="">
+                <img src="images/pass2-clicked-yifulou.png" alt="">
+                <img src="images/clicked-3c.png" alt="">
+                <img src="images/clicked-8c.png" alt="">
+            </div>
+            <div class="img-dissloved">
+                <img src="images/pass2-dissloved-2c.png" alt="">
+                <img src="images/pass2-dissloved-gym.png" alt="">
+                <img src="images/pass2-dissloved-yifulou.png" alt="">
+                <img src="images/dissloved-3c.png" alt="">
+                <img src="images/dissloved-8c.png" alt="">
+            </div>
+        </div>
+    </div>
+
+    <script src="javascripts/zepto.js"></script>
+    <script src="javascripts/main.js"></script>
+
+</body>
+
+</html>

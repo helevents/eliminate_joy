@@ -1,0 +1,447 @@
+.game-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+.homepage-content {
+    width: 100%;
+    height: 2.746667rem;
+    background-image: url('../images/game-time-title.png');
+    background-position: 0 0;
+    background-size: 100% 100%;
+    margin-bottom: 0.346667rem;
+}
+
+.time-title-content {
+    width: 7.866667rem;
+    margin: 0 auto;
+    overflow: hidden;
+    padding-top: 1.2rem;
+}
+
+.time-text {
+    width: 6.32rem;
+    float: left;
+}
+
+.time-score-record {
+    width: 6.32rem;
+    height: 0.68rem;
+    overflow: hidden;
+    margin-bottom: 0.133333rem;
+}
+
+.time-btn {
+    width: 3.066667rem;
+    height: 0.68rem;
+    line-height: 0.68rem;
+    text-align: center;
+    background-image: url('../images/game-time-bg-record&score.png');
+    background-position: 0 0;
+    background-size: 100% 100%;
+    // -webkit-text-stroke: 1px #fff;
+    // text-shadow: #fff 0 1px 0;
+}
+
+.time-score {
+    float: left;
+}
+
+.time-record {
+    float: right;
+}
+
+.time-btn span {
+    color: #FFB23B;
+}
+
+.time-btn cite {
+    color: #FF7764;
+}
+
+.time-bar {
+    width: 6.32rem;
+    height: 0.373333rem;
+    background-image: url('../images/game-time-processbar.png');
+    background-position: 0 0;
+    background-size: 100% 100%;
+    border-radius: 1.2rem;
+    overflow: hidden;
+    position: relative;
+    // border: 1px solid #000;
+    // border-left: 2px solid #fff;
+}
+
+.time-bar:after {
+    display: block;
+    content: '';
+    width: 6.32rem;
+    height: 0.373333rem;
+    border: 0.05rem solid #fff;
+    border-radius: 0.2rem;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 2;
+    box-sizing: border-box;
+}
+
+#process-current {
+    display: block;
+    width: 6.27rem;
+    height: 0.30rem;
+    margin: 0.026667rem;
+    margin-left: -6.27rem;
+    transition: margin-left 1s;
+    -moz-transition: margin-left 1s;
+    /* Firefox 4 */
+    -webkit-transition: margin-left 1s;
+    /* Safari 和 Chrome */
+    -o-transition: margin-left 1s;
+    /* Opera */
+    transition-timing-function: linear;
+    -moz-transition-timing-function: linear;
+    /* Firefox 4 */
+    -webkit-transition-timing-function: linear;
+    /* Safari 和 Chrome */
+    -o-transition-timing-function: linear;
+    /* Opera */
+}
+
+.time-to-stop {
+    width: 1.253333rem;
+    height: 1.253333rem;
+    float: right;
+    background-image: url('../images/icon-stop.png');
+    background-size: 100% 100%;
+    background-position: 0 0;
+}
+
+.time-to-continue {
+    background-image: url('../images/stop.png');
+}
+
+.canvas-container {
+    width: 8.8rem;
+    height: 11.333333rem;
+    margin: 0 auto;
+    background-image: url('../images/game-time-border.png');
+    background-position: 0 0;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+
+.canvas {
+    margin: 0.16rem;
+}
+
+.imgDiv {
+    display: none;
+}
+
+.pass1-img, .pass2-img, .pass3-img {
+    display: none;
+}
+
+//gameover
+.time-over,
+.game-stop,
+.no-dissloved {}
+
+.time-over-container,
+.game-stop-container,
+.no-dissloved-container {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    background-position: 0 0;
+    background-repeat: no-repeat;
+    position: absolute;
+    top: 0;
+    z-index: 5;
+}
+
+.time-over-container {
+    background-image: url('../images/gameover-bg.png');
+    background-size: 100% 11.28rem;
+}
+
+.game-stop-container {
+}
+
+.time-over-content {
+    width: 7.466667rem;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.time-over-content {
+    padding-top: 2.88rem;
+}
+
+.game-stop-content {
+    width: 100%;
+    height: 6.714rem;
+    background-image: url('../images/game-stop-bg.png');
+    background-size: 100% 100%;
+    margin-top: 4rem;
+}
+
+.homepage-content {
+    margin-bottom: 0.346667rem;
+}
+
+.time-stop ..game-stop-content {
+    height: 5.714rem;
+}
+
+.time-over-title {
+    color: #FFC448;
+    font-size: 0.88rem;
+    text-align: center;
+    padding-bottom: 0.3rem;
+}
+
+.higest-score {
+    width: 6.8rem;
+    margin: 0 auto;
+    height: 1.466667rem;
+    background-image: url('../images/gameover-bg-score.png');
+    background-position: 0 0;
+    background-size: 100% 100%;
+    position: relative;
+    line-height: 1.2rem;
+    padding-top: 0.333333rem;
+}
+
+.score-to-success {
+    width: 6.8rem;
+    margin: 0 auto;
+    height: 1.286rem;
+    background-size: 100% 1.286rem;
+    background-position: 0 0;
+    background-repeat: no-repeat;
+    position: relative;
+    text-align: center;
+    margin-top: 0.286rem;
+    color: #FFC347;
+    background-image: url('../images/game-bg-score.png');
+    font-size: 0.286rem;
+}
+
+.time-stop .score-to-success {
+    margin-top: 0.486rem;
+}
+
+.score-to-end {
+    line-height: 1.286rem;
+    color: #fff;
+    margin-left: 2px;
+    margin-right: 2px;
+    font-size: 0.573333rem;
+    position: relative;
+    margin-left: 0.8rem;
+}
+.score-to-end:after {
+    content: '距离目标';
+    display: block;
+    width: 2rem;
+    height: 0.286rem;
+    position: absolute;
+    left: -1.686rem;
+    top: -0.34rem;
+    color: #FFC448;
+    font-size: 0.286rem;
+}
+
+.score-to-end:before {
+    content: '分';
+    display: block;
+    width: 1.2rem;
+    height: 0.286rem;
+    position: absolute;
+    right: -1.286rem;
+    top: -0.34rem;
+    color: #FFC448;
+    font-size: 0.286rem;
+    text-align: left;
+}
+.higest-score:before {
+    display: block;
+    content: attr(data-class);
+    position: absolute;
+    top: 0.48rem;
+    left: 0.96rem;
+    color: #FFCD63;
+    font-size: 0.293333rem;
+    margin-top: -0.333333rem;
+}
+
+.higest-score p {
+    font-size: 0.573333rem;
+    color: #fff;
+}
+
+.time-over-detail {
+    width: 5.92rem;
+    margin: 0 auto;
+    height: 2.24rem;
+    margin-top: 0.346667rem;
+    background-color: #ffe7e5;
+    border-radius: 0.2rem;
+    line-height: 0.586667rem;
+    text-align: center;
+}
+
+.time-over-detail {
+    color: #FFAB37;
+    padding-top: 0.5rem;
+    margin-bottom: 0.266667rem;
+}
+
+.time-over-detail span {
+    color: #FF6E5F;
+    margin-right: 0.068rem;
+}
+
+.time-over-btn {
+    width: 100%;
+    /*display: -webkit-flex;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;*/
+}
+
+.time-over-btn a {
+    display: block;
+}
+
+.time-lbtn,
+.time-rbtn {
+    width: 1.786667rem;
+    height: 1.786667rem;
+}
+
+.time-again {
+    width: 2.266667rem;
+    height: 2.266667rem;
+}
+
+.time-lbtn img,
+.time-rbtn img {
+    display: block;
+    width: 1.786667rem;
+    height: 1.786667rem;
+}
+
+.time-again img {
+    display: block;
+    width: 2.266667rem;
+    height: 2.266667rem;
+}
+
+.game-stop .time-over-btn {
+    width: 4.571rem;
+    height: 1.886rem;
+    margin: 0 auto;
+    margin-top: 0.343rem;
+}
+
+.btn-to-continue {
+    width: 1.857rem;
+    height: 1.857rem;
+    background-position: 0 0;
+    background-size: 100% 100%;
+}
+.game-stop .time-over-title {
+    padding-top: 1.143rem;
+}
+
+
+.next-checkpoint {
+    
+}
+.checkpoint-container {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    position: absolute;
+    top: 0;
+    z-index: 5;
+    color: #FFCD70;
+    text-align: center;
+}
+.next-pass {
+    width: 5.429rem;
+    font-size: 0.8rem;
+    margin: 0 auto;
+}
+.congratulate {
+    width: 7.2rem;
+    font-size: 0.6rem;
+    position: relative;
+    margin: 0 auto;
+    margin-top: 5.857rem;
+}
+
+.congratulate:before, .congratulate:after {
+    content: '';
+    display: block;
+    width: 1.057rem;
+    height: 0.886rem;
+    background-size: 100% 100%;
+    background-position: 0 0;
+    position: absolute;
+    top: -0.657rem;
+}
+
+.congratulate:before {
+    background-image: url('../images/star-left.png');
+    left: -1.007rem;
+}
+
+.congratulate:after {
+    background-image: url('../images/start-right.png');
+    right: -1.007rem;
+}
+
+.no-dissloved {
+}
+
+.no-dissloved-container .no-dissloved-text {
+    color: #FFCD63;
+    font-size: 0.639rem;
+    margin-top: 7.857rem;
+}
+
+.time-over-btn {
+    position: relative;
+}
+.time-lbtn {
+    float: left;
+    margin-top: 0.2rem;
+}
+
+.time-rbtn {
+    float: right;
+    position: absolute;
+    right: 0;
+    top: 0.2rem;
+}
+
+.time-again {
+    margin: 0 auto;
+}
+
+.game-stop .time-lbtn {
+    margin-top: 0;
+}
+
+h5 {
+    text-align: center;
+    color: #4B5E5F;
+}
