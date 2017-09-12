@@ -9,27 +9,30 @@ $(window).on('scroll.elasticity', function (e) {
 }).on('touchmove.elasticity', function (e) {
     e.preventDefault();
 });
+function $$(ele) {
+    return document.querySelector(ele);
+}
 
 //排行榜页面的渲染
 if (window.location.href.indexOf('rank') > -1) {
     if (screen.height < 500) {
-        document.querySelector('.rank-time-list').style.height = '4.8rem';
-        document.querySelector('.rank-pass-list').style.height = '4.8rem';
-        document.querySelector('.rank-cup').style.display = 'none';
+        $$('.rank-time-list').style.height = '4.8rem';
+        $$('.rank-pass-list').style.height = '4.8rem';
+        $$('.rank-cup').style.display = 'none';
     }
 
     Ajax({
         method: "GET",
-        url: document.querySelector('meta').getAttribute('show-url'),
+        url: $$('meta').getAttribute('show-url'),
         success: function success(res) {
             res = res.data;
             //time
-            var timeParent = document.querySelector('.rank-time-list');
-            var timeLast = document.querySelector('.rank-time-list .clearfix');
-            var passParent = document.querySelector('.rank-pass-list');
-            var passLast = document.querySelector('.rank-pass-list .clearfix');
-            var meTime = document.querySelector('.me-time');
-            var mePass = document.querySelector('.me-pass');
+            var timeParent = $$('.rank-time-list'),
+                timeLast = $$('.rank-time-list .clearfix'),
+                passParent = $$('.rank-pass-list'),
+                passLast = $$('.rank-pass-list .clearfix'),
+                meTime = $$('.me-time'),
+                mePass = $$('.me-pass');
 
             // //我的分数
             meTime.firstElementChild.innerHTML = res.js.rank;
@@ -80,32 +83,32 @@ if (window.location.href.indexOf('rank') > -1) {
 }
 
 //游戏页面
-if (document.querySelector('#canvas-container') && document.querySelector('.time-score cite')) {
+if ($$('#canvas-container') && $$('.time-score cite')) {
     var gameOverScore;
 
     (function () {
-        var container = document.querySelector('#canvas-container');
-        var timeScore = document.querySelector('.time-score cite');
-        var btnStop = document.querySelector('.time-to-stop');
-        //如果没有可以消去的小建筑
-        var noDissloved = document.querySelector('.no-dissloved');
-        var currentUrl = window.location.href;
-        //游戏进行时的页面上的 记录 
-        var record = document.querySelector('.time-record cite');
-        var historyScore = 0;
+        var container = $$('#canvas-container'),
+            timeScore = $$('.time-score cite'),
+            btnStop = $$('.time-to-stop'),
+            //如果没有可以消去的小建筑
+            noDissloved = $$('.no-dissloved'),
+            currentUrl = window.location.href,
+            //游戏进行时的页面上的 记录 
+            record = $$('.time-record cite'),
+            historyScore = 0;
 
-        if (document.querySelector('.higest-score p')) {
-            gameOverScore = document.querySelector('.higest-score p');
+        if ($$('.higest-score p')) {
+            gameOverScore = $$('.higest-score p');
         }
 
         if (screen.height < 500) {
-            document.querySelector('.canvas-container').style.height = '9.4rem';
+            $$('.canvas-container').style.height = '9.4rem';
         }
 
         $(document).ready(function () {
 
             //根据不同的dataDpr，图片的宽度不同
-            var dataDpr = Number(document.querySelector('html').getAttribute('data-dpr'));
+            var dataDpr = Number($$('html').getAttribute('data-dpr'));
 
             var conNum = {
                 width: Number(window.getComputedStyle(container, null).getPropertyValue('width').slice(0, -2)) - dataDpr * 13,
@@ -131,9 +134,9 @@ if (document.querySelector('#canvas-container') && document.querySelector('.time
                 extraScore: 10,
                 //当图片的移动位移超过 halfwidth 时, 会进行上下左右的移动
                 halfWidth: 20,
-                allImgs: document.querySelector('.allimg').children,
-                clickedImg: document.querySelector('.img-clicked').children,
-                disslovedImg: document.querySelector('.img-dissloved').children,
+                allImgs: $$('.allimg').children,
+                clickedImg: $$('.img-clicked').children,
+                disslovedImg: $$('.img-dissloved').children,
                 clickedImgIndex: 0,
                 //动态设置宽度和高度
                 setWH: function setWH(ele) {
@@ -159,19 +162,19 @@ if (document.querySelector('#canvas-container') && document.querySelector('.time
             };
 
             //记录触发touchstart事件的位置
-            var start = {};
-            //将 触发touchstart事件的位置 设置为imgWidth的整数倍
-            var startInt = {};
-            //点击的图片 下一刻要去的地方
-            var imgPlace = {};
-            //存放页面上所有的图片信息
-            var matrix = [];
-            //记录分数
-            var ct = 0;
-            //记录当前时间
-            var currentTime = 0;
-            //设置一个标志量，防止将同一张图片连续移动
-            var continueMove = void 0;
+            var start = {},
+                //将 触发touchstart事件的位置 设置为imgWidth的整数倍
+                startInt = {},
+                //点击的图片 下一刻要去的地方
+                imgPlace = {},
+                //存放页面上所有的图片信息
+                matrix = [],
+                //记录分数
+                ct = 0,
+                //记录当前时间
+                currentTime = 0,
+                //设置一个标志量，防止将同一张图片连续移动
+                continueMove = void 0;
 
             var Stage = function () {
                 function Stage() {
@@ -742,7 +745,7 @@ if (document.querySelector('#canvas-container') && document.querySelector('.time
                 }, {
                     key: 'gameBegin',
                     value: function gameBegin() {
-                        if (document.querySelector('.time-over')) {
+                        if ($$('.time-over')) {
                             var scoreToEnd;
                             var nextCheckpoint;
 
@@ -751,7 +754,7 @@ if (document.querySelector('#canvas-container') && document.querySelector('.time
                                 //游戏结束时的分数设置
                                 var gameToEnd = function gameToEnd(timer1) {
                                     currentTime += 1;
-                                    document.querySelector('#process-current').style.marginLeft = currentSmallWidth - processWidth + 'px';
+                                    $$('#process-current').style.marginLeft = currentSmallWidth - processWidth + 'px';
                                     currentSmallWidth += smallWidth;
 
                                     //如果闯关模式已经达到目标分数，将剩余的时间加成分数
@@ -851,13 +854,13 @@ if (document.querySelector('#canvas-container') && document.querySelector('.time
 
                                                 Ajax({
                                                     method: "POST",
-                                                    url: document.querySelector('meta').getAttribute('update-url'),
+                                                    url: $$('meta').getAttribute('update-url'),
                                                     sendContent: 'style=cg' + '&score=' + pubdata.score + '&time=' + pub.timeCount + '&stage=' + 3,
                                                     success: function success(res) {
-                                                        document.querySelector('.time-rank').innerHTML = res.data.rank;
-                                                        document.querySelector('.time-higest-score').innerHTML = res.data.HighScore;
+                                                        $$('.time-rank').innerHTML = res.data.rank;
+                                                        $$('.time-higest-score').innerHTML = res.data.HighScore;
                                                         if (pubdata.score < res.data.HighScore) {
-                                                            document.querySelector('.higest-score').setAttribute('data-class', '');
+                                                            $$('.higest-score').setAttribute('data-class', '');
                                                         }
                                                     }
                                                 });
@@ -881,13 +884,13 @@ if (document.querySelector('#canvas-container') && document.querySelector('.time
                                                     timeOver.style.display = 'block';
                                                     Ajax({
                                                         method: "POST",
-                                                        url: document.querySelector('meta').getAttribute('update-url'),
+                                                        url: $$('meta').getAttribute('update-url'),
                                                         sendContent: 'style=cg' + '&score=' + pubdata.score + '&time=' + pub.timeCount + '&stage=' + 1,
                                                         success: function success(res) {
-                                                            document.querySelector('.time-rank').innerHTML = res.data.rank;
-                                                            document.querySelector('.time-higest-score').innerHTML = res.data.HighScore;
+                                                            $$('.time-rank').innerHTML = res.data.rank;
+                                                            $$('.time-higest-score').innerHTML = res.data.HighScore;
                                                             if (pubdata.score < res.data.HighScore) {
-                                                                document.querySelector('.higest-score').setAttribute('data-class', '');
+                                                                $$('.higest-score').setAttribute('data-class', '');
                                                             }
                                                         }
                                                     });
@@ -899,13 +902,13 @@ if (document.querySelector('#canvas-container') && document.querySelector('.time
                                                     timeOver.style.display = 'block';
                                                     Ajax({
                                                         method: "POST",
-                                                        url: document.querySelector('meta').getAttribute('update-url'),
+                                                        url: $$('meta').getAttribute('update-url'),
                                                         sendContent: 'style=cg' + '&score=' + pubdata.score + '&time=' + pub.timeCount + '&stage=' + 2,
                                                         success: function success(res) {
-                                                            document.querySelector('.time-rank').innerHTML = res.data.rank;
-                                                            document.querySelector('.time-higest-score').innerHTML = res.data.HighScore;
+                                                            $$('.time-rank').innerHTML = res.data.rank;
+                                                            $$('.time-higest-score').innerHTML = res.data.HighScore;
                                                             if (pubdata.score < res.data.HighScore) {
-                                                                document.querySelector('.higest-score').setAttribute('data-class', '');
+                                                                $$('.higest-score').setAttribute('data-class', '');
                                                             }
                                                         }
                                                     });
@@ -917,13 +920,13 @@ if (document.querySelector('#canvas-container') && document.querySelector('.time
                                                     timeOver.style.display = 'block';
                                                     Ajax({
                                                         method: "POST",
-                                                        url: document.querySelector('meta').getAttribute('update-url'),
+                                                        url: $$('meta').getAttribute('update-url'),
                                                         sendContent: 'style=cg' + '&score=' + pubdata.score + '&time=' + pub.timeCount + '&stage=' + 3,
                                                         success: function success(res) {
-                                                            document.querySelector('.time-rank').innerHTML = res.data.rank;
-                                                            document.querySelector('.time-higest-score').innerHTML = res.data.HighScore;
+                                                            $$('.time-rank').innerHTML = res.data.rank;
+                                                            $$('.time-higest-score').innerHTML = res.data.HighScore;
                                                             if (pubdata.score < res.data.HighScore) {
-                                                                document.querySelector('.higest-score').setAttribute('data-class', '');
+                                                                $$('.higest-score').setAttribute('data-class', '');
                                                             }
                                                         }
                                                     });
@@ -936,13 +939,13 @@ if (document.querySelector('#canvas-container') && document.querySelector('.time
 
                                             Ajax({
                                                 method: "POST",
-                                                url: document.querySelector('meta').getAttribute('update-url'),
+                                                url: $$('meta').getAttribute('update-url'),
                                                 sendContent: 'style=js' + '&score=' + pubdata.score + '&time=' + pub.timeCount,
                                                 success: function success(res) {
-                                                    document.querySelector('.time-rank').innerHTML = res.data.rank;
-                                                    document.querySelector('.time-higest-score').innerHTML = res.data.HighScore;
+                                                    $$('.time-rank').innerHTML = res.data.rank;
+                                                    $$('.time-higest-score').innerHTML = res.data.HighScore;
                                                     if (pubdata.score < res.data.HighScore) {
-                                                        document.querySelector('.higest-score').setAttribute('data-class', '');
+                                                        $$('.higest-score').setAttribute('data-class', '');
                                                     }
                                                 }
                                             });
@@ -951,23 +954,23 @@ if (document.querySelector('#canvas-container') && document.querySelector('.time
                                     }
                                 };
 
-                                var gameOver = document.querySelector('.time-over');
-                                var gameStop = document.querySelector('.game-stop');
-                                var btnStop = document.querySelector('.time-to-stop');
-                                var btnContinue = document.querySelector('.btn-to-continue');
-                                var processCurrent = document.querySelector('#process-current');
-                                var rankDetail = document.querySelector('.rank-detail');
+                                var gameOver = $$('.time-over');
+                                var gameStop = $$('.game-stop');
+                                var btnStop = $$('.time-to-stop');
+                                var btnContinue = $$('.btn-to-continue');
+                                var processCurrent = $$('#process-current');
+                                var rankDetail = $$('.rank-detail');
                                 //获取 processBar 需要移动的距离, 并转化为数值
                                 var processWidth = Number(getComputedStyle(processCurrent).width.slice(0, -3));
                                 //每过 1s 后的增量
                                 var smallWidth = processWidth / pub.timeCount;
                                 var currentSmallWidth = smallWidth * 2;
-                                var timeOver = document.querySelector('.time-over');
-                                var btnAgain = document.querySelector('.time-again');
+                                var timeOver = $$('.time-over');
+                                var btnAgain = $$('.time-again');
                                 //是否继续游戏
                                 var toContinue = true;
-                                if (document.querySelector('.score-to-end')) {
-                                    scoreToEnd = document.querySelector('.score-to-end');
+                                if ($$('.score-to-end')) {
+                                    scoreToEnd = $$('.score-to-end');
                                 }
 
                                 //动态设置宽度和高度游戏结束时 页面的 宽度和高度
@@ -975,8 +978,8 @@ if (document.querySelector('#canvas-container') && document.querySelector('.time
                                 pub.setWH(gameStop);
                                 pub.setWH(noDissloved);
 
-                                if (document.querySelector('.next-checkpoint')) {
-                                    nextCheckpoint = document.querySelector('.next-checkpoint');
+                                if ($$('.next-checkpoint')) {
+                                    nextCheckpoint = $$('.next-checkpoint');
 
                                     pub.setWH(nextCheckpoint);
                                 }
@@ -1018,7 +1021,7 @@ if (document.querySelector('#canvas-container') && document.querySelector('.time
 
                                 //游戏继续
                                 btnContinue.addEventListener('click', function () {
-                                    document.querySelector('.time-to-continue').classList.remove('time-to-continue');
+                                    $$('.time-to-continue').classList.remove('time-to-continue');
                                     gameStop.style.display = 'none';
 
                                     var timer0 = setInterval(function () {
@@ -1137,7 +1140,7 @@ if (document.querySelector('#canvas-container') && document.querySelector('.time
             if (currentUrl.indexOf('time') > -1 || currentUrl.indexOf('one') > -1) {
                 Ajax({
                     method: "GET",
-                    url: document.querySelector('meta').getAttribute('show-url'),
+                    url: $$('meta').getAttribute('show-url'),
                     success: function success(res) {
                         if (currentUrl.indexOf('time') > -1) {
                             if (res.data.js.myScore > 0) {
@@ -1325,26 +1328,26 @@ if (document.querySelector('#canvas-container') && document.querySelector('.time
 }
 
 //排行榜 点击进入下一页
-if (document.querySelector('.rank-btn-time')) {
+if ($$('.rank-btn-time')) {
     (function () {
-        var btnTime = document.querySelector('.rank-btn-time');
-        var btnPass = document.querySelector('.rank-btn-pass');
-        var timeLists = document.querySelector('.rank-time-list');
-        var passLists = document.querySelector('.rank-pass-list');
-        var toNextPage = document.querySelector('.to-nextpage');
-        //判断当前显示的是 哪个模式 
-        var nowLists = 'time';
-        //判断 下一次被点击次数
-        var clickCount = 0;
-        //下一页总共能 被点击 的次数
-        var toClickNext = 0;
-        var len = 0;
+        var btnTime = $$('.rank-btn-time'),
+            btnPass = $$('.rank-btn-pass'),
+            timeLists = $$('.rank-time-list'),
+            passLists = $$('.rank-pass-list'),
+            toNextPage = $$('.to-nextpage'),
+            //判断当前显示的是 哪个模式 
+            nowLists = 'time',
+            //判断 下一次被点击次数
+            clickCount = 0,
+            //下一页总共能 被点击 的次数
+            toClickNext = 0,
+            len = 0;
 
         btnTime.addEventListener('click', function () {
             timeLists.style.display = 'block';
             passLists.style.display = 'none';
 
-            var clicked = document.querySelector('.rank-clicked');
+            var clicked = $$('.rank-clicked');
             clicked.classList.remove('rank-clicked');
             btnTime.classList.add('rank-clicked');
 
@@ -1363,7 +1366,7 @@ if (document.querySelector('.rank-btn-time')) {
             timeLists.style.display = 'none';
             passLists.style.display = 'block';
 
-            var clicked = document.querySelector('.rank-clicked');
+            var clicked = $$('.rank-clicked');
             clicked.classList.remove('rank-clicked');
             btnPass.classList.add('rank-clicked');
 
