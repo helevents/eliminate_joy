@@ -9,9 +9,33 @@ $(window).on('scroll.elasticity', function (e) {
 }).on('touchmove.elasticity', function (e) {
     e.preventDefault();
 });
+
 function $$(ele) {
     return document.querySelector(ele);
 }
+
+document.cookie = "usernmae=0"
+
+var usernmae = 0
+
+// Ajax({
+//     method: "GET",
+//     url: `/getTimeMax`,
+//     success: function (res) {
+//         console.log(res);  
+//     }
+// });
+
+// nowStatus = 'time';
+// score = 19990;
+// Ajax({
+//     method: "POST",
+//     url: `/end`,
+//     sendContent: `stuid=${username}&nowStatus=${nowStatus}score=${score}`,
+//     success: function (res) {
+//         console.log(res);
+//     }
+// })
 
 //排行榜页面的渲染
 if (window.location.href.indexOf('rank') > -1) {
@@ -23,7 +47,7 @@ if (window.location.href.indexOf('rank') > -1) {
 
     Ajax({
         method: "GET",
-        url: $$('meta').getAttribute('show-url'),
+        url: `/getTimeRank`,
         success: function success(res) {
             res = res.data;
             //time
@@ -101,23 +125,23 @@ if ($$('#canvas-container') && $$('.time-score cite')) {
             gameOverScore = $$('.higest-score p');
         }
 
-        if (screen.height < 500) {
-            $$('.canvas-container').style.height = '9.4rem';
+        if (screen.height < 570) {
+            $$('.canvas-container').style.height = '9.8rem';
         }
 
         $(document).ready(function () {
 
             //根据不同的dataDpr，图片的宽度不同
             var dataDpr = Number($$('html').getAttribute('data-dpr'));
-
+            console.log(window.getComputedStyle(container, null).getPropertyValue('width').slice(0, -2));
             var conNum = {
                 width: Number(window.getComputedStyle(container, null).getPropertyValue('width').slice(0, -2)) - dataDpr * 13,
                 height: Number(window.getComputedStyle(container, null).getPropertyValue('height').slice(0, -2)) - dataDpr * 11
             };
 
             var pub = {
-                canvas: document.getElementById('canvas'),
-                ctx: document.getElementById('canvas').getContext('2d'),
+                canvas: $$('#canvas'),
+                ctx: $$('#canvas').getContext('2d'),
                 //第一行图片的数量
                 xNum: 6,
                 //第一列图片的数量
@@ -127,7 +151,7 @@ if ($$('#canvas-container') && $$('.time-score cite')) {
                 //每个模式需要的时间
                 timeCount: 60,
                 //闯关模式各关 通关 需要达到的分数
-                passOneNeddScore: 2500,
+                passOneNeedScore: 2500,
                 passTwoNeedScore: 5000,
                 passThreeNeedScore: 7000,
                 //达到目标分数后，如果还有剩余时间，每s加成的分数
@@ -184,7 +208,6 @@ if ($$('#canvas-container') && $$('.time-score cite')) {
                 }
 
                 //每次消除小动物之后 刷新页面
-
 
                 _createClass(Stage, [{
                     key: 'refresh',
@@ -760,7 +783,7 @@ if ($$('#canvas-container') && $$('.time-score cite')) {
                                     //如果闯关模式已经达到目标分数，将剩余的时间加成分数
                                     if (currentUrl.indexOf('pass') > -1) {
                                         if (currentUrl.indexOf('one') > -1) {
-                                            if (pubdata.score >= pub.passOneNeddScore) {
+                                            if (pubdata.score >= pub.passOneNeedScore) {
                                                 nextCheckpoint.style.display = 'block';
 
                                                 clearInterval(timer1);
@@ -880,7 +903,7 @@ if ($$('#canvas-container') && $$('.time-score cite')) {
                                             if (currentUrl.indexOf('one') > -1) {
                                                 localStorage.setItem('passOneScore', pubdata.score);
                                                 //闯关失败 
-                                                if (pubdata.score < pub.passOneNeddScore) {
+                                                if (pubdata.score < pub.passOneNeedScore) {
                                                     timeOver.style.display = 'block';
                                                     Ajax({
                                                         method: "POST",
@@ -954,21 +977,21 @@ if ($$('#canvas-container') && $$('.time-score cite')) {
                                     }
                                 };
 
-                                var gameOver = $$('.time-over');
-                                var gameStop = $$('.game-stop');
-                                var btnStop = $$('.time-to-stop');
-                                var btnContinue = $$('.btn-to-continue');
-                                var processCurrent = $$('#process-current');
-                                var rankDetail = $$('.rank-detail');
+                                var gameOver = $$('.time-over'),
+                                    gameStop = $$('.game-stop'),
+                                    btnStop = $$('.time-to-stop'),
+                                    btnContinue = $$('.btn-to-continue'),
+                                    processCurrent = $$('#process-current'),
+                                    rankDetail = $$('.rank-detail'),
                                 //获取 processBar 需要移动的距离, 并转化为数值
-                                var processWidth = Number(getComputedStyle(processCurrent).width.slice(0, -3));
+                                    processWidth = Number(getComputedStyle(processCurrent).width.slice(0, -3)),
                                 //每过 1s 后的增量
-                                var smallWidth = processWidth / pub.timeCount;
-                                var currentSmallWidth = smallWidth * 2;
-                                var timeOver = $$('.time-over');
-                                var btnAgain = $$('.time-again');
+                                    smallWidth = processWidth / pub.timeCount,
+                                    currentSmallWidth = smallWidth * 2,
+                                    timeOver = $$('.time-over'),
+                                    btnAgain = $$('.time-again'),
                                 //是否继续游戏
-                                var toContinue = true;
+                                    toContinue = true;
                                 if ($$('.score-to-end')) {
                                     scoreToEnd = $$('.score-to-end');
                                 }
@@ -1003,7 +1026,7 @@ if ($$('#canvas-container') && $$('.time-score cite')) {
 
                                     //设置距离目标还有多少分
                                     if (currentUrl.indexOf('one') > -1) {
-                                        timeStopScore = pub.passOneNeddScore - pubdata.score;
+                                        timeStopScore = pub.passOneNeedScore - pubdata.score;
                                     } else if (currentUrl.indexOf('two') > -1) {
                                         timeStopScore = pub.passTwoNeedScore - pubdata.score;
                                     } else if (currentUrl.indexOf('three') > -1) {
