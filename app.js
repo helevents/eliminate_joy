@@ -12,10 +12,7 @@ var passone = require('./routes/passone');
 var passtwo = require('./routes/passtwo');
 var passthree = require('./routes/passthree');
 var rank = require('./routes/rank');
-var getTimeMax = require('./routes/getTimeMax');
-var getPassMax = require('./routes/getPassMax');
-var getTimeRank = require('./routes/getTimeRank');
-var getPassRank = require('./routes/getPassRank');
+var getRank = require('./routes/getRank');
 var end = require('./routes/end');
 
 var app = express();
@@ -39,10 +36,7 @@ app.use('/passone', passone);
 app.use('/passtwo', passtwo);
 app.use('/passthree', passthree);
 app.use('/rank', rank);
-app.use('/getTimeMax', getTimeMax);
-app.use('/getPassMax', getPassMax);
-app.use('/getTimeRank', getTimeRank);
-app.use('/getPassRank', getPassRank);
+app.use('/getRank', getRank);
 app.use('/end', end);
 
 // catch 404 and forward to error handler

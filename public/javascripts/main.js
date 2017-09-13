@@ -14,28 +14,10 @@ function $$(ele) {
     return document.querySelector(ele);
 }
 
-document.cookie = "usernmae=0"
-
-var usernmae = 0
-
-// Ajax({
-//     method: "GET",
-//     url: `/getTimeMax`,
-//     success: function (res) {
-//         console.log(res);  
-//     }
-// });
-
-// nowStatus = 'time';
-// score = 19990;
-// Ajax({
-//     method: "POST",
-//     url: `/end`,
-//     sendContent: `stuid=${username}&nowStatus=${nowStatus}score=${score}`,
-//     success: function (res) {
-//         console.log(res);
-//     }
-// })
+document.cookie = "stuid=0;"
+if (!localStorage.getItem('stuid')) {
+    localStorage.setItem('stuid', '0')
+}
 
 //排行榜页面的渲染
 if (window.location.href.indexOf('rank') > -1) {
@@ -47,7 +29,7 @@ if (window.location.href.indexOf('rank') > -1) {
 
     Ajax({
         method: "GET",
-        url: `/getTimeRank`,
+        url: `/getRank`,
         success: function success(res) {
             res = res.data;
             //time
@@ -58,7 +40,7 @@ if (window.location.href.indexOf('rank') > -1) {
                 meTime = $$('.me-time'),
                 mePass = $$('.me-pass');
 
-            // //我的分数
+            //我的分数
             meTime.firstElementChild.innerHTML = res.js.rank;
             meTime.lastElementChild.innerHTML = res.js.myScore;
             mePass.firstElementChild.innerHTML = res.cg.rank;
@@ -78,7 +60,9 @@ if (window.location.href.indexOf('rank') > -1) {
                     timeParent.insertBefore(newLiChild, timeLast);
                     var rank = i + 1;
 
-                    newLiChild.innerHTML = '<span class="rank-num">' + rank + '</span><span class="rank-name">' + res.js.data[i].nickname + '</span><span class="rank-score">' + res.js.data[i].score + '</span>';
+                    newLiChild.innerHTML = `<span class="rank-num">  ${rank}  
+                                            </span><span class="rank-name">  ${res.js.data[i].stuid}  
+                                            </span><span class="rank-score">  ${res.js.data[i].tScore}  </span>`;
                 }
             }
 
@@ -99,7 +83,9 @@ if (window.location.href.indexOf('rank') > -1) {
 
                     var _rank = _i + 1;
 
-                    _newLiChild.innerHTML = '<span class="rank-num">' + _rank + '</span><span class="rank-name">' + res.cg.data[_i].nickname + '</span><span class="rank-score">' + res.cg.data[_i].score + '</span>';
+                    _newLiChild.innerHTML = `<span class="rank-num"> ${_rank} 
+                                            </span><span class="rank-name"> ${res.cg.data[_i].stuid} 
+                                            </span><span class="rank-score"> ${res.cg.data[_i].pScore} </span>`;
                 }
             }
         }
@@ -119,7 +105,12 @@ if ($$('#canvas-container') && $$('.time-score cite')) {
             currentUrl = window.location.href,
             //游戏进行时的页面上的 记录 
             record = $$('.time-record cite'),
-            historyScore = 0;
+            historyScore = record.innerText,
+            storagedScore = historyScore;
+
+        // if (historyScore != 0) {
+        //     document.cookie = `passHistoryScore=${historyScore}`;
+        // }
 
         if ($$('.higest-score p')) {
             gameOverScore = $$('.higest-score p');
@@ -149,11 +140,11 @@ if ($$('#canvas-container') && $$('.time-score cite')) {
                 imgWidth: conNum.width / 6,
                 imgHeight: conNum.height / 8,
                 //每个模式需要的时间
-                timeCount: 60,
+                timeCount: 5,
                 //闯关模式各关 通关 需要达到的分数
-                passOneNeedScore: 2500,
-                passTwoNeedScore: 5000,
-                passThreeNeedScore: 7000,
+                passOneNeedScore: 100,
+                passTwoNeedScore: 200,
+                passThreeNeedScore: 300,
                 //达到目标分数后，如果还有剩余时间，每s加成的分数
                 extraScore: 10,
                 //当图片的移动位移超过 halfwidth 时, 会进行上下左右的移动
@@ -566,11 +557,10 @@ if ($$('#canvas-container') && $$('.time-score cite')) {
                                 }
 
                                 pubdata.score += scoreCount;
-
                                 if (historyScore < pubdata.score) {
                                     historyScore = pubdata.score;
                                 }
-
+                                
                                 record.innerHTML = historyScore;
                                 timeScore.innerHTML = pubdata.score;
 
@@ -875,18 +865,21 @@ if ($$('#canvas-container') && $$('.time-score cite')) {
                                                     timeOver.style.display = 'block';
                                                 }, 3000);
 
-                                                Ajax({
-                                                    method: "POST",
-                                                    url: $$('meta').getAttribute('update-url'),
-                                                    sendContent: 'style=cg' + '&score=' + pubdata.score + '&time=' + pub.timeCount + '&stage=' + 3,
-                                                    success: function success(res) {
-                                                        $$('.time-rank').innerHTML = res.data.rank;
-                                                        $$('.time-higest-score').innerHTML = res.data.HighScore;
-                                                        if (pubdata.score < res.data.HighScore) {
-                                                            $$('.higest-score').setAttribute('data-class', '');
+                                                if (pubdata.score > storagedScore) {
+                                                    Ajax({
+                                                        method: "POST",
+                                                        url: `/end`,
+                                                        sendContent: `style=cg&score=${pubdata.score}&stuid=${localStorage.getItem('stuid')}`,
+                                                        success: function success(res) {
+                                                            $$('.time-rank').innerHTML = res.data.rank;
+                                                            $$('.time-higest-score').innerHTML = pubdata.score;
+                                                            $$('.higest-score').setAttribute('data-class', '新纪录');
+                                                            gameOverScore.innerHTML = pubdata.score;
                                                         }
-                                                    }
-                                                });
+                                                    });
+                                                } else {
+                                                    $$('.higest-score').setAttribute('data-class', '');
+                                                }
                                             }
                                         }
                                     }
@@ -905,75 +898,85 @@ if ($$('#canvas-container') && $$('.time-score cite')) {
                                                 //闯关失败 
                                                 if (pubdata.score < pub.passOneNeedScore) {
                                                     timeOver.style.display = 'block';
-                                                    Ajax({
-                                                        method: "POST",
-                                                        url: $$('meta').getAttribute('update-url'),
-                                                        sendContent: 'style=cg' + '&score=' + pubdata.score + '&time=' + pub.timeCount + '&stage=' + 1,
-                                                        success: function success(res) {
-                                                            $$('.time-rank').innerHTML = res.data.rank;
-                                                            $$('.time-higest-score').innerHTML = res.data.HighScore;
-                                                            if (pubdata.score < res.data.HighScore) {
-                                                                $$('.higest-score').setAttribute('data-class', '');
+                                                    if (pubdata.score > storagedScore) {
+                                                        Ajax({
+                                                            method: "POST",
+                                                            url: `/end`,
+                                                            sendContent: `style=cg&score=${pubdata.score}&stuid=${localStorage.getItem('stuid')}`,
+                                                            success: function success(res) {
+                                                                $$('.time-rank').innerHTML = res.data.rank;
+                                                                $$('.time-higest-score').innerHTML = pubdata.score;
+                                                                $$('.higest-score').setAttribute('data-class', '新纪录');
+                                                                gameOverScore.innerHTML = pubdata.score;
                                                             }
-                                                        }
-                                                    });
+                                                        });
+                                                    } else {
+                                                        $$('.higest-score').setAttribute('data-class', '');
+                                                    }
                                                 }
                                                 //第二关
                                             } else if (currentUrl.indexOf('two') > -1) {
                                                 localStorage.setItem('passTwoScore', pubdata.score);
                                                 if (pubdata.score < pub.passTwoNeedScore) {
                                                     timeOver.style.display = 'block';
-                                                    Ajax({
-                                                        method: "POST",
-                                                        url: $$('meta').getAttribute('update-url'),
-                                                        sendContent: 'style=cg' + '&score=' + pubdata.score + '&time=' + pub.timeCount + '&stage=' + 2,
-                                                        success: function success(res) {
-                                                            $$('.time-rank').innerHTML = res.data.rank;
-                                                            $$('.time-higest-score').innerHTML = res.data.HighScore;
-                                                            if (pubdata.score < res.data.HighScore) {
-                                                                $$('.higest-score').setAttribute('data-class', '');
+                                                    if (pubdata.score > storagedScore) {
+                                                        Ajax({
+                                                            method: "POST",
+                                                            url: `/end`,
+                                                            sendContent: `style=cg&score=${pubdata.score}&stuid=${localStorage.getItem('stuid')}`,
+                                                            success: function success(res) {
+                                                                $$('.time-rank').innerHTML = res.data.rank;
+                                                                $$('.time-higest-score').innerHTML = pubdata.score;
+                                                                $$('.higest-score').setAttribute('data-class', '新纪录');
+                                                                gameOverScore.innerHTML = pubdata.score;
                                                             }
-                                                        }
-                                                    });
+                                                        });
+                                                    } else {
+                                                        $$('.higest-score').setAttribute('data-class', '');
+                                                    }
                                                 }
                                                 //第三关
                                             } else if (currentUrl.indexOf('three') > -1) {
                                                 localStorage.setItem('passThreeScore', pubdata.score);
                                                 if (pubdata.score < pub.passThreeNeedScore) {
                                                     timeOver.style.display = 'block';
-                                                    Ajax({
-                                                        method: "POST",
-                                                        url: $$('meta').getAttribute('update-url'),
-                                                        sendContent: 'style=cg' + '&score=' + pubdata.score + '&time=' + pub.timeCount + '&stage=' + 3,
-                                                        success: function success(res) {
-                                                            $$('.time-rank').innerHTML = res.data.rank;
-                                                            $$('.time-higest-score').innerHTML = res.data.HighScore;
-                                                            if (pubdata.score < res.data.HighScore) {
-                                                                $$('.higest-score').setAttribute('data-class', '');
+                                                    if (pubdata.score > storagedScore) {
+                                                        Ajax({
+                                                            method: "POST",
+                                                            url: `/end`,
+                                                            sendContent: `style=cg&score=${pubdata.score}&stuid=${localStorage.getItem('stuid')}`,
+                                                            success: function success(res) {
+                                                                $$('.time-rank').innerHTML = res.data.rank;
+                                                                $$('.time-higest-score').innerHTML = pubdata.score;
+                                                                $$('.higest-score').setAttribute('data-class', '新纪录');
+                                                                gameOverScore.innerHTML = pubdata.score;
                                                             }
-                                                        }
-                                                    });
-                                                }
-                                            }
-                                            //计时模式
-                                        } else {
-                                            localStorage.setItem('timeScore', pubdata.score);
-                                            timeOver.style.display = 'block';
-
-                                            Ajax({
-                                                method: "POST",
-                                                url: $$('meta').getAttribute('update-url'),
-                                                sendContent: 'style=js' + '&score=' + pubdata.score + '&time=' + pub.timeCount,
-                                                success: function success(res) {
-                                                    $$('.time-rank').innerHTML = res.data.rank;
-                                                    $$('.time-higest-score').innerHTML = res.data.HighScore;
-                                                    if (pubdata.score < res.data.HighScore) {
+                                                        });
+                                                    } else {
                                                         $$('.higest-score').setAttribute('data-class', '');
                                                     }
                                                 }
-                                            });
+                                            }
+                                        //计时模式
+                                        } else {
+                                            localStorage.setItem('timeScore', pubdata.score);
+                                            timeOver.style.display = 'block';
+                                            if (pubdata.score > storagedScore) {
+                                                Ajax({
+                                                    method: "POST",
+                                                    url: `/end`,
+                                                    sendContent: `style=js&score=${pubdata.score}&stuid=${localStorage.getItem('stuid')}`,
+                                                    success: function success(res) {
+                                                        $$('.time-rank').innerHTML = res.data.rank;
+                                                        $$('.time-higest-score').innerHTML = pubdata.score;
+                                                        $$('.higest-score').setAttribute('data-class', '新纪录');
+                                                        gameOverScore.innerHTML = pubdata.score;
+                                                    }
+                                                });
+                                            } else {
+                                                $$('.higest-score').setAttribute('data-class', '');
+                                            }
                                         }
-                                        gameOverScore.innerHTML = pubdata.score;
                                     }
                                 };
 
@@ -983,15 +986,16 @@ if ($$('#canvas-container') && $$('.time-score cite')) {
                                     btnContinue = $$('.btn-to-continue'),
                                     processCurrent = $$('#process-current'),
                                     rankDetail = $$('.rank-detail'),
-                                //获取 processBar 需要移动的距离, 并转化为数值
+                                    //获取 processBar 需要移动的距离, 并转化为数值
                                     processWidth = Number(getComputedStyle(processCurrent).width.slice(0, -3)),
-                                //每过 1s 后的增量
+                                    //每过 1s 后的增量
                                     smallWidth = processWidth / pub.timeCount,
                                     currentSmallWidth = smallWidth * 2,
                                     timeOver = $$('.time-over'),
                                     btnAgain = $$('.time-again'),
-                                //是否继续游戏
+                                    //是否继续游戏
                                     toContinue = true;
+
                                 if ($$('.score-to-end')) {
                                     scoreToEnd = $$('.score-to-end');
                                 }
@@ -1003,7 +1007,6 @@ if ($$('#canvas-container') && $$('.time-score cite')) {
 
                                 if ($$('.next-checkpoint')) {
                                     nextCheckpoint = $$('.next-checkpoint');
-
                                     pub.setWH(nextCheckpoint);
                                 }
 
@@ -1013,6 +1016,7 @@ if ($$('#canvas-container') && $$('.time-score cite')) {
                                 } else if (currentUrl.indexOf('three') > -1) {
                                     pubdata.score = Number(localStorage.getItem('passTwoScore'));
                                 }
+                                
                                 gameOverScore.innerHTML = pubdata.score;
 
                                 //游戏暂停
@@ -1160,23 +1164,23 @@ if ($$('#canvas-container') && $$('.time-score cite')) {
                 }, 1000);
             }
 
-            if (currentUrl.indexOf('time') > -1 || currentUrl.indexOf('one') > -1) {
-                Ajax({
-                    method: "GET",
-                    url: $$('meta').getAttribute('show-url'),
-                    success: function success(res) {
-                        if (currentUrl.indexOf('time') > -1) {
-                            if (res.data.js.myScore > 0) {
-                                historyScore = res.data.js.myScore;
-                            }
-                        } else if (currentUrl.indexOf('pass') > -1) {
-                            if (res.data.js.myScore > 0) {
-                                historyScore = res.data.cg.myScore;
-                            }
-                        }
-                    }
-                });
-            }
+            // if (currentUrl.indexOf('time') > -1 || currentUrl.indexOf('one') > -1) {
+            //     Ajax({
+            //         method: "GET",
+            //         url: `/getmax`,
+            //         success: function success(res) {
+            //             if (currentUrl.indexOf('time') > -1) {
+            //                 if (res.data.js.myScore > 0) {
+            //                     historyScore = res.data.js.myScore;
+            //                 }
+            //             } else if (currentUrl.indexOf('pass') > -1) {
+            //                 if (res.data.js.myScore > 0) {
+            //                     historyScore = res.data.cg.myScore;
+            //                 }
+            //             }
+            //         }
+            //     });
+            // }
 
             record.innerHTML = historyScore;
 
