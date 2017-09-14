@@ -4,6 +4,8 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var crypto = require('crypto');
+var session = require('express-session');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
@@ -30,8 +32,13 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(session({
+  secret: 'express session', // 建议使用 128 个字符的随机字符串
+  cookie: { maxAge: 60 * 1000 }
+}));
 
 app.use('/', index);
+app.use('/index', index);
 app.use('/users', users);
 app.use('/time', time);
 app.use('/passone', passone);
@@ -47,7 +54,8 @@ app.use('/register', register);
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;
-  next(err);
+  res.render('err', {e: err})
+  // next(err);
 });
 
 // error handler
@@ -60,5 +68,7 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
-
+function md5 (data) {
+    return crypto.createHash('md5').update(data).digest("hex");
+}
 module.exports = app;

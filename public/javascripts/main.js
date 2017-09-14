@@ -14,11 +14,6 @@ function $$(ele) {
     return document.querySelector(ele);
 }
 
-document.cookie = "stuid=0;"
-if (!localStorage.getItem('stuid')) {
-    localStorage.setItem('stuid', '0')
-}
-
 //排行榜页面的渲染
 if (window.location.href.indexOf('rank') > -1) {
     if (screen.height < 500) {
@@ -123,11 +118,13 @@ if ($$('#canvas-container') && $$('.time-score cite')) {
         $(document).ready(function () {
 
             //根据不同的dataDpr，图片的宽度不同
-            var dataDpr = Number($$('html').getAttribute('data-dpr'));
-            console.log(window.getComputedStyle(container, null).getPropertyValue('width').slice(0, -2));
+            var dataDpr = Number($$('html').getAttribute('data-dpr')),
+                containerWidth = Number(window.getComputedStyle(container, null).getPropertyValue('width').slice(0, -2)),
+                containerHeight = Number(window.getComputedStyle(container, null).getPropertyValue('height').slice(0, -2));
+
             var conNum = {
-                width: Number(window.getComputedStyle(container, null).getPropertyValue('width').slice(0, -2)) - dataDpr * 13,
-                height: Number(window.getComputedStyle(container, null).getPropertyValue('height').slice(0, -2)) - dataDpr * 11
+                width: containerWidth - dataDpr * 13,
+                height: containerHeight - dataDpr * 11
             };
 
             var pub = {
@@ -867,7 +864,7 @@ if ($$('#canvas-container') && $$('.time-score cite')) {
                                                 Ajax({
                                                     method: "POST",
                                                     url: `/end`,
-                                                    sendContent: `style=cg&score=${pubdata.score}&stuid=${localStorage.getItem('stuid')}`,
+                                                    sendContent: `style=cg&score=${pubdata.score}`,
                                                     success: function success(res) {
                                                         console.log(res);
                                                         $$('.time-rank').innerHTML = res.data.rank;
@@ -900,7 +897,7 @@ if ($$('#canvas-container') && $$('.time-score cite')) {
                                                     Ajax({
                                                         method: "POST",
                                                         url: `/end`,
-                                                        sendContent: `style=cg&score=${pubdata.score}&stuid=${localStorage.getItem('stuid')}`,
+                                                        sendContent: `style=cg&score=${pubdata.score}`,
                                                         success: function success(res) {
                                                             $$('.time-rank').innerHTML = res.data.rank;
                                                             $$('.time-higest-score').innerHTML = res.data.score;                                                            
@@ -920,7 +917,7 @@ if ($$('#canvas-container') && $$('.time-score cite')) {
                                                     Ajax({
                                                         method: "POST",
                                                         url: `/end`,
-                                                        sendContent: `style=cg&score=${pubdata.score}&stuid=${localStorage.getItem('stuid')}`,
+                                                        sendContent: `style=cg&score=${pubdata.score}`,
                                                         success: function success(res) {
                                                             $$('.time-rank').innerHTML = res.data.rank;
                                                             $$('.time-higest-score').innerHTML = res.data.score;                                                            
@@ -940,7 +937,7 @@ if ($$('#canvas-container') && $$('.time-score cite')) {
                                                     Ajax({
                                                         method: "POST",
                                                         url: `/end`,
-                                                        sendContent: `style=cg&score=${pubdata.score}&stuid=${localStorage.getItem('stuid')}`,
+                                                        sendContent: `style=cg&score=${pubdata.score}`,
                                                         success: function success(res) {
                                                             $$('.time-rank').innerHTML = res.data.rank;
                                                             $$('.time-higest-score').innerHTML = res.data.score;                                                            
@@ -960,7 +957,7 @@ if ($$('#canvas-container') && $$('.time-score cite')) {
                                             Ajax({
                                                 method: "POST",
                                                 url: `/end`,
-                                                sendContent: `style=js&score=${pubdata.score}&stuid=${localStorage.getItem('stuid')}`,
+                                                sendContent: `style=js&score=${pubdata.score}`,
                                                 success: function success(res) {
                                                     console.log(res);
                                                     $$('.time-rank').innerHTML = res.data.rank;
