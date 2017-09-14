@@ -869,8 +869,9 @@ if ($$('#canvas-container') && $$('.time-score cite')) {
                                                     url: `/end`,
                                                     sendContent: `style=cg&score=${pubdata.score}&stuid=${localStorage.getItem('stuid')}`,
                                                     success: function success(res) {
+                                                        console.log(res);
                                                         $$('.time-rank').innerHTML = res.data.rank;
-                                                        $$('.time-higest-score').innerHTML = pubdata.score;
+                                                        $$('.time-higest-score').innerHTML = res.data.score;                                                        
                                                         $$('.higest-score').setAttribute('data-class', '新纪录');
                                                         gameOverScore.innerHTML = pubdata.score;
                                                         if (pubdata.score < storagedScore) {
@@ -902,7 +903,7 @@ if ($$('#canvas-container') && $$('.time-score cite')) {
                                                         sendContent: `style=cg&score=${pubdata.score}&stuid=${localStorage.getItem('stuid')}`,
                                                         success: function success(res) {
                                                             $$('.time-rank').innerHTML = res.data.rank;
-                                                            $$('.time-higest-score').innerHTML = pubdata.score;
+                                                            $$('.time-higest-score').innerHTML = res.data.score;                                                            
                                                             $$('.higest-score').setAttribute('data-class', '新纪录');
                                                             gameOverScore.innerHTML = pubdata.score;
                                                             if (pubdata.score < storagedScore) {
@@ -922,7 +923,7 @@ if ($$('#canvas-container') && $$('.time-score cite')) {
                                                         sendContent: `style=cg&score=${pubdata.score}&stuid=${localStorage.getItem('stuid')}`,
                                                         success: function success(res) {
                                                             $$('.time-rank').innerHTML = res.data.rank;
-                                                            $$('.time-higest-score').innerHTML = pubdata.score;
+                                                            $$('.time-higest-score').innerHTML = res.data.score;                                                            
                                                             $$('.higest-score').setAttribute('data-class', '新纪录');
                                                             gameOverScore.innerHTML = pubdata.score;
                                                             if (pubdata.score < storagedScore) {
@@ -942,7 +943,7 @@ if ($$('#canvas-container') && $$('.time-score cite')) {
                                                         sendContent: `style=cg&score=${pubdata.score}&stuid=${localStorage.getItem('stuid')}`,
                                                         success: function success(res) {
                                                             $$('.time-rank').innerHTML = res.data.rank;
-                                                            $$('.time-higest-score').innerHTML = pubdata.score;
+                                                            $$('.time-higest-score').innerHTML = res.data.score;                                                            
                                                             $$('.higest-score').setAttribute('data-class', '新纪录');
                                                             gameOverScore.innerHTML = pubdata.score;
                                                             if (pubdata.score < storagedScore) {
@@ -963,7 +964,7 @@ if ($$('#canvas-container') && $$('.time-score cite')) {
                                                 success: function success(res) {
                                                     console.log(res);
                                                     $$('.time-rank').innerHTML = res.data.rank;
-                                                    $$('.time-higest-score').innerHTML = pubdata.score;
+                                                    $$('.time-higest-score').innerHTML = res.data.score;
                                                     $$('.higest-score').setAttribute('data-class', '新纪录');
                                                     gameOverScore.innerHTML = pubdata.score;
                                                     if (pubdata.score < storagedScore) {
