@@ -3,6 +3,7 @@ var router = express.Router();
 var connect = require('../config/mysql_connect.js');
 
 router.get('/', function(req, res, next) {
+    // res.render('time', {});
     connect.query("select stuid,tScore from funfest order by tScore desc", function (err, data) {
         if (err) {
             console.log(err);

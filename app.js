@@ -14,6 +14,8 @@ var passthree = require('./routes/passthree');
 var rank = require('./routes/rank');
 var getRank = require('./routes/getRank');
 var end = require('./routes/end');
+var login = require('./routes/login');
+var register = require('./routes/register');
 
 var app = express();
 
@@ -38,6 +40,8 @@ app.use('/passthree', passthree);
 app.use('/rank', rank);
 app.use('/getRank', getRank);
 app.use('/end', end);
+app.use('/login', login);
+app.use('/register', register);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
