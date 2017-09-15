@@ -10,83 +10,6 @@ $(window).on('scroll.elasticity', function (e) {
     e.preventDefault();
 });
 
-function $$(ele) {
-    return document.querySelector(ele);
-}
-
-//排行榜页面的渲染
-if (window.location.href.indexOf('rank') > -1) {
-    if (screen.height < 500) {
-        $$('.rank-time-list').style.height = '4.8rem';
-        $$('.rank-pass-list').style.height = '4.8rem';
-        $$('.rank-cup').style.display = 'none';
-    }
-
-    Ajax({
-        method: "GET",
-        url: `/getRank`,
-        success: function success(res) {
-            res = res.data;
-            //time
-            var timeParent = $$('.rank-time-list'),
-                timeLast = $$('.rank-time-list .clearfix'),
-                passParent = $$('.rank-pass-list'),
-                passLast = $$('.rank-pass-list .clearfix'),
-                meTime = $$('.me-time'),
-                mePass = $$('.me-pass');
-
-            //我的分数
-            meTime.firstElementChild.innerHTML = res.js.rank;
-            meTime.lastElementChild.innerHTML = res.js.myScore;
-            mePass.firstElementChild.innerHTML = res.cg.rank;
-            mePass.lastElementChild.innerHTML = res.cg.myScore;
-
-            if (res.js.data) {
-                var jslistsCount = res.js.data.length;
-                for (var i = 0; i < jslistsCount; i++) {
-                    var newLiChild = document.createElement('li');
-
-                    if (i < 3) {
-                        newLiChild.setAttribute('class', 'single-detail rank-list-top');
-                    } else {
-                        newLiChild.setAttribute('class', 'single-detail');
-                    }
-
-                    timeParent.insertBefore(newLiChild, timeLast);
-                    var rank = i + 1;
-
-                    newLiChild.innerHTML = `<span class="rank-num">  ${rank}  
-                                            </span><span class="rank-name">  ${res.js.data[i].stuid}  
-                                            </span><span class="rank-score">  ${res.js.data[i].tScore}  </span>`;
-                }
-            }
-
-            if (res.cg.data) {
-                //返回的数据条数
-                var cglistsCount = res.cg.data.length;
-
-                for (var _i = 0; _i < cglistsCount; _i++) {
-                    var _newLiChild = document.createElement('li');
-
-                    if (_i < 3) {
-                        _newLiChild.setAttribute('class', 'single-detail rank-list-top');
-                    } else {
-                        _newLiChild.setAttribute('class', 'single-detail');
-                    }
-
-                    passParent.insertBefore(_newLiChild, passLast);
-
-                    var _rank = _i + 1;
-
-                    _newLiChild.innerHTML = `<span class="rank-num"> ${_rank} 
-                                            </span><span class="rank-name"> ${res.cg.data[_i].stuid} 
-                                            </span><span class="rank-score"> ${res.cg.data[_i].pScore} </span>`;
-                }
-            }
-        }
-    });
-}
-
 //游戏页面
 if ($$('#canvas-container') && $$('.time-score cite')) {
     var gameOverScore;
@@ -121,6 +44,13 @@ if ($$('#canvas-container') && $$('.time-score cite')) {
             var dataDpr = Number($$('html').getAttribute('data-dpr')),
                 containerWidth = Number(window.getComputedStyle(container, null).getPropertyValue('width').slice(0, -2)),
                 containerHeight = Number(window.getComputedStyle(container, null).getPropertyValue('height').slice(0, -2));
+            console.log(container);
+            console.log(containerWidth, containerHeight);
+
+            // if (screen.width > 1000) {
+            //     containerWidth = 500;
+            //     containerHeight = 
+            // }
 
             var conNum = {
                 width: containerWidth - dataDpr * 13,
@@ -1346,7 +1276,78 @@ if ($$('#canvas-container') && $$('.time-score cite')) {
         });
     })();
 }
+//排行榜页面的渲染
+if (window.location.href.indexOf('rank') > -1) {
+    if (screen.height < 500) {
+        $$('.rank-time-list').style.height = '4.8rem';
+        $$('.rank-pass-list').style.height = '4.8rem';
+        $$('.rank-cup').style.display = 'none';
+    }
 
+    Ajax({
+        method: "GET",
+        url: `/getRank`,
+        success: function success(res) {
+            res = res.data;
+            //time
+            var timeParent = $$('.rank-time-list'),
+                timeLast = $$('.rank-time-list .clearfix'),
+                passParent = $$('.rank-pass-list'),
+                passLast = $$('.rank-pass-list .clearfix'),
+                meTime = $$('.me-time'),
+                mePass = $$('.me-pass');
+
+            //我的分数
+            meTime.firstElementChild.innerHTML = res.js.rank;
+            meTime.lastElementChild.innerHTML = res.js.myScore;
+            mePass.firstElementChild.innerHTML = res.cg.rank;
+            mePass.lastElementChild.innerHTML = res.cg.myScore;
+
+            if (res.js.data) {
+                var jslistsCount = res.js.data.length;
+                for (var i = 0; i < jslistsCount; i++) {
+                    var newLiChild = document.createElement('li');
+
+                    if (i < 3) {
+                        newLiChild.setAttribute('class', 'single-detail rank-list-top');
+                    } else {
+                        newLiChild.setAttribute('class', 'single-detail');
+                    }
+
+                    timeParent.insertBefore(newLiChild, timeLast);
+                    var rank = i + 1;
+
+                    newLiChild.innerHTML = `<span class="rank-num">  ${rank}  
+                                            </span><span class="rank-name">  ${res.js.data[i].stuid}  
+                                            </span><span class="rank-score">  ${res.js.data[i].tScore}  </span>`;
+                }
+            }
+
+            if (res.cg.data) {
+                //返回的数据条数
+                var cglistsCount = res.cg.data.length;
+
+                for (var _i = 0; _i < cglistsCount; _i++) {
+                    var _newLiChild = document.createElement('li');
+
+                    if (_i < 3) {
+                        _newLiChild.setAttribute('class', 'single-detail rank-list-top');
+                    } else {
+                        _newLiChild.setAttribute('class', 'single-detail');
+                    }
+
+                    passParent.insertBefore(_newLiChild, passLast);
+
+                    var _rank = _i + 1;
+
+                    _newLiChild.innerHTML = `<span class="rank-num"> ${_rank} 
+                                            </span><span class="rank-name"> ${res.cg.data[_i].stuid} 
+                                            </span><span class="rank-score"> ${res.cg.data[_i].pScore} </span>`;
+                }
+            }
+        }
+    });
+}
 //排行榜 点击进入下一页
 if ($$('.rank-btn-time')) {
     (function () {
@@ -1459,4 +1460,7 @@ function Ajax(obj) {
     request.open(defaults.method, defaults.url, defaults.async);
     request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded;charset=UTF-8');
     request.send(defaults.sendContent);
+}
+function $$(ele) {
+    return document.querySelector(ele);
 }

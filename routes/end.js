@@ -12,7 +12,7 @@ router.post('/', function(req, res, next) {
             if (err) {
                 console.log(err);
             } else if (data) {
-                if (data[0].pScore) {
+                if (data[0]) {
                     cookiedScore = data[0].pScore;
                 }
                 if (cookiedScore < parmams.score) {
@@ -80,7 +80,7 @@ router.post('/', function(req, res, next) {
             if (err) {
                 console.log(err);
             } else if (data) {
-                if (data[0].tScore) {
+                if (data[0]) {
                     cookiedScore = data[0].tScore;
                 }
                 //如果数据库里用户的分数小于要更新的分数

@@ -11,62 +11,65 @@
 
 <body>
     <!-- 排行榜 -->
-    <div class="container">
-        <img src="images/game-time-bg.png" alt="" class="container-bg">
-        <img src="images/top-bg.png" alt="" class="container-bg">
-        <div class="content">
-            <div class="main-content">
-                <div class="rank-title">
-                    <span class="congratulate">排行榜</span>
+    <div class="allcontainer">
+        <div class="container">
+            <img src="images/game-time-bg.png" alt="" class="container-bg">
+            <img src="images/top-bg.png" alt="" class="container-bg">
+            <div class="content">
+                <div class="main-content">
+                    <div class="rank-title">
+                        <span class="congratulate">排行榜</span>
+                    </div>
+                    <div class="rank-btn-container">
+                        <img src="images/cup.png" alt="" class="rank-cup">
+                        <p class="rank-btn rank-btn-time rank-clicked">计时排名</p>
+                        <p class="rank-btn rank-btn-pass">闯关排名</p>
+                    </div>
+                    <div class="rank-detail">
+                        <ul class="rank-time-list">
+                            <li class="single-detail single-title">
+                                <span class="rank-num">排名</span>
+                                <span class="rank-name">昵称</span>
+                                <span class="rank-score">总分</span>
+                            </li>
+                            <!-- <%for (var i = 0; i < timeData.length && i < 3; i++) {%> -->
+                            <li class="single-detail me-time">
+                                <span class="rank-num">0</span>
+                                <span class="rank-name">我</span>
+                                <span class="rank-score">0</span>
+                            </li>
+                            <!-- <% } %> -->
+                            
+                            <li class="clearfix"></li>
+                        </ul>
+                        <ul class="rank-pass-list" style="display: none">
+                            <li class="single-detail single-title">
+                                <span class="rank-num">排名</span>
+                                <span class="rank-name">昵称</span>
+                                <span class="rank-score">总分</span>
+                            
+                            <li class="single-detail me-pass">
+                                <span class="rank-num">0</span>
+                                <span class="rank-name">我</span>
+                                <span class="rank-score">0</span>
+                            </li>
+                            <li class="clearfix"></li>
+                        </ul>
+                    </div>
+                    <div class="change-page">
+                        <p class="to-homepage">
+                            <a href="/">首页</a>
+                        </p>
+                        <p class="to-nextpage">
+                            下一页
+                        </p>
+                    </div>
+                    <!-- <h5>©红岩网校工作站</h5> -->
                 </div>
-                <div class="rank-btn-container">
-                    <img src="images/cup.png" alt="" class="rank-cup">
-                    <p class="rank-btn rank-btn-time rank-clicked">计时排名</p>
-                    <p class="rank-btn rank-btn-pass">闯关排名</p>
-                </div>
-                <div class="rank-detail">
-                    <ul class="rank-time-list">
-                        <li class="single-detail single-title">
-                            <span class="rank-num">排名</span>
-                            <span class="rank-name">昵称</span>
-                            <span class="rank-score">总分</span>
-                        </li>
-                        <!-- <%for (var i = 0; i < timeData.length && i < 3; i++) {%> -->
-                        <li class="single-detail me-time">
-                            <span class="rank-num">0</span>
-                            <span class="rank-name">我</span>
-                            <span class="rank-score">0</span>
-                        </li>
-                        <!-- <% } %> -->
-                        
-                        <li class="clearfix"></li>
-                    </ul>
-                    <ul class="rank-pass-list" style="display: none">
-                        <li class="single-detail single-title">
-                            <span class="rank-num">排名</span>
-                            <span class="rank-name">昵称</span>
-                            <span class="rank-score">总分</span>
-                        
-                        <li class="single-detail me-pass">
-                            <span class="rank-num">0</span>
-                            <span class="rank-name">我</span>
-                            <span class="rank-score">0</span>
-                        </li>
-                        <li class="clearfix"></li>
-                    </ul>
-                </div>
-                <div class="change-page">
-                    <p class="to-homepage">
-                        <a href="/">首页</a>
-                    </p>
-                    <p class="to-nextpage">
-                        下一页
-                    </p>
-                </div>
-                <!-- <h5>©红岩网校工作站</h5> -->
             </div>
         </div>
     </div>
+    
     <script src="javascripts/zepto.js"></script>
     <script src="javascripts/main.js"></script>
     
