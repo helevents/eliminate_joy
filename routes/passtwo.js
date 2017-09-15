@@ -3,7 +3,7 @@ var router = express.Router();
 var connect = require('../config/mysql_connect.js');
 
 router.get('/', function(req, res, next) {
-    res.render('passtwo', {});
+    res.render('passtwo', { score: 0 });
     // try {
     //     connect.query("select stuid,pScore from funfest order by pScore desc", function (err, data) {
     //         if (err) {

@@ -23,9 +23,22 @@ a {
     color: inherit;
     text-decoration: none;
 }
-
+.allcontainer {
+    /*max-width: 500px;
+    max-height: 800px;*/
+}
 .container {
     width: 100%;
+   /* max-width: 500px;
+    max-height: 800px;*/
+}
+.homepage-content {
+    /*max-width: 500px;
+    max-height: 800px;*/
+}
+.game-background {
+    /*max-width: 500px;
+    max-height: 800px;   */
 }
 a,button,input{
     -webkit-tap-highlight-color: transparent;
@@ -35,3 +48,24 @@ h5 {
     text-align: center;
     color: #4B5E5F;
 }
+/*body,
+..homepage-content,
+.next-checkpoint, 
+.time-over,
+.time-container,
+.no-dissloved,
+.no-dissloved-container,
+.game-stop-container,
+.allcontainer,
+.game-stop {
+    max-width: 500px;
+    max-height: 800px;
+}
+.time-over-container {
+    max-width: 500px;
+    max-height: 800px;   
+}
+.checkpoint-container {
+    max-width: 500px;
+    max-height: 800px;      
+}*/

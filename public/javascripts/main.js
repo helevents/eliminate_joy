@@ -9,7 +9,15 @@ $(window).on('scroll.elasticity', function (e) {
 }).on('touchmove.elasticity', function (e) {
     e.preventDefault();
 });
-
+// if (screen.width > 1000) {
+//     if ($$('.allcontainer')) {
+//         $$('.allcontainer').style.width = '500px';
+//         console.log($$('.allcontainer').style.width);   
+//         console.log('changed ');
+        console.log(window.getComputedStyle($$('.container'), null).getPropertyValue('width'));    
+//     }
+    
+// }
 //游戏页面
 if ($$('#canvas-container') && $$('.time-score cite')) {
     var gameOverScore;
@@ -47,10 +55,7 @@ if ($$('#canvas-container') && $$('.time-score cite')) {
             console.log(container);
             console.log(containerWidth, containerHeight);
 
-            // if (screen.width > 1000) {
-            //     containerWidth = 500;
-            //     containerHeight = 
-            // }
+            
 
             var conNum = {
                 width: containerWidth - dataDpr * 13,
