@@ -72,11 +72,11 @@ if ($$('#canvas-container') && $$('.time-score cite')) {
                 imgWidth: conNum.width / 6,
                 imgHeight: conNum.height / 8,
                 //每个模式需要的时间
-                timeCount: 5,
+                timeCount: 60,
                 //闯关模式各关 通关 需要达到的分数
-                passOneNeedScore: 100,
-                passTwoNeedScore: 200,
-                passThreeNeedScore: 300,
+                passOneNeedScore: 1000,
+                passTwoNeedScore: 2000,
+                passThreeNeedScore: 3000,
                 //达到目标分数后，如果还有剩余时间，每s加成的分数
                 extraScore: 10,
                 //当图片的移动位移超过 halfwidth 时, 会进行上下左右的移动
