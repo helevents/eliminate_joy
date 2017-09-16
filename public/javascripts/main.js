@@ -14,7 +14,7 @@ $(window).on('scroll.elasticity', function (e) {
 //         $$('.allcontainer').style.width = '500px';
 //         console.log($$('.allcontainer').style.width);   
 //         console.log('changed ');
-        console.log(window.getComputedStyle($$('.container'), null).getPropertyValue('width'));    
+        // console.log(window.getComputedStyle($$('.container'), null).getPropertyValue('width'));    
 //     }
     
 // }
