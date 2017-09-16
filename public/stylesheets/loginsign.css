@@ -9,7 +9,7 @@ input {
     color: red;
     padding: 0;
     font-size: 12px;
-    margin: 0;
+    margin-left: 30px;
 }
 .mask {
     width: 100%;

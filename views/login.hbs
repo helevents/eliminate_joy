@@ -20,13 +20,14 @@
                 </p>
                 <button type="submit" class="btnSub">登录</button>
             </form> -->
+            <p class="errstatus">   </p>
             <p class="words">账户：
                 <input type="text" name="stuid" placeholder="请输入用户名" class="stuid">
             </p>
             <p class="words">密码：
                 <input type="password" name="password" placeholder="请输入密码" class="password">
             </p>
-            <p class="errstatus">错误信息</p>
+            
             <button class="btnSub btn-login">登录</button>
         </div>
     </div>
@@ -43,8 +44,8 @@
                     console.log(res);
                     if (res.status == 200) {
                         window.location.href = window.location.href.replace('login', '');
-                    } else if (res.status == 300) {
-
+                    } else if (res.data) {
+                        $$('.errstatus').innerHTML = res.data;
                     }
                 }
             });
