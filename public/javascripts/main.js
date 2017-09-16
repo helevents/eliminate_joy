@@ -67,7 +67,7 @@ if ($$('#canvas-container') && $$('.time-score cite')) {
                 imgWidth: conNum.width / 6,
                 imgHeight: conNum.height / 8,
                 //每个模式需要的时间
-                timeCount: 5,
+                timeCount: 60,
                 //闯关模式各关 通关 需要达到的分数
                 passOneNeedScore: 1000,
                 passTwoNeedScore: 2000,
