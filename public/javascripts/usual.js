@@ -17,7 +17,12 @@ function Ajax(obj) {
     }
     request.onreadystatechange = function () {
         if (request.readyState === 4 && request.status === 200) {
-            var responseText = JSON.parse(request.responseText);
+            var responseText;
+            // if (request.responseText) {
+            responseText = JSON.parse(request.responseText);
+            // } else {
+            //     responseText = null;
+            // }
             defaults.success.call(request, responseText);
         } 
     };

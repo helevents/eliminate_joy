@@ -17,7 +17,6 @@ router.post('/', function(req, res, next) {
                 }
                 if (cookiedScore < parmams.score) {
                     connect.query("update funfest set pScore=? where stuid=?", [parmams.score, stuid], function (err, data) {
-
                         if (err) {
                             console.log(err);
                         } else if (data) {
@@ -75,6 +74,9 @@ router.post('/', function(req, res, next) {
     //计时模式
     } else if (parmams.style == 'js') {
         var cookiedScore = 0;
+        console.log('--------------');
+        console.log('stuid: ', stuid);
+        console.log(req.session);
         //查看该用户是否存在
         connect.query("select stuid,tScore from funfest where stuid=?", [stuid], function (err, data) {
             if (err) {
@@ -95,6 +97,7 @@ router.post('/', function(req, res, next) {
                                 if (e) {
                                     console.log(e);
                                 } else if (timedata) {
+                                    console.log(timedata);
                                     var rank, score;
                                     timedata.forEach(function (ele, index) {
                                         if (stuid == ele.stuid) {
@@ -102,6 +105,7 @@ router.post('/', function(req, res, next) {
                                             score = ele.tScore;
                                         }
                                     });
+                                    console.log(rank, score);
                                     res.json({
                                         status: 200,
                                         data: {

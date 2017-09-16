@@ -1,15 +1,19 @@
 * {
     font-family: '微软雅黑','冬青黑';
+    margin: 0;
 }
 input {
     outline: none;
-    
+}
+a {
+    color: blue;
 }
 .errstatus {
     color: red;
     padding: 0;
     font-size: 12px;
     margin-left: 30px;
+    margin-top: 20px;
     /*text-align: right;*/
 }
 .mask {
@@ -26,12 +30,12 @@ input {
 }
 .tab-con {
     border-radius: 5px;
-    width: 400px; 
+    width: 340px; 
     height: 280px; 
     border: 1px solid #808080;
     background-color: #fff;
     position: absolute;
-    left: 35%;
+    left: 5%;
     top: 25%;
     z-index: 10;
     box-shadow: 0 2px 16px #000, 0 0 1px #000, 0 0 1px #000;  
@@ -40,12 +44,14 @@ input {
     width: auto;
 }
 .words {
-    padding-left: 30px;
+    padding-left: 20px;
 }
 .words input {
-    width: 250px;
+    width: 200px;
     height: 30px;
     margin-top: 10px;
+    border: 2px solid grey;
+    border-radius: 3px;
 }
 h3 {
     margin-left: 30px;
@@ -56,9 +62,32 @@ button {
     border: 0;
     background-color: #8E8E8E;
     margin-top: 25px;
-    margin-left: 270px;
+    /*margin-left: 270px;*/
     border-radius: 4px;
 }
 .login-register {
-    /*flo*/
+    margin-left: 100px;
+}
+.success-login {
+    color: green;
+    padding: 0;
+    font-size: 12px;
+    margin-left: 30px;
+    margin-top: 10px;
+}
+.allstatus {
+    width: 100%;
+    height: 36px;
+    margin-top: 20px;
+}
+.words span {
+    display: inline-block;
+    width: 85px;
+    text-align: right;
+}
+.modefied {
+    margin-left: 20px;
+}
+.back {
+    margin-left: 180px;
 }

@@ -11,17 +11,10 @@
     <div class="mask"></div>
     <div class="continer">
         <div class="tab-con">
-            <h3>账户注册</h3>
-            <!-- <form action="/register" method="POST" >
-                <p class="words">账户：
-                    <input type="text" name="stuid" placeholder="请输入用户名">
-                </p>
-                <p class="words">密码：
-                    <input type="password" name="password" placeholder="请输入密码">
-                </p>
-                <button type="submit">注册</button>
-            </form> -->
-            <p class="errstatus">   </p>
+            <div class="allstatus">
+                <p class="errstatus">   </p>
+                <p class="success-login"></p>
+            </div>
             <p class="words">账户：
                 <input type="text" name="stuid" placeholder="请输入用户名" class="stuid">
             </p>
@@ -29,13 +22,15 @@
                 <input type="password" name="password" placeholder="请输入密码" class="password">
             </p>
             <div class="login-register">
+                <a href="/forget" class="forget">忘记密码？</a>
                 <button class="btn-register">注册</button>
-                <!-- <button class="btnSub btn-login">登录</button> -->
+                <button class="btnSub btn-login">登录</button>
             </div>
         </div>
     </div>
     <script src="javascripts/usual.js"></script>
     <script>
+
         $$('.btn-register').addEventListener('click', function (e) {
             var stuid = $$('.stuid').value;
             var password = $$('.password').value;
@@ -44,10 +39,38 @@
                 url: `/register`,
                 sendContent: `stuid=${stuid}&password=${password}`,
                 success: function success(res) {
+                    $$('.btn-login').disabled = false;
+                    $$('.btn-register').disabled = true;
+                    if (res.status == 200) {
+                        document.cookie = `stuid=${stuid}`;
+                        console.log(document.cookie);
+                        $$('.errstatus').innerHTML = '';
+                        $$('.success-login').innerHTML = res.data;
+                    } else if (res.status == 300) {
+                        $$('.success-login').innerHTML = '';
+                        $$('.errstatus').innerHTML = res.data;
+                    }
+                }
+            });
+        }); 
+        $$('.btn-login').addEventListener('click', function (e) {
+            $$('.btn-login').disabled = true;
+            var stuid = $$('.stuid').value;
+            var password = $$('.password').value;
+            Ajax({
+                method: "POST",
+                url: `/login`,
+                sendContent: `stuid=${stuid}&password=${password}`,
+                success: function success(res) {
                     console.log(res);
                     if (res.status == 200) {
-                        window.location.href = window.location.href.replace('register', 'login');
+                        $$('.errstatus').innerHTML = '';
+                        $$('.success-login').innerHTML = res.data;
+                        setTimeout(function () {
+                            window.location.href = window.location.href.replace('register', '');
+                        }, 1000);
                     } else if (res.data) {
+                        $$('.success-login').innerHTML = '';
                         $$('.errstatus').innerHTML = res.data;
                     }
                 }

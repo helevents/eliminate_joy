@@ -1,0 +1,64 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="javascripts/limit.js"></script>
+    <link rel="stylesheet" type="text/css" href="stylesheets/loginsign.css">
+</head>
+<body>
+    <div class="mask"></div>
+    <div class="continer">
+        <div class="tab-con">
+            <div class="allstatus">
+                <p class="errstatus">   </p>
+                <p class="success-login"></p>
+            </div>
+            <p class="words">
+                <span>账户:</span>
+                <input type="text" name="stuid" placeholder="请输入用户名" class="stuid" value="hello">
+            </p>
+            <p class="words">
+                <span>新密码:</span>
+                <input type="password" name="password" placeholder="请输入密码" class="password" value="12">
+            </p>
+            <p class="words">
+                <span>确认新密码:</span>
+                <input type="password" name="password" placeholder="请输入密码" class="repeat" value="123">
+            </p>
+            <a href="" class="back">返回</a>
+            <button class="modefied">确认</button>
+        </div>
+    </div>
+    <script src="javascripts/usual.js"></script>
+    <script>
+        // $$('.btn-login').disabled = true;
+        $$('.modefied').addEventListener('click', function (e) {
+            $$('.errstatus').innerHTML = '';
+            $$('.success-login').innerHTML = '';
+            var stuid = $$('.stuid').value;
+            var password = $$('.password').value;
+            var repeat = $$('.repeat').value;
+            var currentUrl = window.location.href;
+            Ajax({
+                method: "POST",
+                url: `/forget`,
+                sendContent: `stuid=${stuid}&password=${password}&repeat=${repeat}`,
+                success: function success(res) {
+                    if (res.status == 200) {
+                        $$('.errstatus').innerHTML = '';
+                        $$('.success-login').innerHTML = res.data;
+                        $$('.modefied').disabled = true;
+                        setTimeout(function (e) {
+                            window.location.href = currentUrl.replace('forget', 'register');
+                        }, 1000);
+                    } else {
+                        
+                    }
+                }
+            });
+        }); 
+    </script>
+</body>
+</html>

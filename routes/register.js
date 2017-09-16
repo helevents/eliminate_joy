@@ -33,11 +33,12 @@ router.post('/', function(req, res, next) {
                             console.log(err);
                         } else {
                             req.session.stuid = stuid;
+                            console.log('register success');
+                            console.log(req.session.stuid);
                             res.json({
                                 status: 200,
-                                data: '登录成功'
+                                data: '注册成功~~~'
                             })
-                            // res.redirect('/login');
                         }
                     });    
                 }

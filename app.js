@@ -19,6 +19,7 @@ var end = require('./routes/end');
 var login = require('./routes/login');
 var register = require('./routes/register');
 var limit = require('./routes/limit');
+var forget = require('./routes/forget');
 
 var app = express();
 
@@ -35,7 +36,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({
   secret: 'express session', // 建议使用 128 个字符的随机字符串
-  cookie: { maxAge: 60 * 1000 }
+  cookie: { maxAge: 60 * 10000 }
 }));
 
 app.use('/', index);
@@ -51,6 +52,7 @@ app.use('/end', end);
 app.use('/login', login);
 app.use('/register', register);
 app.use('/limit', limit);
+app.use('/forget', forget);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -3,10 +3,6 @@ var router = express.Router();
 var connect = require('../config/mysql_connect.js');
 var crypto = require('crypto');
 
-router.get('/', function (req, res) {
-    res.render('login', {});
-});
-
 router.post('/', function(req, res, next) {
     var stuid = req.body.stuid;
     var password = req.body.password;
@@ -27,12 +23,12 @@ router.post('/', function(req, res, next) {
                 });
                 if (isuser) {
                     req.session.stuid = stuid;
-                    console.log('has already registered');
+                    console.log('login success !');
+                    console.log(req.session.stuid);
                     res.json({
                         status: 200,
-                        data: '登录成功'
+                        data: '登录成功~~~'
                     })
-                    // res.redirect('/');
                 } else if (userExisted) {
                     res.json({
                         status: 300,

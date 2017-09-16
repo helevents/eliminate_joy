@@ -484,7 +484,7 @@ if ($$('#canvas-container') && $$('.time-score cite')) {
                                 }
 
                                 pubdata.score += scoreCount;
-                                console.log(historyScore, pubdata.score);
+                                
                                 if (historyScore < pubdata.score) {
                                     historyScore = pubdata.score;
                                 }
