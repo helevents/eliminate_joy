@@ -9,7 +9,7 @@ router.get('/', function(req, res, next) {
         connect.query("select stuid,pScore from funfest order by pScore desc", function (err, data) {
             if (err) {
                 console.log(err);
-            } else if (data && data.length != 0) {
+            } else {
                 var rank = 0;
                 var pScore;
                 data.forEach(function (ele, index) {

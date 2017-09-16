@@ -34,10 +34,6 @@ if ($$('#canvas-container') && $$('.time-score cite')) {
             historyScore = record.innerText,
             storagedScore = historyScore;
 
-        // if (historyScore != 0) {
-        //     document.cookie = `passHistoryScore=${historyScore}`;
-        // }
-
         if ($$('.higest-score p')) {
             gameOverScore = $$('.higest-score p');
         }
@@ -802,6 +798,7 @@ if ($$('#canvas-container') && $$('.time-score cite')) {
                                                         $$('.time-higest-score').innerHTML = res.data.score;                                                        
                                                         $$('.higest-score').setAttribute('data-class', '新纪录');
                                                         gameOverScore.innerHTML = pubdata.score;
+                                                        console.log(pubdata.score, storagedScore);
                                                         if (pubdata.score < storagedScore) {
                                                             $$('.higest-score').setAttribute('data-class', '');
                                                         }
@@ -834,6 +831,7 @@ if ($$('#canvas-container') && $$('.time-score cite')) {
                                                             $$('.time-higest-score').innerHTML = res.data.score;                                                            
                                                             $$('.higest-score').setAttribute('data-class', '新纪录');
                                                             gameOverScore.innerHTML = pubdata.score;
+                                                            console.log(pubdata.score, storagedScore);
                                                             if (pubdata.score < storagedScore) {
                                                                 $$('.higest-score').setAttribute('data-class', '');
                                                             }
@@ -854,6 +852,7 @@ if ($$('#canvas-container') && $$('.time-score cite')) {
                                                             $$('.time-higest-score').innerHTML = res.data.score;                                                            
                                                             $$('.higest-score').setAttribute('data-class', '新纪录');
                                                             gameOverScore.innerHTML = pubdata.score;
+                                                            console.log(pubdata.score, storagedScore);
                                                             if (pubdata.score < storagedScore) {
                                                                 $$('.higest-score').setAttribute('data-class', '');
                                                             }
@@ -874,6 +873,7 @@ if ($$('#canvas-container') && $$('.time-score cite')) {
                                                             $$('.time-higest-score').innerHTML = res.data.score;                                                            
                                                             $$('.higest-score').setAttribute('data-class', '新纪录');
                                                             gameOverScore.innerHTML = pubdata.score;
+                                                            console.log(pubdata.score, storagedScore);
                                                             if (pubdata.score < storagedScore) {
                                                                 $$('.higest-score').setAttribute('data-class', '');
                                                             }
@@ -895,6 +895,7 @@ if ($$('#canvas-container') && $$('.time-score cite')) {
                                                     $$('.time-higest-score').innerHTML = res.data.score;
                                                     $$('.higest-score').setAttribute('data-class', '新纪录');
                                                     gameOverScore.innerHTML = pubdata.score;
+                                                    console.log(pubdata.score, storagedScore);
                                                     if (pubdata.score < storagedScore) {
                                                         $$('.higest-score').setAttribute('data-class', '');
                                                     }

@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title></title>
+    <script src="javascripts/limit.js"></script>
     <link rel="stylesheet" type="text/css" href="stylesheets/loginsign.css">
 </head>
 <body>
@@ -10,7 +11,7 @@
     <div class="continer">
         <div class="tab-con">
             <h3>账户登录</h3>
-            <form action="/login" method="POST" >
+            <!-- <form action="/login" method="POST" >
                 <p class="words">账户：
                     <input type="text" name="stuid" placeholder="请输入用户名">
                 </p>
@@ -18,8 +19,37 @@
                     <input type="password" name="password" placeholder="请输入密码">
                 </p>
                 <button type="submit" class="btnSub">登录</button>
-            </form>
+            </form> -->
+            <p class="words">账户：
+                <input type="text" name="stuid" placeholder="请输入用户名" class="stuid">
+            </p>
+            <p class="words">密码：
+                <input type="password" name="password" placeholder="请输入密码" class="password">
+            </p>
+            <p class="errstatus">错误信息</p>
+            <button class="btnSub btn-login">登录</button>
         </div>
     </div>
+    <script src="javascripts/usual.js"></script>
+    <script>
+        $$('.btn-login').addEventListener('click', function (e) {
+            var stuid = $$('.stuid').value;
+            var password = $$('.password').value;
+            Ajax({
+                method: "POST",
+                url: `/login`,
+                sendContent: `stuid=${stuid}&password=${password}`,
+                success: function success(res) {
+                    console.log(res);
+                    if (res.status == 200) {
+                        window.location.href = window.location.href.replace('login', '');
+                    } else if (res.status == 300) {
+
+                    }
+                }
+            });
+        }); 
+
+    </script>
 </body>
 </html>

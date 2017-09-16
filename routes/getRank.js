@@ -7,7 +7,7 @@ router.get('/', function(req, res, next) {
     connect.query("select stuid,tScore from funfest order by tScore desc", function (err, jsdata) {
         if (err) {
             console.log(err);
-        } else if (jsdata) {
+        } else {
             var jsRank = 0, myjsScore;
             jsdata.forEach(function (ele, index) {
                 if (ele.stuid == stuid) {
@@ -18,7 +18,7 @@ router.get('/', function(req, res, next) {
             connect.query("select stuid,pScore from funfest order by pScore desc", function (err, cgdata) {
                 if (err) {
                     console.log(err);
-                } else if (cgdata) {
+                } else {
                     var cgRank = 0, mycgScore = 0;
                     cgdata.forEach(function (ele, index) {
                         if (ele.stuid == stuid) {

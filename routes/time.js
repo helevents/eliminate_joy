@@ -7,12 +7,11 @@ router.get('/', function(req, res, next) {
     connect.query("select stuid,tScore from funfest order by tScore desc", function (err, data) {
         if (err) {
             console.log(err);
-        } else if (data && data.length != 0) {
-            console.log(data);
+        } else {
             var rank = 0;
-            var tScore;
+            var tScore = 0;
             data.forEach(function (ele, index) {
-                if (req.cookies.usernmae == ele.stuid) {
+                if (req.session.stuid == ele.stuid) {
                     rank = index;
                     tScore = ele.tScore;
                 }
