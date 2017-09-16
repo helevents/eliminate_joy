@@ -52,10 +52,6 @@ if ($$('#canvas-container') && $$('.time-score cite')) {
             var dataDpr = Number($$('html').getAttribute('data-dpr')),
                 containerWidth = Number(window.getComputedStyle(container, null).getPropertyValue('width').slice(0, -2)),
                 containerHeight = Number(window.getComputedStyle(container, null).getPropertyValue('height').slice(0, -2));
-            console.log(container);
-            console.log(containerWidth, containerHeight);
-
-            
 
             var conNum = {
                 width: containerWidth - dataDpr * 13,
@@ -72,7 +68,7 @@ if ($$('#canvas-container') && $$('.time-score cite')) {
                 imgWidth: conNum.width / 6,
                 imgHeight: conNum.height / 8,
                 //每个模式需要的时间
-                timeCount: 60,
+                timeCount: 5,
                 //闯关模式各关 通关 需要达到的分数
                 passOneNeedScore: 1000,
                 passTwoNeedScore: 2000,

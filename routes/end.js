@@ -11,7 +11,7 @@ router.post('/', function(req, res, next) {
         connect.query("select pScore from funfest where stuid=?", [stuid], function (err, data) {
             if (err) {
                 console.log(err);
-            } else if (data) {
+            } else {
                 if (data[0]) {
                     cookiedScore = data[0].pScore;
                 }
@@ -79,10 +79,11 @@ router.post('/', function(req, res, next) {
         connect.query("select stuid,tScore from funfest where stuid=?", [stuid], function (err, data) {
             if (err) {
                 console.log(err);
-            } else if (data) {
+            } else {
                 if (data[0]) {
                     cookiedScore = data[0].tScore;
                 }
+                console.log(cookiedScore);
                 //如果数据库里用户的分数小于要更新的分数
                 if (cookiedScore < parmams.score) {
                     connect.query("update funfest set tScore=? where stuid=?", [parmams.score, stuid], function (err, data) {
