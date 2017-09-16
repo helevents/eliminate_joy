@@ -16,20 +16,32 @@ router.post('/', function(req, res, next) {
             if (e) {
                 console.log(e);
             } else {
+                var userExisted = false;
                 alldata.forEach(function (ele, index) {
                     if (ele.stuid == stuid) {
-                        res.redirect('/');
-                        console.log('has already registered');
-                    } 
-                });
-                connect.query("insert into funfest set ?", { id: null, stuid: stuid, password: secret }, function (err, data) {
-                    if (err) {
-                        console.log(err);
-                    } else {
-                        req.session.stuid = stuid;
-                        res.redirect('/login');
+                        userExisted = true;
                     }
                 });
+                if (userExisted) {
+                    res.json({
+                        status: 300,
+                        data: '用户已存在'
+                    });
+                } else {
+                    connect.query("insert into funfest set ?", { id: null, stuid: stuid, password: secret }, function (err, data) {
+                        if (err) {
+                            console.log(err);
+                        } else {
+                            req.session.stuid = stuid;
+                            res.json({
+                                status: 200,
+                                data: '登录成功'
+                            })
+                            // res.redirect('/login');
+                        }
+                    });    
+                }
+                
             }
         });
         

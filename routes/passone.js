@@ -13,7 +13,7 @@ router.get('/', function(req, res, next) {
                 var rank = 0;
                 var pScore;
                 data.forEach(function (ele, index) {
-                    if (req.cookies.usernmae == ele.stuid) {
+                    if (req.session.stuid == ele.stuid) {
                         rank = index;
                         pScore = ele.pScore;
                     }
