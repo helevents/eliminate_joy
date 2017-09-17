@@ -10,17 +10,24 @@ router.get('/', function(req, res, next) {
         } else {
             var jsRank = 0, myjsScore;
             jsdata.forEach(function (ele, index) {
+                if (!ele.tScore) {
+                    ele.tScore = 0;
+                }
                 if (ele.stuid == stuid) {
                     jsRank = index;
-                    myjsScore = ele.tScore;
+                    myjsScore = ele.tScore;    
                 }
             });
+
             connect.query("select stuid,pScore from funfest order by pScore desc", function (err, cgdata) {
                 if (err) {
                     console.log(err);
                 } else {
                     var cgRank = 0, mycgScore = 0;
                     cgdata.forEach(function (ele, index) {
+                        if (!ele.pScore) {
+                            ele.pScore = 0;
+                        }
                         if (ele.stuid == stuid) {
                             cgRank = index;
                             mycgScore = ele.pScore;
