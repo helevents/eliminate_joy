@@ -1080,34 +1080,18 @@ if ($$('#canvas-container') && $$('.time-score cite')) {
             stage.drawAllStage();
 
             //如果没有可以消去的图片, 重绘当前页面
-            if (!stage.nextTouchToDisslove()) {
-                noDissloved.style.display = 'block';
+            if (currentUrl.indexOf('three') > -1) {
+                if (!stage.nextTouchToDisslove()) {
+                    noDissloved.style.display = 'block';
 
-                setTimeout(function () {
-                    noDissloved.style.display = 'none';
-                    stage.drawBeginStage();
-                    stage.drawAllStage();
-                    stage.continueToDissloved();
-                }, 1000);
+                    setTimeout(function () {
+                        noDissloved.style.display = 'none';
+                        stage.drawBeginStage();
+                        stage.drawAllStage();
+                        stage.continueToDissloved();
+                    }, 1000);
+                }
             }
-
-            // if (currentUrl.indexOf('time') > -1 || currentUrl.indexOf('one') > -1) {
-            //     Ajax({
-            //         method: "GET",
-            //         url: `/getmax`,
-            //         success: function success(res) {
-            //             if (currentUrl.indexOf('time') > -1) {
-            //                 if (res.data.js.myScore > 0) {
-            //                     historyScore = res.data.js.myScore;
-            //                 }
-            //             } else if (currentUrl.indexOf('pass') > -1) {
-            //                 if (res.data.js.myScore > 0) {
-            //                     historyScore = res.data.cg.myScore;
-            //                 }
-            //             }
-            //         }
-            //     });
-            // }
 
             record.innerHTML = historyScore;
 
@@ -1250,29 +1234,31 @@ if ($$('#canvas-container') && $$('.time-score cite')) {
                     }
 
                     //如果没有可以消去的图片, 重绘当前页面
-                    setTimeout(function () {
-                        for (var _i13 = 0; _i13 < pub.xNum; _i13++) {
-                            for (var _j11 = 0; _j11 < pub.yNum; _j11++) {
-                                if (matrix[_i13][_j11].toClick) {
-                                    if (matrix[_i13][_j11].toRemove) {
-                                        matrix[_i13][_j11].toRemove = false;
+                    if (currentUrl.indexOf('three') > -1) {
+                        setTimeout(function () {
+                            for (var _i13 = 0; _i13 < pub.xNum; _i13++) {
+                                for (var _j11 = 0; _j11 < pub.yNum; _j11++) {
+                                    if (matrix[_i13][_j11].toClick) {
+                                        if (matrix[_i13][_j11].toRemove) {
+                                            matrix[_i13][_j11].toRemove = false;
+                                        }
                                     }
                                 }
                             }
-                        }
 
-                        if (!stage.nextTouchToDisslove()) {
-                            noDissloved.style.display = 'block';
+                            if (!stage.nextTouchToDisslove()) {
+                                noDissloved.style.display = 'block';
 
-                            setTimeout(function () {
-                                noDissloved.style.display = 'none';
-                                //重新生成所有图片
-                                stage.drawBeginStage();
-                                stage.drawAllStage();
-                                stage.continueToDissloved();
-                            }, 1000);
-                        }
-                    }, 2000);
+                                setTimeout(function () {
+                                    noDissloved.style.display = 'none';
+                                    //重新生成所有图片
+                                    stage.drawBeginStage();
+                                    stage.drawAllStage();
+                                    stage.continueToDissloved();
+                                }, 1000);
+                            }
+                        }, 500);
+                    }
                 }
 
                 pubdata.moveFlag = false;
