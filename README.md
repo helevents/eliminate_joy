@@ -1,4 +1,4 @@
-if `http://139.199.155.113:3000/register` not work,  just open iterminate
+if `http://172.96.17.25:3000/register` not work,  just open iterminate
 
 ```
 npm install 
