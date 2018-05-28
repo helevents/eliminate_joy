@@ -17,7 +17,7 @@ Main pages are shown below.
 
 + Time mode is processing
 
-![Alt text](https://github.com/scarleatt/eliminate_joy/blob/master/public/images/1game_time_processinge.png)
+![Alt text](https://github.com/scarleatt/eliminate_joy/blob/master/public/images/1game_time_processing.png)
 
 + Timeout
 
