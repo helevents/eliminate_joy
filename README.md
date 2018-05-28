@@ -13,12 +13,12 @@ Main pages are shown below.
 
 + Main Page
 
-![Alt text](https://github.com/scarleatt/eliminate_joy/blob/master/public/images/1games_main_page.png)
+  <img src="https://github.com/scarleatt/eliminate_joy/blob/master/public/images/1games_main_page.png" width="60%" height="60%">
 
 + Time mode is processing
 
-![Alt text](https://github.com/scarleatt/eliminate_joy/blob/master/public/images/1game_time_processing.png)
+  <img src="https://github.com/scarleatt/eliminate_joy/blob/master/public/images/1game_time_processing.png" width="60%" height="60%">
 
 + Timeout
 
-![Alt text](https://github.com/scarleatt/eliminate_joy/blob/master/public/images/1game_time_end.png)
+  <img src="https://github.com/scarleatt/eliminate_joy/blob/master/public/images/1game_time_end.png" width="60%" height="60%">
