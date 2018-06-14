@@ -1274,8 +1274,9 @@ if (window.location.href.indexOf('rank') > -1) {
     }
 
     Ajax({
-        method: "GET",
-        url: `/getRank`,
+        method: "POST",
+        sendContent: `stuid={localStorage.stuid}`,
+        url: `http://localhost:8080/rankList`,
         success: function success(res) {
             res = res.data;
             //time

@@ -43,7 +43,7 @@
             var currentUrl = window.location.href;
             Ajax({
                 method: "POST",
-                url: `/forget`,
+                url: `http://localhost:8080/forget`,
                 sendContent: `stuid=${stuid}&password=${password}&repeat=${repeat}`,
                 success: function success(res) {
                     if (res.status == 200) {
