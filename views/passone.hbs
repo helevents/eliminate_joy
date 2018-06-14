@@ -8,6 +8,28 @@
     <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
     <link rel="stylesheet" type="text/css" href="stylesheets/game.css">
     <link rel="stylesheet" href="font_1480255822072/font-embed.css">
+    <script src="javascripts/usual.js"></script>
+    <script>
+        var score=0;
+        var stuid = localStorage.stuid;
+        Ajax({
+            method: "POST",
+            url: `http://localhost:8080/updatePasHistoryScore`,
+            sendContent: `stuid=${stuid}`,
+            success: function success(res) {
+                if (res.status == 200) {
+                    score=res.data.score;
+                    console.log(score);
+                    console.log("updated passone score=",score);
+                    localStorage.setItem("passOneScore", score);
+                    localStorage.setItem("historyScore", score);
+                    $$('.time-record cite').innerHTML = score;
+                } else if (res.status == 300) {
+                    alert("update time score error!");
+                }
+            }
+        });
+    </script>
 </head>
 
 <body>

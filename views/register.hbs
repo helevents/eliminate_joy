@@ -36,11 +36,11 @@
             var password = $$('.password').value;
             Ajax({
                 method: "POST",
-                url: `/register`,
+                url: `http://localhost:8080/register`,
                 sendContent: `stuid=${stuid}&password=${password}`,
                 success: function success(res) {
-                    $$('.btn-login').disabled = false;
-                    $$('.btn-register').disabled = true;
+                    // $$('.btn-login').disabled = false;
+                    // $$('.btn-register').disabled = true;
                     if (res.status == 200) {
                         document.cookie = `stuid=${stuid}`;
                         console.log(document.cookie);
@@ -54,18 +54,19 @@
             });
         }); 
         $$('.btn-login').addEventListener('click', function (e) {
-            $$('.btn-login').disabled = true;
+            // $$('.btn-login').disabled = true;
             var stuid = $$('.stuid').value;
             var password = $$('.password').value;
             Ajax({
                 method: "POST",
-                url: `/login`,
+                url: `http://localhost:8080/login`,
                 sendContent: `stuid=${stuid}&password=${password}`,
                 success: function success(res) {
                     console.log(res);
                     if (res.status == 200) {
                         $$('.errstatus').innerHTML = '';
                         $$('.success-login').innerHTML = res.data;
+                        localStorage.setItem("stuid", stuid);
                         setTimeout(function () {
                             window.location.href = window.location.href.replace('register', '');
                         }, 1000);

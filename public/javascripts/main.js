@@ -23,12 +23,12 @@ if ($$('#canvas-container') && $$('.time-score cite')) {
             currentUrl = window.location.href,
             //游戏进行时的页面上的 记录 
             record = $$('.time-record cite'),
-            historyScore = record.innerText,
+            historyScore = localStorage.getItem("historyScore"),
             storagedScore = historyScore;
 
-        if (historyScore) {
-            localStorage.setItem('historyScore', historyScore);
-        }
+        // if (historyScore) {
+        //     localStorage.setItem('historyScore', historyScore);
+        // }
 
         if (currentUrl.indexOf('two') > -1) {
             console.log(localStorage.getItem('passOneScore'));
@@ -67,11 +67,11 @@ if ($$('#canvas-container') && $$('.time-score cite')) {
                 imgWidth: conNum.width / 6,
                 imgHeight: conNum.height / 8,
                 //每个模式需要的时间
-                timeCount: 60,
+                timeCount: 10,
                 //闯关模式各关 通关 需要达到的分数
-                passOneNeedScore: 1000,
-                passTwoNeedScore: 2000,
-                passThreeNeedScore: 3000,
+                passOneNeedScore: 100,
+                passTwoNeedScore: 200,
+                passThreeNeedScore: 300,
                 //达到目标分数后，如果还有剩余时间，每s加成的分数
                 extraScore: 10,
                 //当图片的移动位移超过 halfwidth 时, 会进行上下左右的移动
@@ -484,7 +484,6 @@ if ($$('#canvas-container') && $$('.time-score cite')) {
                                 }
 
                                 pubdata.score += scoreCount;
-                                
                                 if (historyScore < pubdata.score) {
                                     historyScore = pubdata.score;
                                 }
@@ -796,8 +795,8 @@ if ($$('#canvas-container') && $$('.time-score cite')) {
                                                     timeOver.style.display = 'block';
                                                     Ajax({
                                                         method: "POST",
-                                                        url: `/end`,
-                                                        sendContent: `style=cg&score=${pubdata.score}`,
+                                                        url: `http://localhost:8080/end`,
+                                                        sendContent: `style=cg&score=${pubdata.score}&stuid=${localStorage.stuid}`,
                                                         success: function success(res) {
                                                             console.log(res);
                                                             $$('.time-rank').innerHTML = res.data.rank;
@@ -830,8 +829,8 @@ if ($$('#canvas-container') && $$('.time-score cite')) {
                                                     timeOver.style.display = 'block';
                                                     Ajax({
                                                         method: "POST",
-                                                        url: `/end`,
-                                                        sendContent: `style=cg&score=${pubdata.score}`,
+                                                        url: `http://localhost:8080/end`,
+                                                        sendContent: `style=cg&score=${pubdata.score}&stuid=${localStorage.stuid}`,
                                                         success: function success(res) {
                                                             $$('.time-rank').innerHTML = res.data.rank;
                                                             $$('.time-higest-score').innerHTML = res.data.score;                                                            
@@ -850,8 +849,8 @@ if ($$('#canvas-container') && $$('.time-score cite')) {
                                                     timeOver.style.display = 'block';
                                                     Ajax({
                                                         method: "POST",
-                                                        url: `/end`,
-                                                        sendContent: `style=cg&score=${pubdata.score}`,
+                                                        url: `http://localhost:8080/end`,
+                                                        sendContent: `style=cg&score=${pubdata.score}&stuid=${localStorage.stuid}`,
                                                         success: function success(res) {
                                                             $$('.time-rank').innerHTML = res.data.rank;
                                                             $$('.time-higest-score').innerHTML = res.data.score;                                                            
@@ -870,8 +869,8 @@ if ($$('#canvas-container') && $$('.time-score cite')) {
                                                     timeOver.style.display = 'block';
                                                     Ajax({
                                                         method: "POST",
-                                                        url: `/end`,
-                                                        sendContent: `style=cg&score=${pubdata.score}`,
+                                                        url: `http://localhost:8080/end`,
+                                                        sendContent: `style=cg&score=${pubdata.score}&stuid=${localStorage.stuid}`,
                                                         success: function success(res) {
                                                             $$('.time-rank').innerHTML = res.data.rank;
                                                             $$('.time-higest-score').innerHTML = res.data.score;                                                            
@@ -890,8 +889,8 @@ if ($$('#canvas-container') && $$('.time-score cite')) {
                                             timeOver.style.display = 'block';
                                             Ajax({
                                                 method: "POST",
-                                                url: `/end`,
-                                                sendContent: `style=js&score=${pubdata.score}`,
+                                                url: `http://localhost:8080/end`,
+                                                sendContent: `style=js&score=${pubdata.score}&stuid=${localStorage.stuid}`,
                                                 success: function success(res) {
                                                     console.log(res);
                                                     $$('.time-rank').innerHTML = res.data.rank;

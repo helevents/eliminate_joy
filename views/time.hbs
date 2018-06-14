@@ -8,6 +8,28 @@
     <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
     <link rel="stylesheet" type="text/css" href="stylesheets/game.css">
     <link rel="stylesheet" href="font_1480255822072/font-embed.css">
+    <script src="javascripts/mobileAdaption.js"></script>
+    <script src="javascripts/usual.js"></script>
+    <script>
+        var score=0;
+        var stuid = localStorage.stuid;
+        Ajax({
+            method: "POST",
+            url: `http://localhost:8080/updateTimeHistoryScore`,
+            sendContent: `stuid=${stuid}`,
+            success: function success(res) {
+                if (res.status == 200) {
+                    score=res.data.score;
+                    console.log("updated time score=",score);
+                    localStorage.setItem("historyScore", score);
+                    localStorage.setItem("timeScore", score);
+                    $$('.time-record cite').innerHTML = score;
+                } else if (res.status == 300) {
+                    alert("update time score error!");
+                }
+            }
+        });
+    </script>
 </head>
 
 <body>
@@ -22,7 +44,7 @@
                             <div class="time-score-record">
                                 <div class="time-btn time-score">
                                     <span>得分</span>
-                                    <cite>1234</cite>
+                                    <cite>0</cite>
                                 </div>
                                 <div class="time-btn time-record">
                                     <span>记录</span>
